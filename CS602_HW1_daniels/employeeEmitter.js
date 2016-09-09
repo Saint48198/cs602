@@ -12,7 +12,7 @@ class EmployeeEmitter extends EventEmitter {
     lookupById (id) {
         this.emit('lookupById', id);
 
-        console.log(_.findWhere(this.data, { id: id }));
+        return _.findWhere(this.data, { id: id });
     }
 
     lookupByLastName (lname) {

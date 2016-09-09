@@ -11,10 +11,37 @@ let data = [
 
 const emitter = new EmployeeEmitter(data);
 
-emitter.on('lookupById', (args) => {
-    let alert = 'Event lookupById raised! ' + args;
+// emitter listeners for events
+emitter.on('lookupById', (id) => {
+    let alert = 'Event lookupById raised! ' + id;
     console.log(alert.red);
 });
 
+emitter.on('lookupByLastName', (lname) => {
+    let alert = 'Event lookupByLastName raised! ' + lname;
+    console.log(alert.red);
+});
+
+emitter.on('addEmployee', (fname, lname) => {
+    let alert = 'Event addEmployee raised! ' + fname + ',' + lname;
+    console.log(alert.red);
+});
+
+
 console.log('Lookup by last name (Smith)'.blue);
-emitter.lookupById(2);
+console.log(emitter.lookupByLastName('Smith'));
+
+console.log(' ');
+
+console.log('Adding employee William Smith');
+emitter.addEmployee('William', 'Smith');
+
+console.log(' ');
+
+console.log('Lookup by last name (Smith)'.blue);
+console.log(emitter.lookupByLastName('Smith'));
+
+console.log(' ');
+
+console.log('Lookup by id (2)'.blue);
+console.log(emitter.lookupById(2));
