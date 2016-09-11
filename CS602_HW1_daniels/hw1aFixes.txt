@@ -1,0 +1,3 @@
+If after editing the name, the lookup functions do not return the updated name. The issue could be with either the update or lookup functions 
+not referencing the data associated with the object. This can be caused by either there being more than one copy of the data or some library 
+functions make a clone of the original data which look like the original but are only accessible during that use.

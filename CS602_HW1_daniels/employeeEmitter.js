@@ -4,23 +4,41 @@ const _ = require('underscore');
 const EventEmitter = require('events').EventEmitter;
 
 class EmployeeEmitter extends EventEmitter {
+    /**
+     * Employee emitter class constructor
+     * Arguments: employee data <array> 
+     **/
     constructor (data) {
         super();
         this.data = data;
     }
 
+    /** 
+    * Function for looking up Employees by ID number.
+    * Arguments: ID <integer> 
+    * Returns: employee object (found) or undefined (not found)
+    **/
     lookupById (id) {
         this.emit('lookupById', id);
 
         return _.findWhere(this.data, { id: id });
     }
 
+    /**
+     * Function for looking yp employees by last name
+     * Arguments: Last Name <string>
+     * Returns: array of employees (found) or empty array (not found)
+     **/
     lookupByLastName (lname) {
         this.emit('lookupByLastName', lname);
 
         return _.where(this.data, { lastName: lname });
     }
 
+    /**
+     * Function for adding new employees 
+     * Arguments: first name <string>, last name <string>
+     **/
     addEmployee (fname, lname) {
         this.emit('addEmployee', fname, lname);
 
