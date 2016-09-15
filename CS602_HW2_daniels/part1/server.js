@@ -11,7 +11,7 @@ const server =  net.createServer(
 
         console.log('Client connection...'.red);
 
-        socket.on('end', () => {
+        socket.on('close', () => {
             console.log('Client disconnected...'.red);
 
             if (clients.length) {
@@ -20,7 +20,11 @@ const server =  net.createServer(
         });
 
         socket.on('data', (data) => {
-            console.log('...Received: ', data.toString());
+            let dataString = data.toString();
+            let dataStringArray = dataString.split(' ');
+            let msg = '...Received: ' + dataString;
+
+            console.log(msg.blue);
         });
     }
 );
