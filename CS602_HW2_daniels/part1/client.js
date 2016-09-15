@@ -10,8 +10,9 @@ const rl = readline.createInterface({
 
 const readCommand = (client) => {
     rl.question('Enter Command: ', (line) => {
-        if (line === 'bye') {
-            client.end();
+        if (line.trim().toLowerCase() === 'bye') {
+            rl.close(); // end readline instance
+            client.end(); // end client instance
         } else {
             readCommand(client);
         }
@@ -23,11 +24,11 @@ const client = net.connect({ port: 3000 }, () => {
     readCommand(client);
 });
 
-client.on('end', () => {
+client.on('close', () => {
     console.log('Client disconnected...');
+    return;
 }); 
 
 client.on('data', (data) => {
     console.log('...Recieved: ', data.toString());
-    client.end();
 });
