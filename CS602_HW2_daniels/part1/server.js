@@ -1,17 +1,18 @@
 'use strict';
-
+const colors = require('colors');
 const net = require('net');
+const employees = require('./employeeModule');
 
 const server =  net.createServer(
     (socket) => {
-        console.log('Client connection...');
+        console.log('Client connection...'.red);
 
         socket.on('end', () => {
-            console.log('Client disconnected...');
+            console.log('Client disconnected...'.red);
         });
 
         socket.on('data', (data) => {
-            console.log('Received: ', data.toString());
+            console.log('...Received: ', data.toString());
         });
 
         socket.write('Hello from the server');
