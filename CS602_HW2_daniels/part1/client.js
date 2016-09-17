@@ -12,11 +12,10 @@
     const readCommand = (client) => {
         rl.question('Enter Command: ', (line) => {
             let input = line.trim();
-
+            
             if (input.toLowerCase() === 'bye') {
                 client.end(); // end client instance
             } else {
-                readCommand(client);
                 client.write(input);
             }
         });
@@ -29,11 +28,14 @@
 
     client.on('close', () => {
         console.log('Client disconnected...');
-        rl.close(); // end readline instance
-        return;
+        rl.close(() => {
+            process.exit(0);
+        }); // end readline instance
     }); 
 
     client.on('data', (data) => {
-        console.log('...Recieved: \n', data.toString());
+        let msg = '...Recieved: \n' + data.toString();
+        console.log(msg.blue);
+        readCommand(client);
     });
 })();
