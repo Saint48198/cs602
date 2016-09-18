@@ -34,6 +34,7 @@ app.get('/id/:id', (req, res) => {
     let intro = 'Employee with the ID ' + id;
     let employee = employeeModule.lookupById(id);
 
+    // render the content based of the request header
     if (isJson(req.headers.accept)) {
         res.type('application/json');
         res.send(employee);
@@ -54,11 +55,13 @@ app.get('/lastName/:name', (req, res) => {
     let newEmployee;
     let alert = 'The employee with ID <b>{{id}}</b> was added!' 
 
+    // updated alert message template of the last employee added to the records
     if (queryData.new === 'true') {
         newEmployee = employees[employees.length - 1];
         alert = alert.replace('{{id}}', newEmployee.id);
     }
 
+    // render the content based of the request header
     if (isJson(req.headers.accept)) {
         res.type('application/json');
         res.send(employees);
@@ -66,6 +69,7 @@ app.get('/lastName/:name', (req, res) => {
         res.type('application/xml');
         res.render('xml/employeeList', { layout: __dirname + '/layouts/xml', employee: employees });
     } else {
+        // render the html template, don't show the alert unless there is a new employee
         res.render('html/employeeList', { employee: employees, intro: intro, alert: newEmployee ? alert : '' });
     }
 });
@@ -79,9 +83,11 @@ app.post('/addEmployee', (req, res) => {
     let fname = postData.fname;
     let lname = postData.lname;
 
+    // simple error handling, don't add an employee unless they have both a first and last name
     if (lname && fname) {
         employeeModule.addEmployee(fname, lname);
-        res.redirect('/lastName/' + lname + '?new=true');
+        // display the employees with the same last name on success
+        res.redirect('/lastName/' + lname + '?new=true'); 
     } else {
         res.render('html/addEmployee', { error: true, fname: fname, lname: lname });
     }
