@@ -1,0 +1,16 @@
+<h1>{{intro}}</h1>
+
+{{#if employee}}
+<dl>
+    <dt>ID</dt>
+    <dd>{{employee.id}}</dd>
+
+    <dt>First Name</dt>
+    <dd>{{employee.firstName}}</dd>
+
+    <dt>Last Name</dt>
+    <dd>{{employee.lastName}}</dd>
+</dl>
+{{else}}
+<p>No record of employee with this ID.</p>
+{{/if}}
