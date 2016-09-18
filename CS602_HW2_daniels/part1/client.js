@@ -13,11 +13,11 @@
         rl.question('Enter Command: ', (line) => {
             let input = line.trim();
             
+            client.write(input);
+
             if (input.toLowerCase() === 'bye') {
                 client.end(); // end client instance
-            } else {
-                client.write(input);
-            }
+            } 
         });
     };
 
@@ -34,8 +34,13 @@
     }); 
 
     client.on('data', (data) => {
-        let msg = '...Recieved: \n' + data.toString();
+        let dataArray = data.toString().split('|');
+        let msg = '...Recieved \n' + dataArray[0]; // first part of data is what needs to be printed
         console.log(msg.blue);
-        readCommand(client);
+
+        // don't show comand prompt on exit
+        if (dataArray[1] !== 'exit') {
+            readCommand(client);
+        } 
     });
 })();

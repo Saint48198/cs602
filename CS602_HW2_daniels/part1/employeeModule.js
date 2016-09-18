@@ -34,6 +34,8 @@ class Employees {
         let max = _.max(data, function(employee) { return employee.id }); // get the largest existing employee ID
         let id = max.id ? max.id + 1 : 0; // create new employee ID
         data.push({ id: id, firstName: fname, lastName: lname });
+
+        return id;
     }
 
     /**
