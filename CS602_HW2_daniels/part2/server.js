@@ -47,9 +47,17 @@ app.get('/id/:id', (req, res) => {
 
 app.get('/lastName/:name', (req, res) => {
     let paramsData = req.params;
+    let queryData = req.query;
     let name = paramsData.name;
     let intro = 'Employees with the Last Name ' + name;
     let employees = employeeModule.lookupByLastName(name);
+    let newEmployee;
+    let alert = 'The employee with ID <b>{{id}}</b> was added!' 
+
+    if (queryData.new === 'true') {
+        newEmployee = employees[employees.length - 1];
+        alert = alert.replace('{{id}}', newEmployee.id);
+    }
 
     if (isJson(req.headers.accept)) {
         res.type('application/json');
@@ -58,7 +66,7 @@ app.get('/lastName/:name', (req, res) => {
         res.type('application/xml');
         res.render('xml/employeeList', { layout: __dirname + '/layouts/xml', employee: employees });
     } else {
-        res.render('html/employeeList', { employee: employees, intro: intro });
+        res.render('html/employeeList', { employee: employees, intro: intro, alert: newEmployee ? alert : '' });
     }
 });
 
@@ -67,7 +75,16 @@ app.get('/addEmployee', (req, res) => {
 });
 
 app.post('/addEmployee', (req, res) => {
-    
+    let postData = req.body;
+    let fname = postData.fname;
+    let lname = postData.lname;
+
+    if (lname && fname) {
+        employeeModule.addEmployee(fname, lname);
+        res.redirect('/lastName/' + lname + '?new=true');
+    } else {
+        res.render('html/addEmployee', { error: true, fname: fname, lname: lname });
+    }
 });
 
 app.use((req, res) => {
