@@ -21,6 +21,7 @@ app.set('views', __dirname + '/views');
 
 // static resources
 app.use(express.static(__dirname + '/public'));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 // app routes [START]
 app.get('/', (req, res) => {

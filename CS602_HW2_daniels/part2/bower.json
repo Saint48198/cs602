@@ -1,0 +1,17 @@
+{
+  "name": "part2",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "sdaniels <daniels.scott.r@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Saint48198/cs602",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

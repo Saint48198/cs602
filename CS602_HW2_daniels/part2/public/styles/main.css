@@ -1,0 +1,20 @@
+body {
+    padding-top: 90px;
+}
+
+.container {
+    overflow: hidden;
+}
+
+.navbar-brand {
+    min-height: 50px;
+    height: 100%;
+}
+
+#navbar > ul {
+    margin-top: 15px;
+}
+
+main {
+    padding: 0 25px;
+}
