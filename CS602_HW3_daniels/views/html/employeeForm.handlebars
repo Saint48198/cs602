@@ -1,0 +1,27 @@
+<form method="post" action="/addEmployee">
+    <h1>{{intro}}</h1>
+    {{#if error}}
+    <p class="error">There was a problem adding the employee. See error below</p>
+    {{/if}}
+    <fieldset>
+        <div>
+            <label for="fname">first name</label>
+            <input type="text" id="fname" value="{{fname}}" name="fname">
+            {{#if error}}
+                {{#unless fname}}
+                <div class="error">There must me a first name</div>
+                {{/unless}}
+            {{/if}}
+        </div>
+        <div>
+            <label for="lname">last name</label>
+            <input type="text" id="lname" value="{{lname}}" name="lname">
+            {{#if error}}
+                {{#unless lname}}
+                <div class="error">There must me a last name</div>
+                {{/unless}}
+            {{/if}}
+        </div>
+    </fieldset>
+    <button type="submit">submit</button>
+</form>
