@@ -32,12 +32,13 @@ module.exports = function editEmployee(req, res, next) {
 
 
     function displayView (err, employee) {
+        const uTitle = title + ': ' + employee.lastName + ', ' + employee.firstName ;
+        const action = '/editEmployee/' + id;
+
         if (err) {
             console.log('Error: %s', err);
         }
 
-        let uTitle = title + ': ' + employee.lastName + ', ' + employee.firstName ;
-
-        res.render('html/employeeForm', { title: uTitle, employee: employee , intro: uTitle, action: '/editEmployee/' + id, error: err });
+        res.render('html/employeeForm', { title: uTitle, employee: employee , intro: uTitle, action: action, error: err });
     };
 };
