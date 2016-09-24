@@ -39,6 +39,8 @@ app.get('/addEmployee',         addEmployee);
 
 app.post('/addEmployee',        addEmployee);
 
+app.post('/editEmployee/:id',    editEmployee);
+
 app.post('/deleteEmployee',     deleteEmployee);
 
 app.use((req, res) => {
