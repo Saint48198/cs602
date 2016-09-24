@@ -32,7 +32,7 @@ module.exports = function editEmployee(req, res, next) {
 
 
     function displayView (err, employee) {
-        const uTitle = title + ': ' + employee.lastName + ', ' + employee.firstName ;
+        const uTitle = title + ': ' + employee.lastName + ', ' + employee.firstName;
         const action = '/editEmployee/' + id;
 
         if (err) {
