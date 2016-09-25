@@ -39,6 +39,6 @@ module.exports = function editEmployee(req, res, next) {
             console.log('Error: %s', err);
         }
 
-        res.render('html/employeeForm', { title: uTitle, employee: employee , intro: uTitle, action: action, error: err });
+        res.render('html/employeeForm', { title: uTitle, employee: employee , action: action, error: err });
     };
 };

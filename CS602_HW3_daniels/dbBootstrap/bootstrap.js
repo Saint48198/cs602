@@ -18,9 +18,7 @@ connection.on("open", () => {
 
     starterData.forEach((entry, index) => {
         // create and save document objects
-        let employee;
-
-        employee = new Employee(entry); 
+        let employee = new Employee(entry); 
 
         if (index === starterData.length - 1) {
             employee.save((err) => {
