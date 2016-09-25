@@ -2,11 +2,18 @@
 
 const DB = require('../dbConnection');
 const Employee = DB.getModel();
-const title = 'Edit Employee';
 
 module.exports = function deleteEmployee(req, res, next) {
-    let paramsData = req.params;
-    let id = parseInt(paramsData.id);
+    let postData = req.body;
+    let id = postData.id;
 
-    
+    Employee.findOneAndRemove({ _id: id }, (err) => {
+        res.type('application/json');
+        if (err) {
+            console.log('Error: %s', err);
+            res.send({ error: err });
+        } else {
+            res.send({ success: true });
+        }
+    });
 };
