@@ -19,7 +19,7 @@ module.exports = function editEmployee(req, res, next) {
                 if (err) {
                     displayView(err, doc);
                 } else {
-                    res.redirect('/employees?success=true');
+                    res.redirect('/employees?update=true');
                 }
 
             });

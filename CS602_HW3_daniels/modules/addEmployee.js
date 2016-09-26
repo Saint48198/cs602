@@ -22,7 +22,7 @@ module.exports = function addEmployee(req, res, next) {
                     throw err
                 }
                 console.log("Success!");
-                res.redirect('/employees?success=true');
+                res.redirect('/employees?add=true');
             });
         } else {
             data.error = errorMsg;
