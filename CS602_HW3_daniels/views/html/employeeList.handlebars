@@ -1,7 +1,9 @@
 {{#if employee.length}}
 <h1>{{intro}}</h1>
 {{#if alert}}
-<p>{{{alert}}}</p>
+<div class="alert alert-success" role="alert">
+    <p>{{{alert}}}</p>
+</div>
 {{/if}}
 <hr>
 <table>
@@ -22,7 +24,7 @@
             <td class="actions">
                 <ul>
                     <li><a href="/editEmployee/{{id}}">edit</a></li>
-                    <li><a href="#delete" data-id="{{id}}" data-lname="{{lastName}}" data-fname="{{firstName}}" data-toggle="modal" data-target="#deleteModal">delete</a></li>
+                    <li><a href="#delete" data-id="{{id}}" data-lname="{{lastName}}" data-fname="{{firstName}}" data-toggle="modal" data-target="#deleteModal"  data-backdrop="static">delete</a></li>
                 </ul>
             </td>
         </tr>
@@ -39,16 +41,22 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">Delete Employee</h4>
         </div>
         <div class="modal-body">
-          <p>This will permentally delete the employee. Do you want to continue?</p>
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary">Delete</button>
+          <button type="button" class="btn btn-primary" data-loading-text="Working...">Delete</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+</div><!-- /.modal -->
+
+<script type="text/x-handlebars-template" id="template-modalMessage">
+    \{{#if error}}
+    <div class="alert alert-danger" role="alert">There was a problem deleting the employee. Try again at a later time.</div>
+    \{{/if}}
+    <p>This will permentally delete the employee. Do you want to continue?</p>
+</script>
