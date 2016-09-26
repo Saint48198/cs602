@@ -8,6 +8,7 @@ module.exports = function displayEmployees(req, res, next) {
     let queryData = req.query;
     let alertMessage = '';
 
+    // updated the alert message for the three actions(Add, Delete and Update);
     if (queryData.delete) {
         alertMessage = 'Employee was successfully deleted!';
     } else if (queryData.add) {

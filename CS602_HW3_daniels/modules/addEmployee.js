@@ -14,6 +14,7 @@ module.exports = function addEmployee(req, res, next) {
     let data = { title: title, action: action };
 
     if(req.method === 'POST') {
+        // simple error handling for the posted form (must have a first name and last name)
         if (fname && lname) {
             let employee = new Employee({ firstName: fname, lastName: lname }); 
 
