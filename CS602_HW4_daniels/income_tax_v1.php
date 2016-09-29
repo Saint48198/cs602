@@ -1,4 +1,103 @@
+<?php
+    // set default state;
+    $displayResults = FALSE;
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // get the data from the form
+        $income = filter_input(INPUT_POST, 'income', FILTER_VALIDATE_FLOAT);
+
+        // set default error message value
+        $error_message = '';
+
+        // validate income
+        if ($income === FALSE) {
+            $error_message = 'Income must be a valid number.';
+        } elseif ($income <= 0) {
+            $error_message = 'Income must be greater than zero.';
+        }
+
+        // display form page if there is an error otherwise display results
+        if ($error_message === '') {
+            $displayResults = TRUE;
+            $singleTax = incomeTaxSingle($income);
+        } else {
+            $displayResults = FALSE;
+        }
+    } 
+
+
+    function incomeTaxSingle ($value) {
+        if ($value <= 9275) {
+            return $value * 0.1;
+        } elseif ($value >= 9276 && $value <= 37650) {
+            return 927.50 + (9275 * 0.15);
+        } elseif ($value >= 37651 && $value <= 91150) {
+            return 5183.75 + (37650 * 0.25);
+        } elseif ($value >= 91151 && $value <= 190150) {
+            return 18558.75 + (91150 * 0.28);
+        } elseif ($value >= 190151 && $value <= 413350) {
+            return 46278.75 + (190150 * 0.33);
+        } elseif ($value >= 413351 && $value <= 415050) {
+            return 119934.75 + (413350 * 0.35);
+        } elseif ($value <= 415051) {
+            return 120529.75 + (415050 * 0.396);
+        }
+    }
+
+    function incomeTaxMarriedJointly ($value) {
+        if ($value <= 9275) {
+
+        } elseif ($value >= 9276 && $value <= 37650) {
+
+        } elseif ($value >= 37651 && $value <= 91150) {
+
+        } elseif ($value >= 91151 && $value <= 190150) {
+
+        } elseif ($value >= 190151 && $value <= 413350) {
+
+        } elseif ($value >= 413351 && $value <= 415050) {
+
+        } elseif ($value <= 415051) {
+            
+        }
+    }
+
+    function incomeTaxMarriedSeparately ($value) {
+        if ($value <= 9275) {
+
+        } elseif ($value >= 9276 && $value <= 37650) {
+
+        } elseif ($value >= 37651 && $value <= 91150) {
+
+        } elseif ($value >= 91151 && $value <= 190150) {
+
+        } elseif ($value >= 190151 && $value <= 413350) {
+
+        } elseif ($value >= 413351 && $value <= 415050) {
+
+        } elseif ($value <= 415051) {
+            
+        }
+    }
+
+    function incomeTaxHeadOfHousehold ($value) {
+        if ($value <= 9275) {
+
+        } elseif ($value >= 9276 && $value <= 37650) {
+
+        } elseif ($value >= 37651 && $value <= 91150) {
+
+        } elseif ($value >= 91151 && $value <= 190150) {
+
+        } elseif ($value >= 190151 && $value <= 413350) {
+
+        } elseif ($value >= 413351 && $value <= 415050) {
+
+        } elseif ($value <= 415051) {
+            
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,7 +108,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>Income Tax Calculator v1</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
@@ -23,33 +122,47 @@
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-
     <div class="container">
 
-      <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-      </div>
+      <h1>Income Tax Calculator</h1>
+
+      <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <div class="input-group">
+            <label for="income">Your Net Income:</label>
+            <input type="text" value="<?php echo $income ?>" name="income" id="income">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      <?php if ($displayResults) { ?>
+      <table class="table">
+        <thead>
+        <tr>
+            <th>Status</th>
+            <th>Tax</th>
+        </tr>
+        </thead>
+        <tboday>
+            <tr>
+                <td>Single<td>
+                <td>$<? echo $singleTax ?></td>
+            </tr>
+            <tr>
+                <td>Married Filing Jointly<td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Married Filing Separately<td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Head of Household<td>
+                <td></td>
+            </tr>
+        <tboday>
+      </table>
+      <?php } ?>
 
     </div><!-- /.container -->
 
