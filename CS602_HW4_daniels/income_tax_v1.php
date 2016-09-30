@@ -54,19 +54,19 @@
     function incomeTaxMarriedJointly ($value) {
         $tax = 0;
 
-        if ($value <= 9275) {
+        if ($value <= 18550) {
 
-        } elseif ($value >= 9276 && $value <= 37650) {
+        } elseif ($value >= 18551 && $value <= 75300) {
 
-        } elseif ($value >= 37651 && $value <= 91150) {
+        } elseif ($value >= 75301 && $value <= 151900) {
 
-        } elseif ($value >= 91151 && $value <= 190150) {
+        } elseif ($value >= 151901 && $value <= 231450) {
 
-        } elseif ($value >= 190151 && $value <= 413350) {
+        } elseif ($value >= 231451 && $value <= 413350) {
 
-        } elseif ($value >= 413351 && $value <= 415050) {
+        } elseif ($value >= 413351 && $value <= 466950) {
 
-        } elseif ($value >= 415051) {
+        } elseif ($value >= 466951) {
             
         }
 
@@ -80,15 +80,15 @@
 
         } elseif ($value >= 9276 && $value <= 37650) {
 
-        } elseif ($value >= 37651 && $value <= 91150) {
+        } elseif ($value >= 37651 && $value <= 75950) {
 
-        } elseif ($value >= 91151 && $value <= 190150) {
+        } elseif ($value >= 75951 && $value <= 115725) {
 
-        } elseif ($value >= 190151 && $value <= 413350) {
+        } elseif ($value >= 115726 && $value <= 206675) {
 
-        } elseif ($value >= 413351 && $value <= 415050) {
+        } elseif ($value >= 206676 && $value <= 233475) {
 
-        } elseif ($value <= 415051) {
+        } elseif ($value <= 233476) {
             
         }
 
@@ -98,19 +98,19 @@
     function incomeTaxHeadOfHousehold ($value) {
         $tax = 0;
 
-        if ($value <= 9275) {
+        if ($value <= 13250) {
 
-        } elseif ($value >= 9276 && $value <= 37650) {
+        } elseif ($value >= 13251 && $value <= 50400) {
 
-        } elseif ($value >= 37651 && $value <= 91150) {
+        } elseif ($value >= 50401 && $value <= 130150) {
 
-        } elseif ($value >= 91151 && $value <= 190150) {
+        } elseif ($value >= 130151 && $value <= 210800) {
 
-        } elseif ($value >= 190151 && $value <= 413350) {
+        } elseif ($value >= 210801 && $value <= 413350) {
 
-        } elseif ($value >= 413351 && $value <= 415050) {
+        } elseif ($value >= 413351 && $value <= 441000) {
 
-        } elseif ($value <= 415051) {
+        } elseif ($value <= 441001) {
             
         }
 
