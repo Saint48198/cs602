@@ -1,33 +1,4 @@
 <?php
-    // set default state;
-    $displayResults = FALSE;
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // get the data from the form
-        $income = filter_input(INPUT_POST, 'income', FILTER_VALIDATE_FLOAT);
-
-        // set default error message value
-        $error_message = '';
-
-        // validate income
-        if ($income === FALSE) {
-            $error_message = 'Income must be a valid number.';
-        } elseif ($income <= 0) {
-            $error_message = 'Income must be greater than zero.';
-        }
-
-        // display form page if there is an error otherwise display results
-        if ($error_message === '') {
-            $displayResults = TRUE;
-            $singleTax = number_format(incomeTaxSingle($income), 2);
-            $marriedJointTax = number_format(incomeTaxMarriedJointly($income), 2);
-            $marriedSeprateTax = number_format(incomeTaxMarriedSeparately($income), 2);
-            $headOfHouseTax = number_format(incomeTaxHeadOfHousehold($income), 2);
-        } else {
-            $displayResults = FALSE;
-        }
-    } 
-
 
     function incomeTaxSingle ($value) {
         $tax = 0;
@@ -128,6 +99,35 @@
         
         return $amt;
     }
+
+    // set default state;
+    $displayResults = FALSE;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // get the data from the form
+        $income = filter_input(INPUT_POST, 'income', FILTER_VALIDATE_FLOAT);
+
+        // set default error message value
+        $error_message = '';
+
+        // validate income
+        if ($income === FALSE) {
+            $error_message = 'Income must be a valid number.';
+        } elseif ($income <= 0) {
+            $error_message = 'Income must be greater than zero.';
+        }
+
+        // display form page if there is an error otherwise display results
+        if ($error_message === '') {
+            $displayResults = TRUE;
+            $singleTax = number_format(incomeTaxSingle($income), 2);
+            $marriedJointTax = number_format(incomeTaxMarriedJointly($income), 2);
+            $marriedSeprateTax = number_format(incomeTaxMarriedSeparately($income), 2);
+            $headOfHouseTax = number_format(incomeTaxHeadOfHousehold($income), 2);
+        } else {
+            $displayResults = FALSE;
+        }
+    } 
 ?>
 <!DOCTYPE html>
 <html lang="en">
