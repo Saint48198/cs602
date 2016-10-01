@@ -103,12 +103,12 @@
     // set default state;
     $displayResults = FALSE;
 
+    // set default error message value
+    $error_message = '';
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // get the data from the form
         $income = filter_input(INPUT_POST, 'income', FILTER_VALIDATE_FLOAT);
-
-        // set default error message value
-        $error_message = '';
 
         // validate income
         if ($income === FALSE) {

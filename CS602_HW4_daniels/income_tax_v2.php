@@ -1,5 +1,5 @@
 <?php
-    define('TAX_RATES',
+    define("TAX_RATES",
         array(
             'Single' => array(
                 'Rates' => array(10, 15, 25, 28, 33, 35, 39.6),
@@ -24,12 +24,62 @@
         )
     );
 
-    function incomeTax($value, $status) {
-        foreach("TAX_RATE" as $key => $value) {
-            echo $key;
-        }
-    }
+    function incomeTax($amt, $status) {
+        // get data based on  status
+        $data = TAX_RATES[$status];
+        $ranges = $data['Ranges'];
+        $rates = $data['Rates'];
+        $minTax = $data['MinTax'];
 
+        // set default  tax amount
+        $incomeTax = 0;
+        
+        // get total for loop
+        $total = count($ranges);
+        
+        // set default min and max for use in loop and determing tax rate
+        $min = 0;
+        $max = 0;
+
+        // set default tax rate
+        $rate = 0;
+
+        for ($i = 0; $i < $total; $i++) {
+            // conditions for getting the min and max of each tax rate
+            if ($i == 0) {
+                $min = $ranges[$i];
+                $max = $ranges[$i + 1];
+            } elseif ($i > 0 && $i < $total - 1) {
+                $min = $ranges[$i] + 1;
+                $max = $ranges[$i + 1];
+            } else {
+                $min = $ranges[$i] + 1;
+                $max = null;
+            }
+
+            // if there is a max then not in top tax bracket
+            if ($max) {
+                if ($amt >= $min && $amt <= $max) {
+                    $rate = $rates[$i] / 100; // convert to decemal 
+                    $incomeTax = calTax($amt, $rate, $minTax[$i], $min - 1);
+                    break;
+                }
+            } else {
+                if ($amt >= $min) {
+                    $rate = $rates[$i] / 100; // convert to decemal
+                    $incomeTax = calTax($amt, $rate, $minTax[$i], $min - 1);
+                    break;
+                }
+            }
+        }
+
+        return $incomeTax;
+    }
+    /** 
+    * Calulates income tax amount
+    * Arguments: $value<int or float>, $rate<float>, $baseAmt<int or float>, $limitAmt< int or float>
+    * returns tax amount 
+    */
     function calTax ($value, $rate, $baseAmt, $limitAmt) {
         $amt = 0;
 
@@ -45,13 +95,13 @@
     // set default state;
     $displayResults = FALSE;
 
+    // set default error message value
+    $error_message = '';
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // get the data from the form
         $income = filter_input(INPUT_POST, 'income', FILTER_VALIDATE_FLOAT);
-
-        // set default error message value
-        $error_message = '';
 
         // validate income
         if ($income === FALSE) {
@@ -85,7 +135,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Income Tax Calculator v1</title>
+    <title>Income Tax Calculator v2</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
