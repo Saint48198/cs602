@@ -33,19 +33,19 @@
         $tax = 0;
 
         if ($value <= 9275) {
-            $tax = $value * 0.1;
+            $tax = calTax($value, 0.1, null, null);
         } elseif ($value >= 9276 && $value <= 37650) {
-            $tax =  927.50 + (($value - 9275) * 0.15);
+            $tax = calTax($value, 0.15, 927.5, 9275);
         } elseif ($value >= 37651 && $value <= 91150) {
-            $tax = 5183.75 + (($value - 37650) * 0.25);
+            $tax = calTax($value, 0.25, 5183.75, 37650);
         } elseif ($value >= 91151 && $value <= 190150) {
-            $tax = 18558.75 + (($value - 91150) * 0.28);
+            $tax = calTax($value, 0.28, 18558.75, 91150);
         } elseif ($value >= 190151 && $value <= 413350) {
-            $tax = 46278.75 + (($value - 190150) * 0.33);
+            $tax = calTax($value, 0.33, 46278.75, 190150);
         } elseif ($value >= 413351 && $value <= 415050) {
-            $tax = 119934.75 + (($value - 413350) * 0.35);
+            $tax = calTax($value, 0.35, 119934.75, 413350);
         } elseif ($value >= 415051) {
-            $tax = 120529.75 + (($value - 415050) * 0.396);
+            $tax = calTax($value, 0.396, 120529.75, 415050);
         }
 
         return $tax;
@@ -55,19 +55,19 @@
         $tax = 0;
 
         if ($value <= 18550) {
-
+            $tax = calTax($value, 0.1, null, null);
         } elseif ($value >= 18551 && $value <= 75300) {
-
+            $tax = calTax($value, 0.15, 1855, 18550);
         } elseif ($value >= 75301 && $value <= 151900) {
-
+            $tax = calTax($value, 0.25, 10367.5, 75300);
         } elseif ($value >= 151901 && $value <= 231450) {
-
+            $tax = calTax($value, 0.28, 29517.5, 151900);
         } elseif ($value >= 231451 && $value <= 413350) {
-
+            $tax = calTax($value, 0.33, 51791.5, 231450);
         } elseif ($value >= 413351 && $value <= 466950) {
-
+            $tax = calTax($value, 0.35, 111818.5, 413350);
         } elseif ($value >= 466951) {
-            
+            $tax = calTax($value, 0.396, 130578.5, 466950);
         }
 
         return $tax;
@@ -77,19 +77,19 @@
         $tax = 0;
 
         if ($value <= 9275) {
-
+            $tax = calTax($value, 0.1, null, null);
         } elseif ($value >= 9276 && $value <= 37650) {
-
+            $tax = calTax($value, 0.15, 927.5, 9275);
         } elseif ($value >= 37651 && $value <= 75950) {
-
+            $tax = calTax($value, 0.25, 5183.75, 37650);
         } elseif ($value >= 75951 && $value <= 115725) {
-
+            $tax = calTax($value, 0.28, 14758.75, 75950);
         } elseif ($value >= 115726 && $value <= 206675) {
-
+            $tax = calTax($value, 0.33, 25895.75, 115725);
         } elseif ($value >= 206676 && $value <= 233475) {
-
-        } elseif ($value <= 233476) {
-            
+            $tax = calTax($value, 0.35, 55909.25, 206675);
+        } elseif ($value >= 233476) {
+            $tax = calTax($value, 0.396, 65289.25, 233475);
         }
 
         return $tax;
@@ -99,22 +99,34 @@
         $tax = 0;
 
         if ($value <= 13250) {
-
+            $tax = calTax($value, 0.1, null, null);
         } elseif ($value >= 13251 && $value <= 50400) {
-
+            $tax = calTax($value, 0.15, 1325, 13250);
         } elseif ($value >= 50401 && $value <= 130150) {
-
+            $tax = calTax($value, 0.25, 6897.5, 50400);
         } elseif ($value >= 130151 && $value <= 210800) {
-
+            $tax = calTax($value, 0.28, 26835, 130150);
         } elseif ($value >= 210801 && $value <= 413350) {
-
+            $tax = calTax($value, 0.33, 49417, 210800);
         } elseif ($value >= 413351 && $value <= 441000) {
-
-        } elseif ($value <= 441001) {
-            
+            $tax = calTax($value, 0.35, 116258.5, 413350);
+        } elseif ($value >= 441001) {
+            $tax = calTax($value, 0.396, 125936, 441000);
         }
 
         return $tax;
+    }
+
+    function calTax ($value, $rate, $baseAmt, $limitAmt) {
+        $amt = 0;
+
+        if ($baseAmt && $limitAmt) {
+            $amt = $baseAmt + (($value - $limitAmt) * $rate);
+        } else {
+            $amt = $value * $rate;
+        }
+        
+        return $amt;
     }
 ?>
 <!DOCTYPE html>
@@ -177,7 +189,7 @@
             </tr>
             <tr>
                 <td>Married Filing Separately</td>
-                <td>$<? ech $marriedSeprateTax ?></td>
+                <td>$<? echo $marriedSeprateTax ?></td>
             </tr>
             <tr>
                 <td>Head of Household</td>
