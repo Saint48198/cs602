@@ -1,0 +1,35 @@
+body {
+    padding-top: 90px;
+}
+
+.container {
+    overflow: hidden;
+}
+
+.navbar-brand {
+    min-height: 50px;
+    height: 100%;
+}
+
+#navbar > ul {
+    margin-top: 15px;
+}
+
+main {
+    padding: 0 25px;
+}
+
+.actions ul {
+    list-style: none;
+}
+
+.actions li {
+    float: left;
+    padding: 0;
+}
+
+.actions li:first-child {
+    padding-right: 5px;
+    border-right:  1px solid #666;
+    margin-right: 5px;
+}
