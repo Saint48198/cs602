@@ -78,7 +78,7 @@
     /** 
     * Calulates income tax amount
     * Arguments: $value<int or float>, $rate<float>, $baseAmt<int or float>, $limitAmt< int or float>
-    * returns tax amount 
+    * returns tax amount<string>
     */
     function calTax ($value, $rate, $baseAmt, $limitAmt) {
         $amt = 0;
@@ -90,6 +90,81 @@
         }
         
         return $amt;
+    }
+
+    /** 
+    * Creates HTML table with tax info
+    * Arguments: taxBracketData <array>
+    * returns html<string>
+    */
+    function generateTaxTable ($taxBracketData) {
+        // get the data per tax bracket
+        $ranges = $taxBracketData['Ranges'];
+        $rates = $taxBracketData['Rates'];
+        $minTax = $taxBracketData['MinTax'];
+
+        // get total for loop
+        $total = count($ranges);
+        
+        // set default min and max for use in loop and determing tax rate
+        $min = 0;
+        $max = 0;
+
+        // string templates
+        $taxIncomeTemplate = '$%min% - $%max%';
+        $taxRateTemplate = '$%base% plus %rate%% of the amount over $%nontaxt%';
+
+        // start the html table 
+        $table = '<table class="table table-striped">';
+        $table .= '<thead><tr><th>Taxable Income</th><th>Tax Rate</th></tr></thead>';
+        $table .= '<tbody>';
+        
+        // loop thru each tax bracket
+        for ($i = 0; $i  < $total; $i++) {
+             // initial strings for taxable income and tax rate
+             $taxableIncomeText = '';
+             $taxRateText = '';
+            
+            // conditions for getting the min and max of each tax rate
+            if ($i == 0) {
+                $min = $ranges[$i];
+                $max = $ranges[$i + 1];
+            } elseif ($i > 0 && $i < $total - 1) {
+                $min = $ranges[$i] + 1;
+                $max = $ranges[$i + 1];
+            } else {
+                $min = $ranges[$i] + 1;
+                $max = null;
+            }
+
+            // if there is a max use the string template overwise use alternative string format
+            if ($max) {
+                $taxableIncomeText = str_replace('%min%', $min, $taxIncomeTemplate);
+                $taxableIncomeText = str_replace('%max%', $max, $taxableIncomeText);
+            } else {
+                $taxableIncomeText = '$' . $min . ' or more';
+            }
+
+            // if first line don't use the string template overwise do use it.
+            if ($i === 0) {
+                $taxRateText = $rates[$i] . '%';
+            } else {
+                $taxRateText = str_replace('%base%', number_format($minTax[$i], 2), $taxRateTemplate);
+                $taxRateText = str_replace('%rate%', $rates[$i], $taxRateText);
+                $taxRateText = str_replace('%nontaxt%', number_format($min - 1), $taxRateText);
+            }
+
+            // add table row entry  for tax info
+            $table .= '<tr>';
+            $table .= '<td>' . $taxableIncomeText . '</td><td>' . $taxRateText . '</td>';
+            $table .= '</tr>';
+        }
+
+        // end html table
+        $table .= '</tbody>';
+        $table .= '</table>';
+
+        return $table;
     }
 
     // set default state;
@@ -154,19 +229,25 @@
       <h1>Income Tax Calculator</h1>
 
       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-        <div class="input-group">
-            <label for="income">Your Net Income:</label>
-            <input type="text" value="" name="income" id="income">
+        <div class="form-group clearfix<? if ($error_message) { ?> has-error <? } ?>">
+            <label for="income" class="control-label col-sm-2">Enter Net Income:</label>
+            <div class="col-sm-10">
+                <input type="text" value="" name="income" id="income"  class="form-control">
+            </div>
             <? if ($error_message) 
-                echo '<div class="error">' . $error_message . '</div>';
+                echo '<div class="help-block col-sm-offset-2 col-sm-10">' . $error_message . '</div';
             ?>
         </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group clearfix"> 
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
       </form>
 
       <?php if ($displayResults) { ?>
-      <p>With a net taxable income of <?php echo number_format($income, 2) ?></p>
+      <br>
+      <p>With a net taxable income of <b>$<?php echo number_format($income, 2) ?></b></p>
       <table class="table">
         <thead>
             <tr>
@@ -194,7 +275,17 @@
         <tbody>
       </table>
       <?php } ?>
+      <hr>
+      <h2>2016 Tax Tables</h2>
+      <table class="table">
 
+      <?php 
+        foreach (TAX_RATES as $key => $value) {
+            echo '<h3>' . str_replace('_', ' ', $key) . '</h3>';
+            echo generateTaxTable($value);
+        }
+      ?>
+      </table>
     </div><!-- /.container -->
 
 

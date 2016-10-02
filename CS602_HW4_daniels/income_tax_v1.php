@@ -158,19 +158,24 @@
       <h1>Income Tax Calculator</h1>
 
       <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-        <div class="input-group">
-            <label for="income">Your Net Income:</label>
-            <input type="text" value="" name="income" id="income">
+        <div class="form-group clearfix<? if ($error_message) { ?> has-error <? } ?>">
+            <label for="income" class="control-label col-sm-2">Enter Net Income:</label>
+            <div class="col-sm-10">
+                <input type="text" value="" name="income" id="income"  class="form-control">
+            </div>
             <? if ($error_message) 
-                echo '<div class="error">' . $error_message . '</div>';
+                echo '<div class="help-block col-sm-offset-2 col-sm-10">' . $error_message . '</div';
             ?>
         </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group clearfix"> 
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
       </form>
 
       <?php if ($displayResults) { ?>
-      <p>With a net taxable income of <?php echo number_format($income, 2) ?></p>
+      <p>With a net taxable income of <b>$<?php echo number_format($income, 2) ?></b></p>
       <table class="table">
         <thead>
             <tr>
