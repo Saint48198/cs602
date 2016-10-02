@@ -4,7 +4,7 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 
 // modules
-
+const addUser = require('./modules/addUser');
 
 // declare app
 const app = express();
@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+app.post('/user', addUser);
 
 app.use((req, res) => {
     res.status(404);
