@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const addUser = require('../controllers/user');
+const user = require('../controllers/user');
 
 
 // Default page
@@ -11,6 +11,6 @@ router.get('/', (req, res) => {
 });
 
 // api add user
-router.post('/user', addUser);
+router.post('/user', user.addUser);
 
 module.exports = router;

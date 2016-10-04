@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-module.exports = function addUser(req, res, next) {
+module.exports.addUser = (req, res, next) => {
     let postData = req.body;
     let fname = postData.fname;
     let lname = postData.lname;
@@ -24,8 +24,7 @@ module.exports = function addUser(req, res, next) {
         if (error) {
             res.send(JSON.stringify({  success: false, error: error }));
             throw error;
-        } 
-console.log('saved');
+        }
 
         res.send(JSON.stringify({ success: true }));
         
