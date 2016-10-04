@@ -3,8 +3,8 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 
-// modules
-const addUser = require('./modules/addUser');
+// db & models
+require('./models/db');
 
 // declare app
 const app = express();
@@ -24,12 +24,11 @@ app.use(express.static(__dirname + '/public'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 // app routes [START]
-app.get('/', (req, res) => {
-    //res.redirect('/employees');
-    res.send('Hello World!');
-});
+const viewsRoutes = require('./routes/views');
+const apiRoutes = require('./routes/apis');
 
-app.post('/user', addUser);
+app.use('/', viewsRoutes);
+app.use('/api', apiRoutes);
 
 app.use((req, res) => {
     res.status(404);

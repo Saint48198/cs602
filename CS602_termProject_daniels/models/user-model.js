@@ -19,7 +19,7 @@ userSchema.pre('save', function (next) {
     let user = this;
 
     // only hash the password if it has been modified or new
-    if (user.password && !user.isModified('password')) {
+    if (!user.isModified('password')) {
         return next();
     }
 
@@ -34,7 +34,6 @@ userSchema.pre('save', function (next) {
             if (error) {
                 return next(error);
             }
-
             // over write the nonencrpted password 
             user.password = hash;
             next();
@@ -53,4 +52,4 @@ userSchema.methods.comparePassword = (password, callback) => {
     });
 };
 
-module.exports = mongoose.model('UserModal', userSchema);
+module.exports = mongoose.model('User', userSchema);

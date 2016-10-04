@@ -1,9 +1,7 @@
 'use strict';
 
-const mongoose =  require('mongoose');
-
-const DB = require('../dbConnection');
-const User = require('../modals/user-modal');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
 
 module.exports = function addUser(req, res, next) {
     let postData = req.body;
@@ -23,12 +21,13 @@ module.exports = function addUser(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
 
     newUser.save((error) => {
-        console.log(error);
         if (error) {
             res.send(JSON.stringify({  success: false, error: error }));
-        } else {
-            res.send(JSON.stringify({ success: true }));
-        }
+            throw error;
+        } 
+console.log('saved');
+
+        res.send(JSON.stringify({ success: true }));
         
     });
 };
