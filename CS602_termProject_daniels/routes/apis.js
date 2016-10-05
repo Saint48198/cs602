@@ -13,4 +13,7 @@ router.get('/', (req, res) => {
 // api add user
 router.post('/user', user.addUser);
 
+// api authenticate  user login
+router.post('/auth', user.auth);
+
 module.exports = router;
