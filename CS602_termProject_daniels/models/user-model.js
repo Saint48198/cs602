@@ -90,6 +90,7 @@ let failedLoginStatics = UserSchema.statics.failedLogin = {
 };
 
 UserSchema.statics.getAuthenticated = (email, password, callback) => {
+    console.log(this);
     this.findOne({  email: email }, (error, user) => {
         if (error) {
             return callback(error);
@@ -152,4 +153,4 @@ UserSchema.statics.getAuthenticated = (email, password, callback) => {
     });
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', UserSchema);

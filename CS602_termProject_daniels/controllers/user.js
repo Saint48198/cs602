@@ -31,7 +31,11 @@ module.exports.addUser = (req, res, next) => {
     });
 };
 
-module.exports.auth = (email, password) => {
+module.exports.auth = (req, res, next) => {
+    let postData = req.body;
+    let email = postData.email;
+    let password = postData.password;
+    
     res.setHeader('Content-Type', 'application/json');
 
     User.getAuthenticated(email, password, (error, user, reason) => {
