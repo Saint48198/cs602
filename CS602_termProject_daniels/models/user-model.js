@@ -53,13 +53,12 @@ UserSchema.pre('save', function (next) {
 });
 
 // password verification
-UserSchema.methods.comparePassword = (password, callback) => {
-    bcrypt.compare(password, this.password, (error, isMatch) => {
+UserSchema.methods.comparePassword = (user, password, callback) => {
+    bcrypt.compare(password, user.password, (error, isMatch) => {
         if (error) {
-            return callback.call(this, error);
+            return callback.call(user, error, isMatch);
         }
-
-        callback.call(this, isMatch);
+        callback.call(user, error, isMatch);
     });
 };
 
@@ -89,66 +88,60 @@ let failedLoginStatics = UserSchema.statics.failedLogin = {
     MAX_ATTEMPTS: 0
 };
 
-UserSchema.statics.getAuthenticated = (email, password, callback) => {
-    console.log(this);
-    this.findOne({  email: email }, (error, user) => {
-        if (error) {
-            return callback(error);
-        }
+UserSchema.statics.getAuthenticated = (user, password, callback) => {
+    // make sure user exist
+    if (!user) {
+        return callback(null, null, failedLoginStatics.NOT_FOUND);
+    }
 
-        // make sure user exist
-        if (!user) {
-            return callback(null, null, failedLoginStatics.NOT_FOUND);
-        }
-
-        // check if the account is currentlt locked
-        if (user.isLocked) {
-            // just increment the login attempts  if the account is already locked
-            return user.incorrectLoginAttempts((error) => {
-                if (error) {
-                    return callback(error);
-                }
-
-                return callback(null, null, failedLoginStatics.MAX_ATTEMPTS);
-            });
-        }
-
-        // test for matching passowrd
-        user.comparePassword(password, (error, isMatch) => {
+    // check if the account is currentlt locked
+    if (user.isLocked) {
+        // just increment the login attempts  if the account is already locked
+        return user.incorrectLoginAttempts((error) => {
             if (error) {
                 return callback(error);
             }
 
-            // check if the password was a matching
-            if (isMatch) {
-                // if there is no lock or maxed failed attempts, let user in
-                if (user.loginAttempts < MAX_LOGIN_ATTEMPTS && !user.lockUntil) {
-                    return callback(null, user);
-                }
+            return callback(null, null, failedLoginStatics.MAX_ATTEMPTS);
+        });
+    }
 
-                // reset attempts and lock info
-                let updates = {
-                    $set: { loginAttempts: 0 },
-                    $unset: { lockUntil: 1 }
-                };
-
-                return user.update(updates, (error) => {
-                    if (error) {
-                        return callback(error);
-                    }
-
-                    return callback(null, user);
-                });
+    // test for matching passowrd
+    user.comparePassword(user, password, (error, isMatch) => {
+        
+        if (error) {
+            return callback(error);
+        }
+        
+        // check if the password was a matching
+        if (isMatch) {
+            // if there is no lock or maxed failed attempts, let user in
+            if (user.loginAttempts < MAX_LOGIN_ATTEMPTS && !user.lockUntil) {
+                return callback(null, user);
             }
 
-            // password is incorrect 
-            user.incorrectLoginAttempts((error) => {
+            // reset attempts and lock info
+            let updates = {
+                $set: { loginAttempts: 0 },
+                $unset: { lockUntil: 1 }
+            };
+
+            return user.update(updates, (error) => {
                 if (error) {
                     return callback(error);
                 }
 
-                return callback(null, null, failedLoginStatics.PASSWORD_INCORRECT);
+                return callback(null, user);
             });
+        }
+
+        // password is incorrect 
+        user.incorrectLoginAttempts((error) => {
+            if (error) {
+                return callback(error);
+            }
+
+            return callback(null, null, failedLoginStatics.PASSWORD_INCORRECT);
         });
     });
 };

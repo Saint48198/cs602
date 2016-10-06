@@ -37,30 +37,27 @@ module.exports.auth = (req, res, next) => {
     let password = postData.password;
     
     res.setHeader('Content-Type', 'application/json');
+    
+    if (!email && !password) {
+        res.send(JSON.stringify({ success: false, info: false }));
+        return ;
+    }
 
-    User.getAuthenticated(email, password, (error, user, reason) => {
+    User.findOne({  email: email }, (error, user) => {
         if (error) {
-            throw error;
-        }
-
-        // login successful 
-        if (user) {
-            res.send(JSON.stringify({ success: true }));
+            user.loginAttempts = user.loginAttempts + 1;
+            res.send(JSON.stringify({ success: false, error: error }));
             return;
         }
 
-        // failed and determin why
-        let reasons = User.failedLogin;
-        switch (reasons) {
-            case reasons.NOT_FOUND:
-            case reasons.PASSWORD_INCORRECT:
-                // treated the same but don't  inform the user of this
-                res.send(JSON.stringify({ success: false, accountLocked: false }));
-                break;
-            case reasons.MAX_ATTEMPTS: 
-                // send email to inform the user of the account lock
-                res.send(JSON.stringify({ success: false, accountLocked: true  }));
-                break;
-        }
+        User.getAuthenticated(user, password, (error, data, reason) => {
+            if (data) {
+                res.send(JSON.stringify({ success: true, user: data }));
+                return;
+            } else {
+                user.loginAttempts = user.loginAttempts + 1;
+                res.send(JSON.stringify({ success: false, error: error, reason: reason }));
+            }
+        });
     });
 };
