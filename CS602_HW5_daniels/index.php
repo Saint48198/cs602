@@ -1,5 +1,19 @@
 <?php
     require_once ('db.php');
+    require_once ('utilities.php');
+
+    if (isset($_GET['course_id'])) {
+        $course_id = $_GET['course_id'];
+    } else {
+        $course_id = null;
+    }
+
+    $allCourses = getAllCourses();
+    $course = getCourse($course_id);
+
+    if (count($course)) {
+
+    }
 ?>
 
 <!DOCTYPE html>
@@ -39,14 +53,16 @@
                 <nav class="well">
                     <ul class="nav nav-pills nav-stacked">
                         <li>courses</li>
-                        <li><a href="/id=#">CS602</a></li>
+                        <? foreach ($allCourses as $row) { ?>
+                        <li><a href="/?course_id=<? echo $row['courseId'] ?>"><? echo $row['courseId'] ?></a></li>
+                        <? } ?>
                     </ul>
                 </nav>
             </div>
             <div class="col-sm-9">
                 <h1>Student List</h1>
                 <table class="table table-striped">
-                    <caption>cs601 - Web Application Development</caption>
+                    <caption><?php echo $course['courseId'] . ' - ' . $course['courseName'] ?></caption>
                     <thead>
                     <tr>
                         <th>first name</th>

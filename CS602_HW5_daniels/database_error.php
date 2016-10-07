@@ -1,11 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: sdaniels
- * Date: 10/7/16
- * Time: 2:11 PM
- */
-?>
+<?php ?>
 
 <!DOCTYPE html>
 <html lang="en">
