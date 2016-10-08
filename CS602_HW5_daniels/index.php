@@ -48,6 +48,10 @@
     </header>
 
     <main class="wrapper container">
+        <? if (isset($error) && $error) {?>
+            <div class="alert alert-danger" role="alert"><? echo  $error ?></div>
+        <? } ?>
+
         <div class="row">
             <div class="col-sm-3">
                 <nav class="well">
@@ -78,14 +82,17 @@
                         <td><? echo $row['lastName'] ?></td>
                         <td><? echo $row['email'] ?></td>
                         <td>
-                            <button type="button" class="btn btn-danger" data-id="<? echo $row['studentId'] ?>">Delete</button>
+                            <form method="post" action="delete_student.php">
+                                <input type="hidden" name="studentId" value="<? echo $row['studentId'] ?>">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     <? } ?>
                     </tbody>
                 </table>
                 <div>
-                    <ul>
+                    <ul class="nav nav-pills">
                         <li><a href="add_student.php">Add Student</a></li>
                         <li><a href="course_list.php">List Courses</a></li>
                     </ul>

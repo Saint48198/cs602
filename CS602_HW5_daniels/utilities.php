@@ -46,6 +46,14 @@ function addStudent ($courseId, $firstName, $lastName, $email) {
     return $db->exec($sql);
 }
 
+function deleteStudent ($studentId) {
+    global $db;
+
+    $sql = "DELETE FROM sk_students WHERE studentId='$studentId'";
+
+    return $db->exec($sql);
+}
+
 function getCopyYear () {
     return date("Y");
 }

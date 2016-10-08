@@ -11,3 +11,15 @@ body {
     padding-right: 15px;
     padding-left: 15px;
 }
+
+footer {
+    padding: 15px;
+    border-top: 1px solid #ccc;
+    margin-top: 15px;
+}
+
+footer div {
+    text-align: right;
+    font-size: 11px;
+    color: #ccc;
+}
