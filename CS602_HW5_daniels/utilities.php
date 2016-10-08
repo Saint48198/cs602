@@ -38,6 +38,14 @@ function addCourse ($courseId, $courseName) {
     return $db->exec($sql);
 }
 
+function addStudent ($courseId, $firstName, $lastName, $email) {
+    global $db;
+
+    $sql = "INSERT INTO sk_students (courseId, firstName, lastName, email) VALUES ('$courseId', '$firstName', '$lastName', '$email')";
+
+    return $db->exec($sql);
+}
+
 function getCopyYear () {
     return date("Y");
 }
