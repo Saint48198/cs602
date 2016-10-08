@@ -1,5 +1,3 @@
-<h2>Add Course</h2>
-
 <form method="post" action="<? echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
     <div class="form-group">
         <label for="courseId">Course ID</label>
