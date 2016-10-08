@@ -56,7 +56,7 @@
             <div class="col-sm-3">
                 <nav class="well">
                     <ul class="nav nav-pills nav-stacked">
-                        <li>courses</li>
+                        <li><b>Courses</b></li>
                         <? foreach ($allCourses as $row) { ?>
                         <li><a href="/?course_id=<? echo $row['courseId'] ?>"><? echo $row['courseId'] ?></a></li>
                         <? } ?>

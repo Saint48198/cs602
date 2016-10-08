@@ -2,6 +2,10 @@ body {
     padding-top: 65px;
 }
 
+table th {
+    text-transform: capitalize;
+}
+
 .row {
     margin-right: -15px;
     margin-left: -15px;
