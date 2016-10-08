@@ -37,7 +37,7 @@
 
     <footer class="footer">
         <div class="container">
-            &copy; 2016 Scott Daniels
+            &copy; <? echo getCopyYear() ?> Scott Daniels
         </div>
     </footer>
 </body>

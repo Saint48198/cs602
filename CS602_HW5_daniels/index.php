@@ -12,7 +12,7 @@
     $course = getCourse($course_id);
 
     if (count($course)) {
-
+        $students = getStudents($course['courseId']);
     }
 ?>
 
@@ -72,14 +72,16 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <? foreach ($students as $row) { ?>
                     <tr>
-                        <td>john</td>
-                        <td>doe</td>
-                        <td>john@doe.com</td>
+                        <td><? echo $row['firstName'] ?></td>
+                        <td><? echo $row['lastName'] ?></td>
+                        <td><? echo $row['email'] ?></td>
                         <td>
-                            <button type="button" class="btn btn-danger" data-id="1">Delete</button>
+                            <button type="button" class="btn btn-danger" data-id="<? echo $row['studentId'] ?>">Delete</button>
                         </td>
                     </tr>
+                    <? } ?>
                     </tbody>
                 </table>
                 <div>
@@ -93,7 +95,7 @@
     </main>
     <footer class="footer">
         <div class="container">
-            &copy; 2016 Scott Daniels
+            &copy; <? echo getCopyYear() ?> Scott Daniels
         </div>
     </footer>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

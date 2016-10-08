@@ -21,3 +21,15 @@ function getAllCourses () {
 
     return $db->query($sql);
 }
+
+function getStudents ($courseId) {
+    global $db;
+
+    $sql = 'SELECT studentId, courseId, firstName, lastName, email FROM sk_students WHERE courseId=\'' . $courseId . '\' ORDER BY studentId';
+
+    return $db->query($sql);
+}
+
+function getCopyYear () {
+    return date("Y");
+}
