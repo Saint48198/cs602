@@ -11,7 +11,7 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     loginAttempts: { type: Number, required: true, default: 0 },
     type: { type: String, required: true },
-    classes: { any: [{}] }
+    courses: { any: [{}] }
 });
 
 const SALT_WORK_FACTOR = 10;

@@ -32,7 +32,7 @@ exports.create = (req, res, next) => {
 	newUser.save((error) => {
 		if (error) {
 			res.send(JSON.stringify({  success: false, error: error }));
-			throw error;
+			return;
 		}
 
 		res.send(JSON.stringify({ success: true }));
