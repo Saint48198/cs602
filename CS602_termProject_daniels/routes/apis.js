@@ -17,6 +17,9 @@ router.post('/user', user.addUser);
 // api authenticate  user login
 router.post('/auth', user.auth);
 
+// api to destroy session
+router.get('/logout', session.logout);
+
 // api for getting session status
 router.get('/session', session.status);
 

@@ -15,8 +15,10 @@
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.14.1",
+    "fs": "0.0.1-security",
     "helmet": "^2.3.0",
     "mongoose": "^4.6.2",
+    "morgan": "^1.7.0",
     "uuid": "^2.0.3"
   }
 }
