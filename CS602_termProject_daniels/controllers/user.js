@@ -4,7 +4,12 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
 module.exports.addUser = (req, res, next) => {
-    let postData = req.body;
+	if(req.session.lastPage) {
+		res.write('Last page was: ' + req.session.lastPage + '. ');
+	}
+
+
+	let postData = req.body;
     let fname = postData.fname;
     let lname = postData.lname;
     let email = postData.email;

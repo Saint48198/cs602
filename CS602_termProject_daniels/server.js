@@ -1,7 +1,10 @@
 'use strict';
 
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const handlebars = require('express-handlebars');
+const session = require('express-session');
 
 // db & models
 require('./models/db');
@@ -10,7 +13,6 @@ require('./models/db');
 const app = express();
 
 // to parse request body
-const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -22,6 +24,10 @@ app.set('views', __dirname + '/views');
 // static resources
 app.use(express.static(__dirname + '/public'));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
+
+// session
+app.use(cookieParser());
+app.use(session({secret: '1234567890QWERTY', resave: false, saveUninitialized: true }));
 
 // app routes [START]
 const viewsRoutes = require('./routes/views');

@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
-
+const pageView = require('../controllers/page');
 
 // Default page
-router.get('/', (req, res) => {
-    //res.redirect('/employees');
-    res.send('Hello World!');
-});
+router.get('/', pageView);
 
 module.exports = router;
