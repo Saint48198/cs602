@@ -1,5 +1,9 @@
+"use strict";
+
+let sess;
+
 module.exports = function page(req, res, next) {
-	"use strict";
+	sess = req.session;
 
 	res.render('html/page');
 }

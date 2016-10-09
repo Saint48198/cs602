@@ -4,10 +4,14 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
 module.exports.addUser = (req, res, next) => {
-	if(req.session.lastPage) {
-		res.write('Last page was: ' + req.session.lastPage + '. ');
-	}
+	res.setHeader('Content-Type', 'application/json');
 
+	let sess = req.session;
+
+	if (!sess.email) {
+		res.send(JSON.stringify({ message: 'You need to be logged in to use this service!' }));
+		return;
+	}
 
 	let postData = req.body;
     let fname = postData.fname;
@@ -22,8 +26,6 @@ module.exports.addUser = (req, res, next) => {
         password: password,
         type: 'user' // tmp
     });
-
-    res.setHeader('Content-Type', 'application/json');
 
     newUser.save((error) => {
         if (error) {
@@ -57,12 +59,22 @@ module.exports.auth = (req, res, next) => {
 
         User.getAuthenticated(user, password, (error, data, reason) => {
             if (data) {
-                res.send(JSON.stringify({ success: true, user: data }));
-                return;
+            	req.session.regenerate(() => {
+					req.session.email = email; // set email value is session
+					req.session.logged_in =  true;
+					req.session.success = 'Authentication was successful!';
+				});
+                res.send(JSON.stringify({ success: true, user: user }));
             } else {
+            	req.session.error = reason;
+
                 user.loginAttempts = user.loginAttempts + 1;
                 res.send(JSON.stringify({ success: false, error: error, reason: reason }));
             }
         });
     });
+};
+
+module.exports.logout = (req, res, next) => {
+
 };
