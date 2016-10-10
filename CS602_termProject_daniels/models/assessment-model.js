@@ -1,11 +1,12 @@
 'use strict';
 
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
+
+const QuestionSchema = require('Question').schema;
 const AssessmentSchema = new Schema({
 	name: { type: String, required: true },
-	questions: [],
+	questions: [QuestionSchema],
 	attempts: { type: Number, default: 0 },
 	points: { type: Number, default: 100, required: true },
 	grade: { type: Number, default: 0 },
