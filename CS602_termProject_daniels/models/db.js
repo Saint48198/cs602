@@ -28,5 +28,7 @@ gracefulShutdown = (msg, callback) => {
 };
 
 // BRING IN YOUR SCHEMAS & MODELS
+const Assessment = require('./assessment-model');
+const Assignment = require('./assignment-model');
 const Course = require('./course-model');
 const User = require('./user-model');
