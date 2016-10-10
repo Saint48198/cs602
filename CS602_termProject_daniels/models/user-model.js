@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const Schema = mongoose.Schema;
+const CourseSchema =  mongoose.model('Course').schema;
+
 const UserSchema = new Schema({
 	firstName: { type: String, required: false },
 	lastName: { type: String, required: false },
@@ -11,7 +13,9 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     loginAttempts: { type: Number, required: true, default: 0 },
     type: { type: String, required: true },
-    courses: []
+    numberLogins: { type: Number, required: true, default: 0 },
+    lastLogin: { type: Date, default: null },
+    courses: [CourseSchema]
 });
 
 const SALT_WORK_FACTOR = 10;

@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 const utilities = require('../../lib/utilities');
 const User = mongoose.model('User');
 
+function updateUser (email, data) {
+	"use strict";
+
+	User.update({ email: email }, data, (error, result) => {
+		if (error) throw error;
+	});
+};
+
 exports.prefix = '/api';
 
 exports.create = (req, res, next) => {
@@ -91,7 +99,7 @@ exports.auth = (req, res, next) => {
 
 	User.findOne({  email: email }, (error, user) => {
 		if (error) {
-			user.loginAttempts = user.loginAttempts + 1;
+			updateUser(email, { loginAttempts: user.loginAttempts + 1 });
 			res.send(JSON.stringify({ success: false, error: error }));
 			return;
 		}
@@ -104,12 +112,14 @@ exports.auth = (req, res, next) => {
 					req.session.type = user.type;
 					req.session.success = 'Authentication was successful!';
 
+					updateUser(email, { lastLogin: Date.now(), numberLogins: user.numberLogins + 1, loginAttempts: 0 });
+
 					res.send(JSON.stringify({ success: true, user: { email: user.email, courses: user.courses, type: user.type }, sid: req.sessionID }));
 				});
 			} else {
 				req.session.error = reason;
 
-				user.loginAttempts = user.loginAttempts + 1;
+				updateUser(email, { loginAttempts: user.loginAttempts + 1 });
 				res.send(JSON.stringify({ success: false, error: error, reason: reason }));
 			}
 		});
