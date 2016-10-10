@@ -44,6 +44,10 @@ module.exports = (parent, options) => {
 					method = 'get';
 					path = '/' + key;
 					break;
+				case 'list':
+					method = 'get';
+					path = '/' + name + 's';
+					break;
 				case 'create':
 					method = 'post';
 					path = '/' + name;

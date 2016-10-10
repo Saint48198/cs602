@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const utilities = require('../../lib/utilities');
 const User = mongoose.model('User');
 
 exports.prefix = '/api';
@@ -8,10 +9,9 @@ exports.create = (req, res, next) => {
 
 	res.setHeader('Content-Type', 'application/json');
 
-	let sess = req.session;
-
-	if (!sess.email) {
-		res.send(JSON.stringify({ message: 'You need to be logged in to use this service!' }));
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
 		return;
 	}
 
@@ -20,13 +20,14 @@ exports.create = (req, res, next) => {
 	let lname = postData.lname;
 	let email = postData.email;
 	let password = postData.password;
+	let type =  postData.type || 'user';
 
 	let newUser = new User({
 		firstName:  fname,
 		lastName: lname,
 		email: email,
 		password: password,
-		type: 'user' // tmp
+		type: type
 	});
 
 	newUser.save((error) => {
@@ -38,6 +39,40 @@ exports.create = (req, res, next) => {
 		res.send(JSON.stringify({ success: true }));
 
 	});
+};
+
+exports.list = (req, res, next) => {
+	"use strict";
+
+	let queryData = req.query;
+	let query = {};
+
+	if (queryData.type) {
+		query.type = queryData.type;
+	}
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	User.find(query, (error, user) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error }));
+			return;
+		}
+
+		let results = user.map((user) => {
+			return user;
+		});
+
+		res.send(JSON.stringify({ results: results }));
+	});
+
 };
 
 exports.auth = (req, res, next) => {
@@ -66,6 +101,7 @@ exports.auth = (req, res, next) => {
 				req.session.regenerate(() => {
 					req.session.email = email; // set email value is session
 					req.session.logged_in =  true;
+					req.session.type = user.type;
 					req.session.success = 'Authentication was successful!';
 
 					res.send(JSON.stringify({ success: true, user: { email: user.email, courses: user.courses, type: user.type }, sid: req.sessionID }));
