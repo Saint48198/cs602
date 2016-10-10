@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const AssessmentSchema = new Schema({
+const ModuleSchema = new Schema({
 	name: { type: String, required: true },
 	content: { type: String, required: true  }
 });
