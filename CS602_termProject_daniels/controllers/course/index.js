@@ -16,11 +16,11 @@ exports.create = (req, res, next) => {
 	}
 
 	let postData = req.body;
-	let title = postData.title;
+	let name = postData.name;
 	let number = postData.number;
 
 	let newCourse = new Course({
-		title:  title,
+		name:  name,
 		number: number
 	});
 
@@ -33,4 +33,38 @@ exports.create = (req, res, next) => {
 		res.send(JSON.stringify({ success: true }));
 
 	});
+};
+
+exports.list = (req, res, next) => {
+	"use strict";
+
+	let queryData = req.query;
+	let query = {};
+
+	if (queryData.userId) {
+		query.userId = queryData.userId;
+	}
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	Course.find(query, (error, course) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error }));
+			return;
+		}
+
+		let results = course.map((course) => {
+			return course;
+		});
+
+		res.send(JSON.stringify({ results: results }));
+	});
+
 };

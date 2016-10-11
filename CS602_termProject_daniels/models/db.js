@@ -32,5 +32,5 @@ const Question = require('./question-model');
 const Assessment = require('./assessment-model');
 const Assignment = require('./assignment-model');
 const Module = require('./module-model');
-const Course = require('./course-model');
 const User = require('./user-model');
+const Course = require('./course-model');
