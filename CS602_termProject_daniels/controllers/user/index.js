@@ -2,14 +2,6 @@ const mongoose = require('mongoose');
 const utilities = require('../../lib/utilities');
 const User = mongoose.model('User');
 
-function updateUser (email, data) {
-	"use strict";
-
-	User.update({ email: email }, data, (error, result) => {
-		if (error) throw error;
-	});
-};
-
 exports.prefix = '/api';
 
 exports.create = (req, res, next) => {
@@ -98,13 +90,14 @@ exports.auth = (req, res, next) => {
 	}
 
 	User.findOne({  email: email }, (error, user) => {
+		// system error with getting user
 		if (error) {
-			updateUser(email, { loginAttempts: user.loginAttempts + 1 });
 			res.send(JSON.stringify({ success: false, error: error }));
 			return;
 		}
 
-		User.getAuthenticated(user, password, (error, data, reason) => {
+		User.getAuthenticated(user, password, (error, data) => {
+
 			if (data) {
 				req.session.regenerate(() => {
 					req.session.email = email; // set email value is session
@@ -112,15 +105,10 @@ exports.auth = (req, res, next) => {
 					req.session.type = user.type;
 					req.session.success = 'Authentication was successful!';
 
-					updateUser(email, { lastLogin: Date.now(), numberLogins: user.numberLogins + 1, loginAttempts: 0 });
-
 					res.send(JSON.stringify({ success: true, user: { email: user.email, courses: user.courses, type: user.type }, sid: req.sessionID }));
 				});
 			} else {
-				req.session.error = reason;
-
-				updateUser(email, { loginAttempts: user.loginAttempts + 1 });
-				res.send(JSON.stringify({ success: false, error: error, reason: reason }));
+				res.send(JSON.stringify({ success: false, error: error }));
 			}
 		});
 	});

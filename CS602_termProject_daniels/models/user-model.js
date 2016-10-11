@@ -15,6 +15,7 @@ const UserSchema = new Schema({
     type: { type: String, required: true },
     numberLogins: { type: Number, required: true, default: 0 },
     lastLogin: { type: Date, default: null },
+    lockUntil: { type: Date, default: 1 },
     courses: [CourseSchema]
 });
 
@@ -24,13 +25,13 @@ const SALT_WORK_FACTOR = 10;
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCK_TIME = 2 * 60 * 60 * 1000;
 
-UserSchema.virtual('isLocked').get(() => {
+UserSchema.virtual('isLocked').get(function () {
     // check for a future lockUntil timestamp
     return !!(this.lockUntil && this.lockUntil > Date.now());
 });
 
 // password hashing middleware
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', (next) => {
     let user = this;
 
     // only hash the password if it has been modified or new
@@ -57,7 +58,7 @@ UserSchema.pre('save', function (next) {
 });
 
 // password verification
-UserSchema.methods.comparePassword = (user, password, callback) => {
+UserSchema.methods.comparePassword = function (user, password, callback) {
     bcrypt.compare(password, user.password, (error, isMatch) => {
         if (error) {
             return callback.call(user, error, isMatch);
@@ -66,7 +67,7 @@ UserSchema.methods.comparePassword = (user, password, callback) => {
     });
 };
 
-UserSchema.methods.incorrectLoginAttempts = (callback) => {
+UserSchema.methods.incorrectLoginAttempts = function (callback) {
     // if we have a previous lock that has expired, restart at 1
     if (this.lockUntil && this.lockUntil < Date.now()) {
         return this.update({
@@ -77,6 +78,7 @@ UserSchema.methods.incorrectLoginAttempts = (callback) => {
 
     // otherwise we're incrementing
     var updates = { $inc: { loginAttempts: 1 } };
+
     // lock the account if we've reached max attempts and it's not locked already
     if (this.loginAttempts + 1 >= MAX_LOGIN_ATTEMPTS && !this.isLocked) {
         updates.$set = { lockUntil: Date.now() + LOCK_TIME };
@@ -95,7 +97,8 @@ let failedLoginStatics = UserSchema.statics.failedLogin = {
 UserSchema.statics.getAuthenticated = (user, password, callback) => {
     // make sure user exist
     if (!user) {
-        return callback(null, null, failedLoginStatics.NOT_FOUND);
+        failedLoginStatics.NOT_FOUND++;
+        return callback('Incorrect email and/or password', user);
     }
 
     // check if the account is currentlt locked
@@ -105,8 +108,7 @@ UserSchema.statics.getAuthenticated = (user, password, callback) => {
             if (error) {
                 return callback(error);
             }
-
-            return callback(null, null, failedLoginStatics.MAX_ATTEMPTS);
+            return callback('User account is locked!', null);
         });
     }
 
@@ -126,7 +128,7 @@ UserSchema.statics.getAuthenticated = (user, password, callback) => {
 
             // reset attempts and lock info
             let updates = {
-                $set: { loginAttempts: 0 },
+                $set: { loginAttempts: 0, lastLogin: Date.now(), numberLogins: user.numberLogins++ },
                 $unset: { lockUntil: 1 }
             };
 
@@ -145,7 +147,7 @@ UserSchema.statics.getAuthenticated = (user, password, callback) => {
                 return callback(error);
             }
 
-            return callback(null, null, failedLoginStatics.PASSWORD_INCORRECT);
+            return callback('Incorrect email and/or password', null);
         });
     });
 };
