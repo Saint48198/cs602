@@ -1,0 +1,29 @@
+body {
+    padding-top: 65px;
+}
+
+table th {
+    text-transform: capitalize;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+footer {
+    padding: 15px;
+    border-top: 1px solid #ccc;
+    margin-top: 15px;
+}
+
+footer div {
+    text-align: right;
+    font-size: 11px;
+    color: #ccc;
+}

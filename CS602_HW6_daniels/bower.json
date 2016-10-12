@@ -1,0 +1,20 @@
+{
+  "name": "CS602_HW5_daniels",
+  "homepage": "https://github.com/Saint48198/cs602",
+  "authors": [
+    "sdaniels <daniels.scott.r@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
