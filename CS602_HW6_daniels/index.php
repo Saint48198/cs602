@@ -42,7 +42,7 @@
     <header class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">Course Manager</a>
+          <a class="navbar-brand" href="/cs602/CS602_HW6_daniels/">Course Manager</a>
         </div>
       </div>
     </header>
@@ -58,7 +58,7 @@
                     <ul class="nav nav-pills nav-stacked">
                         <li><b>Courses</b></li>
                         <? foreach ($allCourses as $row) { ?>
-                        <li><a href="/?course_id=<? echo $row['courseId'] ?>"><? echo $row['courseId'] ?></a></li>
+                        <li><a href="/cs602/CS602_HW6_daniels/?course_id=<? echo $row['courseId'] ?>"><? echo $row['courseId'] ?></a></li>
                         <? } ?>
                     </ul>
                 </nav>

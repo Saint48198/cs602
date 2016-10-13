@@ -31,7 +31,7 @@
 <header class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Course Manager</a>
+            <a class="navbar-brand" href="/cs602/CS602_HW6_daniels/">Course Manager</a>
         </div>
     </div>
 </header>
@@ -50,7 +50,7 @@
                 <tbody>
                 <? foreach ($allCourses as $row) { ?>
                     <tr>
-                        <td><a href="/?id=<? echo $row['courseId'] ?>"><? echo $row['courseId'] ?></a></td>
+                        <td><a href="/cs602/CS602_HW6_daniels/?course_id=<? echo $row['courseId'] ?>"><? echo $row['courseId'] ?></a></td>
                         <td><? echo $row['courseName'] ?></td>
                     </tr>
                 <? } ?>
@@ -61,7 +61,7 @@
             <? include ('add_course.php') ?>
             <br>
             <div>
-                <a href="/">List Students</a>
+                <a href="/cs602/CS602_HW6_daniels/">List Students</a>
             </div>
         </div>
     </div>

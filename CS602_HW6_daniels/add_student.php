@@ -29,7 +29,7 @@
 <header class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/">Course Manager</a>
+            <a class="navbar-brand" href="/cs602/CS602_HW6_daniels/">Course Manager</a>
         </div>
     </div>
 </header>
@@ -39,7 +39,7 @@
         <div class="col-md-12">
             <h1>Add Student</h1>
             <? include ('add_student_form.php') ?>
-            <a href="/">View Student List</a>
+            <a href="/cs602/CS602_HW6_daniels/">View Student List</a>
         </div>
     </div>
 </main>

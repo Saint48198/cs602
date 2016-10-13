@@ -19,7 +19,7 @@
             $addStudent = addStudent($courseId, $firstName, $lastName, $email);
 
             if ($addStudent) {
-                echo "<script>window.location = '/?course_id=$courseId';</script>";
+                echo "<script>window.location = '/cs602/CS602_HW6_daniels/?course_id=$courseId';</script>";
                 exit();
             } else {
                 $error = $db->errorInfo()[2];
