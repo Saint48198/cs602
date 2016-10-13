@@ -17,17 +17,30 @@ function getCourse($id) {
 function getAllCourses () {
     global $db;
 
-    $sql = 'SELECT courseId, courseName FROM sk_courses ORDER BY courseId';
+    function course($courseId, $courseName) {
+        return array('courseId'=> $courseId, 'courseName' => $courseName);
+    }
 
-    return $db->query($sql);
+    $sql = 'SELECT courseId, courseName FROM sk_courses ORDER BY courseId';
+    $query = $db->prepare($sql);
+    $query->execute();
+
+    return $query->fetchAll(PDO::FETCH_FUNC, "course");
 }
 
 function getStudents ($courseId) {
     global $db;
 
-    $sql = 'SELECT studentId, courseId, firstName, lastName, email FROM sk_students WHERE courseId=\'' . $courseId . '\' ORDER BY studentId';
+    function student ($studentId, $courseId, $firstName, $lastName, $email) {
+        return array('studentId' => $studentId, 'courseId' => $courseId, 'firstName' => $firstName, 'lastName' => $lastName, 'email' => $email);
+    }
 
-    return $db->query($sql);
+    $sql = 'SELECT studentId, courseId, firstName, lastName, email FROM sk_students WHERE courseId=\'' . $courseId . '\' ORDER BY studentId';
+    $query = $db->prepare($sql);
+    $query->execute();
+
+
+    return $query->fetchAll(PDO::FETCH_FUNC, "student");
 }
 
 function addCourse ($courseId, $courseName) {
@@ -56,4 +69,13 @@ function deleteStudent ($studentId) {
 
 function getCopyYear () {
     return date("Y");
+}
+
+function createXMLString($string) {
+    $xmlstr = '<?xml version="1.0" encoding="UTF-8"?>';
+
+    $xmlstr = $xmlstr . $string;
+    $xml = new SimpleXMLElement($xmlstr);
+
+    return $xml->asXML();
 }
