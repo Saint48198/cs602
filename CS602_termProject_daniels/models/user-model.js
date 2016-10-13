@@ -126,7 +126,7 @@ UserSchema.statics.getAuthenticated = (user, password, callback) => {
 
             // reset attempts and lock info
             let updates = {
-                $set: { loginAttempts: 0, lastLogin: Date.now(), numberLogins: user.numberLogins++ },
+                $set: { loginAttempts: 0, lastLogin: Date.now(), numberLogins: user.numberLogins + 1 },
                 $unset: { lockUntil: 1 }
             };
 

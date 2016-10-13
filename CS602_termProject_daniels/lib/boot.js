@@ -56,6 +56,10 @@ module.exports = (parent, options) => {
 					method = 'post';
 					path = '/' + key;
 					break;
+				case 'show':
+					method = 'get';
+					path = '/' + name + '/:' + name + '_id';
+					break;
 				default:
 					throw new Error('unrecognized route: ' + name + '.' + key);
 			}

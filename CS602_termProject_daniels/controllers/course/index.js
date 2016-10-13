@@ -21,7 +21,12 @@ exports.create = (req, res, next) => {
 
 	let newCourse = new Course({
 		name:  name,
-		number: number
+		number: number,
+		assessments: [],
+		assignments: [],
+		modules: [],
+		students: [],
+		teachers: []
 	});
 
 	newCourse.save((error) => {

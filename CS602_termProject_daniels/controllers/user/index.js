@@ -75,6 +75,32 @@ exports.list = (req, res, next) => {
 
 };
 
+exports.show =  (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	User.find({ _id: req.params.user_id }, (error, user) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error }));
+			return;
+		}
+
+		let results = user.map((user) => {
+			return user;
+		});
+
+		res.send(JSON.stringify({ results: results }));
+	});
+};
+
 exports.auth = (req, res, next) => {
 	"use strict";
 
