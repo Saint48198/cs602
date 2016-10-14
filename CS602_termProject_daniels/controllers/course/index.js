@@ -66,6 +66,51 @@ exports.show =  (req, res, next) => {
 	});
 };
 
+exports.updateAddTeacher = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	let postData = req.body;
+
+	Course.findOne({ number: req.params.course_id }, {}, { sort: { date: -1}}, (error, course) => {
+		if (error) {
+			res.send(JSON.stringify({ error: error, course: course }));
+			return;
+		}
+
+		if (!course) {
+			res.status(401);
+			res.send(JSON.stringify({ status: 'Record Not Found!', code: 404 }));
+			return;
+		}
+
+		let teacherFound = false;
+
+		course.teachers.forEach((teacher) => {
+			if (teacher._id === postData.id) {
+				teacherFound = true;
+			}
+		});
+
+		if (teacherFound) {
+			res.send(JSON.stringify({ error: 'Teacher already added to the course!', course: course }));
+		} else {
+			course.teachers.push(postData);
+			course.markModified('teachers');
+			course.save();
+
+			res.send(JSON.stringify({ success: true, course: course }));
+		}
+	});
+};
+
 exports.list = (req, res, next) => {
 	"use strict";
 

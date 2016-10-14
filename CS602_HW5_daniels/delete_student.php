@@ -1,6 +1,6 @@
 <?php
-    require_once ('db.php');
-    require_once ('utilities.php');
+    require_once ('./db.php');
+    require_once ('./utilities.php');
 
     $error = '';
 
@@ -14,5 +14,5 @@
         $error = 'There was an issue deleting the student';
     }
 
-    include ('index.php');
+    include ('./index.php');
 ?>

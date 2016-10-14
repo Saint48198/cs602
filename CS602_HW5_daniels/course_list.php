@@ -1,6 +1,6 @@
 <?php
-    require_once ('db.php');
-    require_once ('utilities.php');
+    require_once ('./db.php');
+    require_once ('./utilities.php');
 
     $allCourses = getAllCourses();
 ?>
@@ -15,7 +15,7 @@
     <title>Course Manager :: Course List</title>
 
     <!-- Bootstrap -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="./bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,13 +25,13 @@
     <![endif]-->
 
     <!-- Site styles -->
-    <link href="styles/main.css" rel="stylesheet">
+    <link href="./styles/main.css" rel="stylesheet">
 </head>
 <body>
 <header class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/cs602/CS602_HW5_daniels/">Course Manager</a>
+            <a class="navbar-brand" href="./">Course Manager</a>
         </div>
     </div>
 </header>
@@ -50,7 +50,7 @@
                 <tbody>
                 <? foreach ($allCourses as $row) { ?>
                     <tr>
-                        <td><a href="/cs602/CS602_HW5_daniels/?id=<? echo $row['courseId'] ?>"><? echo $row['courseId'] ?></a></td>
+                        <td><a href="./?id=<? echo $row['courseId'] ?>"><? echo $row['courseId'] ?></a></td>
                         <td><? echo $row['courseName'] ?></td>
                     </tr>
                 <? } ?>
@@ -58,10 +58,10 @@
             </table>
             <hr>
             <h2>Add Course</h2>
-            <? include ('add_course.php') ?>
+            <? include ('./add_course.php') ?>
             <br>
             <div>
-                <a href="/cs602/CS602_HW5_daniels/">List Students</a>
+                <a href="./">List Students</a>
             </div>
         </div>
     </div>

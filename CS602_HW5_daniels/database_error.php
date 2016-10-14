@@ -8,7 +8,7 @@
     <title>Course Manager</title>
 
     <!-- Bootstrap -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="./bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,13 +18,13 @@
     <![endif]-->
 
     <!-- Site styles -->
-    <link href="styles/main.css" rel="stylesheet">
+    <link href="./styles/main.css" rel="stylesheet">
 </head>
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/cs602/CS602_HW5_daniels/">Course Manager</a>
+                <a class="navbar-brand" href="./">Course Manager</a>
             </div>
         </div>
     </header>

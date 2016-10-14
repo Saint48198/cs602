@@ -60,6 +60,10 @@ module.exports = (parent, options) => {
 					method = 'get';
 					path = '/' + name + '/:' + name + '_id';
 					break;
+				case 'updateAddTeacher':
+					method = 'post';
+					path = '/' + name + '/:' + name + '_id/add_teacher';
+					break;
 				default:
 					throw new Error('unrecognized route: ' + name + '.' + key);
 			}
