@@ -4,6 +4,8 @@
 
     $error = '';
 
+
+
     if ($_POST['studentId']) {
         $deleteStudent = deleteStudent($_POST['studentId']);
 
@@ -14,5 +16,7 @@
         $error = 'There was an issue deleting the student';
     }
 
+
     include ('./index.php');
-?>
+
+

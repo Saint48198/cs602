@@ -4,8 +4,10 @@
 
     if (isset($_GET['course_id'])) {
         $course_id = $_GET['course_id'];
+        $deleteAction = 'delete_student.php?course_id=' . $course_id;
     } else {
         $course_id = null;
+        $deleteAction = 'delete_student.php';
     }
 
     $allCourses = getAllCourses();
@@ -82,7 +84,7 @@
                         <td><? echo $row['lastName'] ?></td>
                         <td><? echo $row['email'] ?></td>
                         <td>
-                            <form method="post" action="delete_student.php">
+                            <form method="post" action="<? echo $deleteAction ?>">
                                 <input type="hidden" name="studentId" value="<? echo $row['studentId'] ?>">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
