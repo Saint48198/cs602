@@ -1,6 +1,6 @@
 <?php
-    require_once ('db.php');
-    require_once ('utilities.php');
+    require_once ('./db.php');
+    require_once ('./utilities.php');
 
     if (isset($_GET['course_id'])) {
         $course_id = $_GET['course_id'];
@@ -26,7 +26,7 @@
     <title>Course Manager</title>
 
     <!-- Bootstrap -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="./bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,13 +36,13 @@
     <![endif]-->
 
       <!-- Site styles -->
-      <link href="styles/main.css" rel="stylesheet">
+      <link href="./styles/main.css" rel="stylesheet">
   </head>
   <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/cs602/CS602_HW6_daniels/">Course Manager</a>
+          <a class="navbar-brand" href="./">Course Manager</a>
         </div>
       </div>
     </header>
@@ -58,7 +58,7 @@
                     <ul class="nav nav-pills nav-stacked">
                         <li><b>Courses</b></li>
                         <? foreach ($allCourses as $row) { ?>
-                        <li><a href="/cs602/CS602_HW6_daniels/?course_id=<? echo $row['courseId'] ?>"><? echo $row['courseId'] ?></a></li>
+                        <li><a href="./?course_id=<? echo $row['courseId'] ?>"><? echo $row['courseId'] ?></a></li>
                         <? } ?>
                     </ul>
                 </nav>
@@ -93,8 +93,8 @@
                 </table>
                 <div>
                     <ul class="nav nav-pills">
-                        <li><a href="add_student.php">Add Student</a></li>
-                        <li><a href="course_list.php">List Courses</a></li>
+                        <li><a href="./add_student.php">Add Student</a></li>
+                        <li><a href="./course_list.php">List Courses</a></li>
                     </ul>
                 </div>
             </div>

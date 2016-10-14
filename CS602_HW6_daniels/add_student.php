@@ -1,6 +1,6 @@
 <?php
-    require_once ('db.php');
-    require_once ('utilities.php');
+    require_once ('./db.php');
+    require_once ('./utilities.php');
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
     <title>Course Manager :: Add Student</title>
 
     <!-- Bootstrap -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="./bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,13 +23,13 @@
     <![endif]-->
 
     <!-- Site styles -->
-    <link href="styles/main.css" rel="stylesheet">
+    <link href="./styles/main.css" rel="stylesheet">
 </head>
 <body>
 <header class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/cs602/CS602_HW6_daniels/">Course Manager</a>
+            <a class="navbar-brand" href="./">Course Manager</a>
         </div>
     </div>
 </header>
@@ -38,8 +38,8 @@
     <div class="row">
         <div class="col-md-12">
             <h1>Add Student</h1>
-            <? include ('add_student_form.php') ?>
-            <a href="/cs602/CS602_HW6_daniels/">View Student List</a>
+            <? include ('./add_student_form.php') ?>
+            <a href="./">View Student List</a>
         </div>
     </div>
 </main>

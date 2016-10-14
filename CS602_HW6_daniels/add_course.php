@@ -1,7 +1,7 @@
 <?php
 
-    require_once ('db.php');
-    require_once ('utilities.php');
+    require_once ('./db.php');
+    require_once ('./utilities.php');
 
 
     $error = '';
@@ -22,7 +22,7 @@
             $addCourse = addCourse($courseId, $courseName);
 
             if ($addCourse) {
-                echo '<script>window.location = "/cs602/CS602_HW6_daniels/course_list.php";</script>';
+                echo '<script>window.location = "./course_list.php";</script>';
                 exit();
             } else {
                 $error = $db->errorInfo()[2];

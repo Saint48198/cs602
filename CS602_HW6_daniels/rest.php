@@ -1,7 +1,7 @@
 <?php
 
-require_once ('db.php');
-require_once ('utilities.php');
+require_once ('./db.php');
+require_once ('./utilities.php');
 
 // get parameters and set default variable values
 $format = isset($_GET['format']) ?  strtolower (htmlspecialchars($_GET['format'])) : 'json'; // format defaults to JSON

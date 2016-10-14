@@ -1,6 +1,6 @@
 <?php
-    require_once ('db.php');
-    require_once ('utilities.php');
+    require_once ('./db.php');
+    require_once ('./utilities.php');
 
     $allCourses = getAllCourses();
     $error = '';
