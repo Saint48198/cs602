@@ -12,9 +12,10 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     loginAttempts: { type: Number, required: true, default: 0 },
     type: { type: String, required: true },
+	course: [ { _id: String, grade: String, assessments: [ { _id: String, grade: String }], assignments: [ { _id: String, grade: String }] }],
     numberLogins: { type: Number, required: true, default: 0 },
     lastLogin: { type: Date, default: null },
-    lockUntil: { type: Date, default: 1 }
+    lockUntil: { type: Date, default: 1 },
 });
 
 const SALT_WORK_FACTOR = 10;
