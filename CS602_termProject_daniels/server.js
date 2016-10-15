@@ -8,6 +8,7 @@ const session = require('express-session');
 const helmet = require('helmet');
 const uuid = require('uuid');
 const logger = require('morgan');
+const methodOverride = require('method-override');
 
 // db & models
 require('./models/db');
@@ -25,7 +26,7 @@ app.set('views', __dirname + '/views');
 
 // define a custom res.message() method
 // which stores messages in the session
-app.response.message = (msg) => {
+app.response.message = function (msg) {
 	// reference `req.session` via the `this.req` reference
 	let sess = this.req.session;
 	// simply add the msg to an array for later
@@ -67,11 +68,11 @@ if (app.get('env') === 'production') {
 app.use(cookieParser());
 app.use(session(sess));
 
-
 // to parse request body
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
+// allow overriding methods in query (?_method=put)
+app.use(methodOverride('_method'));
 
 // expose the "messages" local variable when views are rendered
 app.use((req, res, next) => {
@@ -93,7 +94,11 @@ app.use((req, res, next) => {
 	next();
 	// empty or "flush" the messages so they
 	// don't build up
-	req.session.messages = [];
+	// is inside a try because can't set property on destroyed session
+	try {
+		req.session.messages = [];
+	} catch (err) {}
+
 });
 
 // load controllers

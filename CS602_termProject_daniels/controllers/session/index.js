@@ -22,5 +22,7 @@ exports.logout = (req, res, next) => {
 		}
 
 		res.send(JSON.stringify({ logged_out: true }));
+
+		this.session.messages = [];
 	})
 };
