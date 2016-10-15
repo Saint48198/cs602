@@ -20,15 +20,16 @@ exports.create = (req, res, next) => {
 	let lname = postData.lname;
 	let email = postData.email;
 	let password = postData.password;
-	let type =  postData.type || 'user';
+	let role =  postData.role || 'user';
 
 	let newUser = new User({
 		firstName:  fname,
 		lastName: lname,
 		email: email,
 		password: password,
-		type: type
 	});
+
+	newUser.roles.addToSet(role);
 
 	newUser.save((error) => {
 		if (error) {

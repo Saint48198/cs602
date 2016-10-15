@@ -7,11 +7,8 @@ const QuestionSchema = mongoose.model('Question').schema;
 const AssessmentSchema = new Schema({
 	name: { type: String, required: true },
 	questions: [QuestionSchema],
-	attempts: { type: Number, default: 0 },
 	points: { type: Number, default: 100, required: true },
-	grade: { type: Number, default: 0 },
 	due: { type: Date, default: Date.now(), required: true },
-	submitted: { type: Date, default: null },
 	instructions: { type: String }
 });
 

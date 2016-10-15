@@ -11,8 +11,15 @@ const UserSchema = new Schema({
     email: { type: String, required: true, index: { unique: true } },
     password: { type: String, required: true },
     loginAttempts: { type: Number, required: true, default: 0 },
-    type: { type: String, required: true },
-	course: [ { _id: String, grade: String, assessments: [ { _id: String, grade: String }], assignments: [ { _id: String, grade: String }] }],
+    roles: [ String ],
+	course: [
+		{
+			number: String,
+			grade: Number,
+			assessments: [ { _id: String, grade: Number, attempts: [ { _id: String, submitted: Date }] }],
+			assignments: [ { _id: String, grade: Number, attempts: [ {_id: String, submitted: Date }] }]
+		}
+	],
     numberLogins: { type: Number, required: true, default: 0 },
     lastLogin: { type: Date, default: null },
     lockUntil: { type: Date, default: 1 },

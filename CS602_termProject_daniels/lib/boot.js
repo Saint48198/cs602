@@ -60,11 +60,11 @@ module.exports = (parent, options) => {
 					method = 'get';
 					path = '/' + name + '/:' + name + '_id';
 					break;
-				case 'updateAddTeacher':
+				case 'addTeacher':
 					method = 'post';
 					path = '/' + name + '/:' + name + '_id/add_teacher';
 					break;
-				case 'updateAddStudent':
+				case 'addStudent':
 					method = 'post';
 					path = '/' + name + '/:' + name + '_id/add_student';
 					break;

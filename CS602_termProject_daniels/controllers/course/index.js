@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const utilities = require('../../lib/utilities');
 const Course = mongoose.model('Course');
+const User = mongoose.model('User');
 
 exports.prefix = '/api';
 
@@ -66,7 +67,7 @@ exports.show =  (req, res, next) => {
 	});
 };
 
-exports.updateAddTeacher = (req, res, next) => {
+exports.addTeacher = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -93,7 +94,7 @@ exports.updateAddTeacher = (req, res, next) => {
 		});
 };
 
-exports.updateAddStudent = (req, res, next) => {
+exports.addStudent = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -106,6 +107,7 @@ exports.updateAddStudent = (req, res, next) => {
 
 	let postData = req.body;
 
+	// find course and add student id to array
 	Course.findOneAndUpdate(
 		{ number: req.params.course_id },
 		{ $addToSet: { students: { _id: postData._id } }},
@@ -116,7 +118,29 @@ exports.updateAddStudent = (req, res, next) => {
 				return;
 			}
 
-			res.send(JSON.stringify({ success: true, course: course }));
+			// find user and add course id array
+			User.findOneAndUpdate(
+				{ _id: postData._id },
+				{
+					$addToSet: {
+						courses: {
+							number: req.params.course_id,
+							grade: null,
+							assessments: [ ],
+							assignments: [ ]
+						}
+					}
+				},
+				{ safe: true, upsert: true, new: true },
+				(error, student) => {
+					if (error) {
+						res.send(JSON.stringify({error: error}));
+						return;
+					}
+
+					res.send(JSON.stringify({ success: true, course: course, student: student }));
+				}
+			);
 		});
 };
 
