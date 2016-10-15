@@ -12,7 +12,7 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     loginAttempts: { type: Number, required: true, default: 0 },
     roles: [ String ],
-	course: [
+	courses: [
 		{
 			number: String,
 			grade: Number,

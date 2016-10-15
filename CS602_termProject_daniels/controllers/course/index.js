@@ -123,7 +123,7 @@ exports.addStudent = (req, res, next) => {
 				{ _id: postData._id },
 				{
 					$addToSet: {
-						course: {
+						courses: {
 							number: req.params.course_id,
 							grade: null,
 							assessments: [ ],
