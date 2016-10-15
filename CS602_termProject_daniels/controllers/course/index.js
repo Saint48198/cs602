@@ -81,7 +81,7 @@ exports.updateAddTeacher = (req, res, next) => {
 
 	Course.findOneAndUpdate(
 		{ number: req.params.course_id },
-		{ $push: { teachers: { _id: postData._id } }},
+		{ $addToSet: { teachers: { _id: postData._id } }},
 		{ safe: true, upsert: true, new: true },
 		(error, course) => {
 			if (error) {
@@ -108,7 +108,7 @@ exports.updateAddStudent = (req, res, next) => {
 
 	Course.findOneAndUpdate(
 		{ number: req.params.course_id },
-		{ $push: { students: { _id: postData._id } }},
+		{ $addToSet: { students: { _id: postData._id } }},
 		{ safe: true, upsert: true, new: true },
 		(error, course) => {
 			if (error) {
