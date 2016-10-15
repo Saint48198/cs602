@@ -3,20 +3,15 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const AssessmentSchema = mongoose.model('Assessment').schema;
-const AssignmentSchema =  mongoose.model('Assignment').schema;
-const ModuleSchema = mongoose.model('Module').schema;
-const UserSchema = mongoose.model('User').schema;
-
 
 const CourseSchema = new Schema({
 	name: { type: String, required: true },
 	number: { type: String, required: true, index: { unique: true } },
-	assessments: [AssessmentSchema],
-	assignments: [AssignmentSchema],
-	modules: [ModuleSchema],
-	students: [UserSchema],
-	teachers: [UserSchema]
+	assessments: [{_id: String, index: { unique: true } }],
+	assignments: [{_id: String, index: { unique: true } }],
+	modules: [{_id: String, index: { unique: true } }],
+	students: [{_id: String, index: { unique: true } }],
+	teachers: [{_id: String, index: { unique: true } }]
 });
 
 module.exports = mongoose.model('Course', CourseSchema);

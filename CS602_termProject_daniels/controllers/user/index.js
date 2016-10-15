@@ -130,7 +130,6 @@ exports.auth = (req, res, next) => {
 					req.session.logged_in =  true;
 					req.session.type = user.type;
 					req.session.success = 'Authentication was successful!';
-					this.session.messages = [];
 
 					res.send(JSON.stringify({ success: true, user: { email: user.email, courses: user.courses, type: user.type }, sid: req.sessionID }));
 				});
