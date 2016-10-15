@@ -20,7 +20,7 @@ exports.create = (req, res, next) => {
 	let lname = postData.lname;
 	let email = postData.email;
 	let password = postData.password;
-	let role =  postData.role || 'user';
+	let role =  postData.role ? postData.role.split(',') : ['user'];
 
 	let newUser = new User({
 		firstName:  fname,
@@ -29,7 +29,7 @@ exports.create = (req, res, next) => {
 		password: password,
 	});
 
-	newUser.roles.addToSet(role);
+	newUser.roles.addToSet({ $each: role });
 
 	newUser.save((error) => {
 		if (error) {
@@ -48,8 +48,8 @@ exports.list = (req, res, next) => {
 	let queryData = req.query;
 	let query = {};
 
-	if (queryData.type) {
-		query.type = queryData.type;
+	if (queryData.role) {
+		query.role = queryData.role;
 	}
 
 	res.setHeader('Content-Type', 'application/json');

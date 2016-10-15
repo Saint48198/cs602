@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const utilities = require('../../lib/utilities');
 
 const Course = mongoose.model('Course');
-const Assessment = mongoose.model('Assessment');
+const Module = mongoose.model('Module');
 
 exports.prefix = '/api';
 
@@ -21,9 +21,9 @@ exports.create = (req, res, next) => {
 	postData.due = new Date();
 	postData.files = [];
 
-	let newAssessment = new Assessment(postData);
+	let newModule = new Module(postData);
 
-	newAssessment.save((error) => {
+	newModule.save((error) => {
 		if (error) {
 			res.send(JSON.stringify({  success: false, error: error }));
 			return;
@@ -55,14 +55,14 @@ exports.list = (req, res, next) => {
 				return;
 			}
 
-			Assessment.find({ $or: course.assessments }, (error, results) => {
+			Module.find({ $or: course.modules }, (error, results) => {
 				if (error) {
 					console.log('Error: %s', error);
 					res.send(JSON.stringify({ error: error }));
 					return;
 				}
 
-				res.send(JSON.stringify({ assessment: results }));
+				res.send(JSON.stringify({ module: results }));
 			});
 
 
@@ -86,17 +86,17 @@ exports.show =  (req, res, next) => {
 		return;
 	}
 
-	Assessment.find({ number: req.params.assessment_id }, (error, assessment) => {
+	Module.find({ number: req.params.module_id }, (error, module) => {
 		if (error) {
 			console.log('Error: %s', error);
 			res.send(JSON.stringify({ error: error }));
 			return;
 		}
 
-		let results = assessment.map((assessment) => {
-			return assessment;
+		let results = module.map((module) => {
+			return module;
 		});
 
-		res.send(JSON.stringify({ assessment: results }));
+		res.send(JSON.stringify({ module: results }));
 	});
 };
