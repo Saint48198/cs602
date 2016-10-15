@@ -31,6 +31,10 @@ exports.create = (req, res, next) => {
 
 	newUser.roles = role;
 
+	if (role.join(',').indexOf('user') !== -1) {
+		newUser.course = [];
+	}
+
 	newUser.save((error) => {
 		if (error) {
 			res.send(JSON.stringify({  success: false, error: error }));
