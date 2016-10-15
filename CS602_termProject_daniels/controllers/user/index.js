@@ -10,9 +10,9 @@ exports.create = (req, res, next) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	if (utilities.checkAccess(req, res, next) === false) {
-		//res.status(401);
-		//res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
-		//return;
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
 	}
 
 	let postData = req.body;
@@ -55,9 +55,9 @@ exports.list = (req, res, next) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	if (utilities.checkAccess(req, res, next) === false) {
-		//res.status(401);
-		//res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
-		//return;
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
 	}
 
 	User.find(query, (error, user) => {
@@ -129,7 +129,7 @@ exports.auth = (req, res, next) => {
 				req.session.regenerate(() => {
 					req.session.email = email; // set email value is session
 					req.session.logged_in =  true;
-					req.session.type = user.type;
+					req.session.roles = user.roles.join(',');
 					req.session.success = 'Authentication was successful!';
 
 					res.send(JSON.stringify({ success: true, user: { email: user.email, courses: user.courses, type: user.type }, sid: req.sessionID }));
