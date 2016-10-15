@@ -68,6 +68,18 @@ module.exports = (parent, options) => {
 					method = 'post';
 					path = '/' + name + '/:' + name + '_id/add_student';
 					break;
+				case 'addAssignment':
+					method = 'post';
+					path = '/' + name + '/:' + name + '_id/add_assignment';
+					break;
+				case 'addModule':
+					method = 'post';
+					path = '/' + name + '/:' + name + '_id/add_module';
+					break;
+				case 'addAssessment':
+					method = 'post';
+					path = '/' + name + '/:' + name + '_id/add_assessment';
+					break;
 				default:
 					throw new Error('unrecognized route: ' + name + '.' + key);
 			}

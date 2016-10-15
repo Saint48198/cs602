@@ -144,6 +144,90 @@ exports.addStudent = (req, res, next) => {
 		});
 };
 
+exports.addAssignment = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	let postData = req.body;
+
+	// find course and add student id to array
+	Course.findOneAndUpdate(
+		{ number: req.params.course_id },
+		{ $addToSet: { assignments: { _id: postData._id } }},
+		{ safe: true, upsert: true, new: true },
+		(error, course) => {
+			if (error) {
+				res.send(JSON.stringify({ error: error.message }));
+				return;
+			}
+
+			res.send(JSON.stringify({ success: true, course: course }));
+		});
+};
+
+exports.addModule = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	let postData = req.body;
+
+	// find course and add student id to array
+	Course.findOneAndUpdate(
+		{ number: req.params.course_id },
+		{ $addToSet: { modules: { _id: postData._id } }},
+		{ safe: true, upsert: true, new: true },
+		(error, course) => {
+			if (error) {
+				res.send(JSON.stringify({ error: error.message }));
+				return;
+			}
+
+			res.send(JSON.stringify({ success: true, course: course }));
+		});
+};
+
+exports.addAssessment = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	let postData = req.body;
+
+	// find course and add student id to array
+	Course.findOneAndUpdate(
+		{ number: req.params.course_id },
+		{ $addToSet: { assessments: { _id: postData._id } }},
+		{ safe: true, upsert: true, new: true },
+		(error, course) => {
+			if (error) {
+				res.send(JSON.stringify({ error: error.message }));
+				return;
+			}
+
+			res.send(JSON.stringify({ success: true, course: course }));
+		});
+};
+
 exports.list = (req, res, next) => {
 	"use strict";
 

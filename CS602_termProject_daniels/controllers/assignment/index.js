@@ -47,26 +47,27 @@ exports.list = (req, res, next) => {
 		return;
 	}
 
-	if (queryData.courseId) {
-		Course.find({ number: courseId}, (error, course) => {
+	if (queryData.course_id) {
+		Course.findOne({ number: queryData.course_id }, (error, course) => {
 			if (error) {
 				console.log('Error: %s', error);
-				res.send(JSON.stringify({ error: error }));
+				res.send(JSON.stringify({ error: 'Error finding course!' }));
 				return;
 			}
 
-			Assignment.find({ $or: course.assignments }, (error, results) => {
-				if (error) {
-					console.log('Error: %s', error);
-					res.send(JSON.stringify({ error: error }));
-					return;
-				}
+			if (course.assignments.length) {
+				Assignment.find({ $or: course.assignments }, (error, results) => {
+					if (error) {
+						console.log('Error: %s', error);
+						res.send(JSON.stringify({ error: 'Error finding assignments!' }));
+						return;
+					}
 
-				res.send(JSON.stringify({ assignment: results }));
-			});
-
-
-
+					res.send(JSON.stringify({ assignment: results }));
+				});
+			} else {
+				res.send(JSON.stringify({ assignment: course.assessments }));
+			}
 		});
 
 		return;
