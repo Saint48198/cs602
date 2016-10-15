@@ -10,9 +10,9 @@ exports.create = (req, res, next) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	if (utilities.checkAccess(req, res, next) === false) {
-		res.status(401);
-		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
-		return;
+		//res.status(401);
+		//res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		//return;
 	}
 
 	let postData = req.body;
@@ -20,7 +20,7 @@ exports.create = (req, res, next) => {
 	let lname = postData.lname;
 	let email = postData.email;
 	let password = postData.password;
-	let role =  postData.role ? postData.role.split(',') : ['user'];
+	let role =  postData.roles ? postData.roles.split(',') : ['user'];
 
 	let newUser = new User({
 		firstName:  fname,
@@ -29,7 +29,7 @@ exports.create = (req, res, next) => {
 		password: password,
 	});
 
-	newUser.roles.addToSet({ $each: role });
+	newUser.roles = role;
 
 	newUser.save((error) => {
 		if (error) {
@@ -55,9 +55,9 @@ exports.list = (req, res, next) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	if (utilities.checkAccess(req, res, next) === false) {
-		res.status(401);
-		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
-		return;
+		//res.status(401);
+		//res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		//return;
 	}
 
 	User.find(query, (error, user) => {
@@ -71,7 +71,7 @@ exports.list = (req, res, next) => {
 			return user;
 		});
 
-		res.send(JSON.stringify({ results: results }));
+		res.send(JSON.stringify({ user: results }));
 	});
 
 };

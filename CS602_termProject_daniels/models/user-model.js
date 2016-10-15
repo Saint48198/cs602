@@ -37,23 +37,22 @@ UserSchema.virtual('isLocked').get(function () {
 });
 
 // password hashing middleware
-UserSchema.pre('save', (next) => {
+UserSchema.pre('save', function (next) {
     let user = this;
-
     // only hash the password if it has been modified or new
-    if (!user.isModified('password')) {
+    if (user.password && !user.isModified('password')) {
         return next();
     }
 
     // generate salt
     bcrypt.genSalt(SALT_WORK_FACTOR, function (error, salt) {
-        if (error) {
+    	if (error) {
             return next(error);
         }
 
         // hash the password along with the salt
         bcrypt.hash(user.password, salt, function (error, hash) {
-            if (error) {
+        	if (error) {
                 return next(error);
             }
             // over write the nonencrpted password 
@@ -139,7 +138,7 @@ UserSchema.statics.getAuthenticated = (user, password, callback) => {
             };
 
             return user.update(updates, (error) => {
-                if (error) {
+            	if (error) {
                     return callback(error);
                 }
 
