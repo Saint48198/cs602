@@ -47,7 +47,7 @@ exports.create = (req, res, next) => {
 				res.send(JSON.stringify({  success: false, error: error }));
 				return;
 			}
-console.log(assessment);
+
 			Course.findOneAndUpdate({ number: courseId }, { $addToSet: { assessments: { _id: assessment._id } } }, (error, course) => {
 				if (error) {
 					res.send(JSON.stringify({  success: false, error: error }));
