@@ -35,7 +35,7 @@ app.response.message = function (msg) {
 	return this;
 };
 
-// log
+// log every request to the console
 if (!module.parent) {
 	app.use(logger('dev'));
 }
@@ -68,8 +68,14 @@ if (app.get('env') === 'production') {
 app.use(cookieParser());
 app.use(session(sess));
 
-// to parse request body
+// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// parse application/json
+app.use(bodyParser.json());
+
+// parse application/vnd.api+json as json
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
 // allow overriding methods in query (?_method=put)
 app.use(methodOverride('_method'));
@@ -116,7 +122,16 @@ app.use((err, req, res, next) => {
 // assume 404 since no middleware responded
 app.use((req, res) => {
     res.status(404);
-    res.render('html/404');
+
+	// respond with json
+	if (req.accepts('json')) {
+		res.send({ error: 'Not found' });
+	} else if (req.accepts('html')) { // respond with html page
+		res.render('html/404');
+	} else { // default to plain-text. send()
+		res.type('txt').send('Not found');
+	}
+
 });
 
 

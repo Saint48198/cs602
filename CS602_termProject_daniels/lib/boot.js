@@ -32,10 +32,6 @@ module.exports = (parent, options) => {
 			}
 
 			switch (key) {
-				case 'index':
-					method = 'get';
-					path = '/';
-					break;
 				case 'session':
 					method = 'get';
 					path = '/' + name;
@@ -83,6 +79,10 @@ module.exports = (parent, options) => {
 				case 'addQuestion':
 					method = 'post';
 					path = '/' + name + '/:' + name + '_id/add_question';
+					break;
+				case 'index':
+					method = 'get';
+					path = '*';
 					break;
 				default:
 					throw new Error('unrecognized route: ' + name + '.' + key);
