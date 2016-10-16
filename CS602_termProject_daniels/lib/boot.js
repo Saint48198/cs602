@@ -80,6 +80,10 @@ module.exports = (parent, options) => {
 					method = 'post';
 					path = '/' + name + '/:' + name + '_id/add_assessment';
 					break;
+				case 'addQuestion':
+					method = 'post';
+					path = '/' + name + '/:' + name + '_id/add_question';
+					break;
 				default:
 					throw new Error('unrecognized route: ' + name + '.' + key);
 			}

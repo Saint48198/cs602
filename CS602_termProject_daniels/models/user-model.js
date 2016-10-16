@@ -16,8 +16,8 @@ const UserSchema = new Schema({
 		{
 			number: String,
 			grade: Number,
-			assessments: [ { _id: String, grade: Number, attempts: [ { _id: String, submitted: Date }] }],
-			assignments: [ { _id: String, grade: Number, attempts: [ {_id: String, submitted: Date }] }]
+			assessments: [{ _id: String, grade: Number, attempts: [{ _id: String, submitted: Date, answers: [{ _id: String }] }] }],
+			assignments: [{ _id: String, grade: Number, attempts: [{_id: String, submitted: Date }] }]
 		}
 	],
     numberLogins: { type: Number, required: true, default: 0 },

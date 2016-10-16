@@ -55,6 +55,11 @@ exports.list = (req, res, next) => {
 				return;
 			}
 
+			if (!course.name) {
+				res.send(JSON.stringify({ error: 'Invalid course number!' }));
+				return;
+			}
+
 			if (course.assignments.length) {
 				Assignment.find({ $or: course.assignments }, (error, results) => {
 					if (error) {
