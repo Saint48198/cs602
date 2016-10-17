@@ -22,8 +22,6 @@ define([
 		},
 
 		onRender: function () {
-			console.log("sample");
-			console.log(this.$el);
 			this.replaceUsingTemplate("template-sample", this.$el, {}, { title: "Hello World" });
 		}
 	});

@@ -33,3 +33,36 @@ main {
     border-right:  1px solid #666;
     margin-right: 5px;
 }
+
+/* content loader */
+.loader {
+    border: 6px solid #f3f3f3; /* Light grey */
+    border-top: 6px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+}
+
+.loader.lg {
+    width: 120px;
+    height: 120px;
+    border-width: 16px;
+    border-top-width: 16px;
+}
+
+.loader.sm {
+    width: 16px;
+    height: 16px;
+    border-width: 3px;
+    border-top-width: 3px;
+}
+
+.loader.center {
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

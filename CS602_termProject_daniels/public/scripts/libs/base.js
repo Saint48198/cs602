@@ -321,12 +321,11 @@
 
 				replaceUsingTemplate: function (templateId, targetElement, data, options) {
 					if (options && (typeof options.title !== "undefined")) {
-						document.title = options.title + " - LMS";
+						document.title = options.title + " :: LMS";
 					}
 					var compiledTemplate = this.compileTemplate(templateId);
 					var html = compiledTemplate(data);
 					var $target = $(targetElement);
-console.log(html);
 
 					if (html && $target.length) {
 						$target.html(html);

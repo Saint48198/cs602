@@ -5,8 +5,9 @@ define([
 	'underscore',
 	'backbone',
 	'../views/sample/sample-view',
+	'../views/login/login-view',
 	'base'
-], function ($, _, Backbone, SampleView, base) {
+], function ($, _, Backbone, SampleView, LoginView, base) {
 	"use strict";
 
 	var displayView = function (View, viewName, config) {
@@ -31,7 +32,7 @@ define([
 
 	var AppRouter = Backbone.Router.extend({
 		routes: {
-			//'/login(?:queryString)': displayView(LoginView, 'login', { needsAuth: false }),
+			'/login(?:queryString)': displayView(LoginView, 'login', { needsAuth: false }),
 			'*actions': displayView(SampleView, 'sample', { needsAuth: true })
 		}
 	});
