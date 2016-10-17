@@ -14,8 +14,8 @@ module.exports.create = (req, res, next) => {
 	}
 
 	let postData = req.body;
-	let fname = postData.fname;
-	let lname = postData.lname;
+	let fname = postData.firstName;
+	let lname = postData.lastName;
 	let email = postData.email;
 	let password = postData.password;
 	let role =  postData.roles ? postData.roles.split(',') : ['user'];
@@ -133,6 +133,7 @@ module.exports.auth = (req, res, next) => {
 					req.session.logged_in =  true;
 					req.session.roles = user.roles.join(',');
 					req.session.success = 'Authentication was successful!';
+					req.session.user = user;
 
 					res.send(JSON.stringify({ success: true, user: { email: user.email, courses: user.courses, type: user.type }, sid: req.sessionID }));
 				});

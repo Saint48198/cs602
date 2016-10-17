@@ -86,7 +86,8 @@ define([
 		},
 
 		submitError: function (model, error) {
-			this.updateView({ error: error });
+			this.updateView({ error: error, email: model.get('email') });
+			this.disabled = false;
 		},
 
 		doRedirect: function (url) {
