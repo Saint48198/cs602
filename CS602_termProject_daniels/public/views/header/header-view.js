@@ -6,6 +6,7 @@ define([
 	'underscore',
 	'backbone',
 	'util',
+	'bootstrap',
 	'base'
 
 ], function ($, _, Backbone, UTIL) {
@@ -18,13 +19,55 @@ define([
 			return '/views/header/header-template.handlebars';
 		},
 
-		onInitialize: function () {},
+		events: {
+			'click #logout': 'handleLogout'
+		},
+
+		onInitialize: function () {
+			this.requestedLogout = false;
+		},
 
 		onRender: function () {
 			var session = this.router.session;
 			var isLoggedIn = session ? session.logged_in : false;
+			var name = '';
 
-			this.replaceUsingTemplate('template-header', this.$el, { isLoggedIn: isLoggedIn });
+			if (isLoggedIn) {
+				name = (session.user && session.user.firstName && session.user.lastName) ? session.user.firstName + ' ' + session.user.lastName : session.email.split('@')[0];
+			}
+
+			this.replaceUsingTemplate('template-header', this.$el, { isLoggedIn: isLoggedIn, name: name });
+			$('.dropdown-toggle').dropdown();
+		},
+
+		handleLogout: function (e) {
+			e.preventDefault();
+
+			if (!this.requestedLogout) {
+				this.requestedLogout = true;
+
+				$.ajax({
+					method: 'GET',
+					url: '/api/logout',
+					success:  function (resp) {
+						if (resp.logged_out) {
+							location.reload(true);
+							return false;
+						}
+
+						this.handleLogoutError.call(this, resp);
+
+					}.bind(this),
+					error: this.handleLogoutError.bind(this)
+				});
+			}
+
+
+		},
+
+		handleLogoutError: function (resp) {
+			alert('There was an issue logging you out.Please try again later');
+			this.requestedLogout = false;
 		}
 	});
 	return HeaderView;

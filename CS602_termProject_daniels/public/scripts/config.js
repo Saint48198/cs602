@@ -10,7 +10,8 @@ require.config({
 		'es5-shim': '../bower_components/es5-shim/es5-shim.min',
 		'es6-shim': '../bower_components/es6-shim/es6-shim.min',
 		'base': 'libs/base',
-		'util': 'libs/utilities'
+		'util': 'libs/utilities',
+		'bootstrap': '../bower_components/bootstrap/dist/js/bootstrap.min'
 	},
 
 	'shim': {
@@ -37,6 +38,9 @@ require.config({
 		'util': {
 			'deps': ['jquery', 'underscore'],
 			'exports': 'UTIL'
+		},
+		'bootstrap': {
+			'deps': ['jquery', 'backbone']
 		}
 	}
 });
