@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 const utilities = require('../../lib/utilities');
 const User = mongoose.model('User');
 
-exports.prefix = '/api';
-
-exports.create = (req, res, next) => {
+module.exports.create = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -46,7 +44,7 @@ exports.create = (req, res, next) => {
 	});
 };
 
-exports.list = (req, res, next) => {
+module.exports.list = (req, res, next) => {
 	"use strict";
 
 	let queryData = req.query;
@@ -80,7 +78,7 @@ exports.list = (req, res, next) => {
 
 };
 
-exports.show =  (req, res, next) => {
+module.exports.show =  (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -106,7 +104,7 @@ exports.show =  (req, res, next) => {
 	});
 };
 
-exports.auth = (req, res, next) => {
+module.exports.auth = (req, res, next) => {
 	"use strict";
 
 	let postData = req.body;

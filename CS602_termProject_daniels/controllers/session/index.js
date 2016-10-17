@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-exports.prefix = '/api';
-
-exports.session = (req, res, next) => {
+module.exports.session = (req, res, next) => {
 	'use strict';
 
 	let session = req.session;
@@ -12,7 +10,7 @@ exports.session = (req, res, next) => {
 	res.send(JSON.stringify(session));
 };
 
-exports.logout = (req, res, next) => {
+module.exports.logout = (req, res, next) => {
 	req.session.destroy((error) => {
 		res.setHeader('Content-Type', 'application/json');
 

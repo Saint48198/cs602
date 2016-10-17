@@ -3,9 +3,7 @@ const utilities = require('../../lib/utilities');
 const Course = mongoose.model('Course');
 const User = mongoose.model('User');
 
-exports.prefix = '/api';
-
-exports.create = (req, res, next) => {
+module.exports.create = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -41,7 +39,7 @@ exports.create = (req, res, next) => {
 	});
 };
 
-exports.show =  (req, res, next) => {
+module.exports.show =  (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -67,7 +65,7 @@ exports.show =  (req, res, next) => {
 	});
 };
 
-exports.addTeacher = (req, res, next) => {
+module.exports.addTeacher = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -94,7 +92,7 @@ exports.addTeacher = (req, res, next) => {
 		});
 };
 
-exports.addStudent = (req, res, next) => {
+module.exports.addStudent = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -144,7 +142,7 @@ exports.addStudent = (req, res, next) => {
 		});
 };
 
-exports.addAssignment = (req, res, next) => {
+module.exports.addAssignment = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -172,7 +170,7 @@ exports.addAssignment = (req, res, next) => {
 		});
 };
 
-exports.addModule = (req, res, next) => {
+module.exports.addModule = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -200,7 +198,7 @@ exports.addModule = (req, res, next) => {
 		});
 };
 
-exports.addAssessment = (req, res, next) => {
+module.exports.addAssessment = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -228,7 +226,7 @@ exports.addAssessment = (req, res, next) => {
 		});
 };
 
-exports.list = (req, res, next) => {
+module.exports.list = (req, res, next) => {
 	"use strict";
 
 	let queryData = req.query;

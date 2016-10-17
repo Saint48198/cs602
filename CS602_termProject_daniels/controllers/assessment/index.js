@@ -5,9 +5,7 @@ const Course = mongoose.model('Course');
 const Assessment = mongoose.model('Assessment');
 const Question = mongoose.model('Question');
 
-exports.prefix = '/api';
-
-exports.create = (req, res, next) => {
+module.exports.create = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -66,7 +64,7 @@ exports.create = (req, res, next) => {
 
 };
 
-exports.addQuestion = (req, res, next) => {
+module.exports.addQuestion = (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');
@@ -107,7 +105,7 @@ exports.addQuestion = (req, res, next) => {
 	}
 };
 
-exports.list = (req, res, next) => {
+module.exports.list = (req, res, next) => {
 	"use strict";
 
 	let queryData = req.query;
@@ -155,7 +153,7 @@ exports.list = (req, res, next) => {
 	}
 };
 
-exports.show =  (req, res, next) => {
+module.exports.show =  (req, res, next) => {
 	"use strict";
 
 	res.setHeader('Content-Type', 'application/json');

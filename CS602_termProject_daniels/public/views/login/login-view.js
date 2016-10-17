@@ -40,6 +40,14 @@ define([
 		},
 
 		onRender: function () {
+			var session = this.router.session;
+			var isLoggedIn = session ? session.logged_in : false;
+
+			if (isLoggedIn) {
+				this.doRedirect('/');
+				return false;
+			}
+			
 			this.updateView({});
 		},
 
@@ -71,7 +79,7 @@ define([
 
 		submitSuccess: function (resp) {
 			if (resp.toJSON().success) {
-				this.trigger("successfulLogin");
+				this.trigger('successfulLogin');
 			} else {
 				this.submitError(this.loginModel, resp.toJSON().error);
 			}
