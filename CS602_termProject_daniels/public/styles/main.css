@@ -1,8 +1,21 @@
+/* layout */
+html, body {
+    height: 100%;
+    margin: 0;
+}
 body {
     padding-top: 90px;
 }
 
-.container {
+.wrapper {
+    min-height: 100%;
+
+    /* Equal to height of footer */
+    /* But also accounting for potential margin-bottom of last child */
+    margin-bottom: -75px;
+}
+
+header .container {
     overflow: hidden;
 }
 
@@ -19,6 +32,20 @@ main {
     padding: 0 25px;
 }
 
+.footer, .push {
+    height: 75px;
+}
+
+footer > div:first-child {
+    border-top: 1px solid #ccc;
+    padding-top: 25px;
+    text-align: right;
+    font-size: 12px;
+    color: #ccc;
+}
+
+
+/* horizontal menu */
 .actions ul {
     list-style: none;
 }

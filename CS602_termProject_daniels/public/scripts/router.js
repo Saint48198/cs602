@@ -5,11 +5,13 @@ define([
 	'underscore',
 	'backbone',
 	'util',
+	'../views/header/header-view',
+	'../views/footer/footer-view',
 	'../views/sample/sample-view',
 	'../views/login/login-view',
 	"../models/session-model",
 	'base'
-], function ($, _, Backbone, UTIL, SampleView, LoginView, SessionModel, base) {
+], function ($, _, Backbone, UTIL, HeaderView, FooterView, SampleView, LoginView, SessionModel, base) {
 	"use strict";
 
 	var displayView = function (View, viewName, config) {
@@ -70,6 +72,12 @@ define([
 	};
 
 	var startApp = function (router, sessionData) {
+		router.session = sessionData;
+
+		var footerView = new FooterView(router);
+		var headerView =  new HeaderView(router);
+
+		headerView.render();
 		Backbone.history.start();
 	};
 
@@ -114,11 +122,9 @@ define([
 
 		appRouter.sessionModel.fetch({
 			success: function (model, sessionResp) {
-				console.log(sessionResp);
 				startApp(appRouter, sessionResp);
 			},
 			error: function (model, sessionResp) {
-				console.log(sessionResp);
 				startApp(appRouter, sessionResp);
 			}
 		});

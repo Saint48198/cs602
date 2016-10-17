@@ -53,7 +53,7 @@ app.use('/bower_components', express.static(__dirname + '/bower_components'));
 const expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 let sess = {
 	secret: '1234567890QWERTY',
-	resave: false,
+	resave: true,
 	saveUninitialized: false,
 	name: 'sessionId',
 	genid: function (req) {

@@ -1,0 +1,17 @@
+<script id="template-header" type="text/x-handlebars-template">
+	<header class="navbar navbar-inverse navbar-fixed-top">
+		<nav class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/"><img src="/images/bu-logo.gif" alt="Boston University"></a>
+			</div>
+			{{#if isLoggedIn }}
+				<div id="navbar">
+					<ul class="nav navbar-nav">
+						<li><a href="/">Home</a></li>
+						<li><a href="/admin">LMS Admin</a></li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			{{/if}}
+		</nav>
+	</header>
+</script>
