@@ -321,12 +321,12 @@
 
 				replaceUsingTemplate: function (templateId, targetElement, data, options) {
 					if (options && (typeof options.title !== "undefined")) {
-						document.title = options.title + " - SIRS Knowledge Source";
+						document.title = options.title + " - LMS";
 					}
-					var compiledTemplate = this.compileTemplate(templateId),
-						html = compiledTemplate(data),
-						$target = $(targetElement);
-
+					var compiledTemplate = this.compileTemplate(templateId);
+					var html = compiledTemplate(data);
+					var $target = $(targetElement);
+console.log(html);
 
 					if (html && $target.length) {
 						$target.html(html);

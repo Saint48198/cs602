@@ -1,5 +1,8 @@
+// global for loading view templates
+window.templateStore = {};
+
 require([
-	'scripts/app'
+	'app'
 ], function (App) {
 	"use strict";
 

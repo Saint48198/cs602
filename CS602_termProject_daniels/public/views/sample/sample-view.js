@@ -2,29 +2,30 @@
 // Filename: sample-view.js
 
 define([
-  "jquery",
-  "underscore",
-  "backbone",
-  "framework"
+	"jquery",
+	"underscore",
+	"backbone",
+	"base"
 
-], function ($, _, Backbone) {
-  "use strict";
-  var SampleView = BaseView.fullExtend({
+], function ($, _, Backbone, base) {
+	"use strict";
+	var SampleView = BaseView.fullExtend({
 
-    el: $("main"),
+		el: $("main"),
 
-    url: function () {
-      return "/webapp/views/sample/sample-template.handlebars";
-    },
+		url: function () {
+			return "/views/sample/sample-template.handlebars";
+		},
 
-    onInitialize: function () {
+		onInitialize: function () {
 
-    },
+		},
 
-    onRender: function () {
-      console.log("hello");
-      this.replaceUsingTemplate("template-sample", this.$el, {}, { title: "Hello World" });
-    }
-  });
-  return SampleView;
+		onRender: function () {
+			console.log("sample");
+			console.log(this.$el);
+			this.replaceUsingTemplate("template-sample", this.$el, {}, { title: "Hello World" });
+		}
+	});
+	return SampleView;
 });
