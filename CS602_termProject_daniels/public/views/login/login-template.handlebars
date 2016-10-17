@@ -3,9 +3,15 @@
 		<form class="form-signin" method="post" action="." id="form-login">
 			<h2 class="form-signin-heading">Please sign in</h2>
 
+			{{#if error}}
+				<div class="alert alert-danger">
+					{{{error}}}
+				</div>
+			{{/if}}
+
 			<div class="form-group">
 				<label for="inputEmail" class="sr-only">Email address</label>
-				<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus /{{#if disabled}}disabled/{{/if}}>
+				<input type="email" name="email" value="{{email}}" id="inputEmail" class="form-control" placeholder="Email address" required autofocus /{{#if disabled}}disabled/{{/if}}>
 			</div>
 			<div class="form-group">
 				<label for="inputPassword" class="sr-only">Password</label>

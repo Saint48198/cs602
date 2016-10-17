@@ -5,10 +5,11 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+	'util',
 	'../../models/login-model',
 	'base'
 
-], function ($, _, Backbone, LoginModel, base) {
+], function ($, _, Backbone, UTIL, LoginModel, base) {
 	'use strict';
 	var LoginView = BaseView.fullExtend({
 
@@ -32,7 +33,7 @@ define([
 				if (typeof q.fwd != 'undefined') {
 					this.doRedirect(decodeURIComponent(q.fwd));
 				} else {
-					this.doRedirect('/webapp/');
+					this.doRedirect('/');
 				}
 
 			}, this));
@@ -59,13 +60,29 @@ define([
 					formDataObject[formData[total].name] = formData[total].value;
 				}
 
-				formDataObject.user = formDataObject.user.trim();
+				formDataObject.email = formDataObject.email.trim();
 
 				this.disabled = true;
-				this.updateView({user: formDataObject.user, disabled: this.disabled});
+				this.updateView({ email: formDataObject.email, disabled: this.disabled });
 
-				this.loginModel.save(formDataObject, {success: this.submitSuccess, error: this.submitError});
+				this.loginModel.save(formDataObject, { success: this.submitSuccess.bind(this), error: this.submitError.bind(this) });
 			}
+		},
+
+		submitSuccess: function (resp) {
+			if (resp.toJSON().success) {
+				this.trigger("successfulLogin");
+			} else {
+				this.submitError(this.loginModel, resp.toJSON().error);
+			}
+		},
+
+		submitError: function (model, error) {
+			this.updateView({ error: error });
+		},
+
+		doRedirect: function (url) {
+			window.location.replace(url);
 		}
 	});
 	return LoginView;

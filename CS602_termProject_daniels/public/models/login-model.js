@@ -38,7 +38,7 @@ define([
 					(attrs = {})[key] = val;
 				}
 
-				options = _.extend({validate: true}, options);
+				options = _.extend({ validate: true }, options);
 
 				// If we're not waiting and attributes exist, save acts as
 				// `set(attr).save(null, opts)` with validation. Otherwise, check if
@@ -94,7 +94,7 @@ define([
 
 
 			validate: function (attrs, options) {
-				var requiredFields = {'user': [], 'password': []},
+				var requiredFields = {'email': [], 'password': []},
 					errors = [];
 
 				_.each(attrs, function (value, name) {
