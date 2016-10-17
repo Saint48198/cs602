@@ -1,0 +1,40 @@
+<script id="template-admin" type="text/x-handlebars-template">
+	<div class="container">
+		<div class="col-md-3">
+			<nav>
+				<ul class="nav nav-pills nav-stacked">
+					<li role="presentation" class="active"><a href="#" data-bb-link>Courses</a></li>
+					<li role="presentation"><a href="/students" data-bb-link>Students</a></li>
+					<li role="presentation"><a href="/teachers" data-bb-link>Send Email</a></li>
+				</ul>
+			</nav>
+		</div>
+		<div class="col-lg-9">
+			<h1>Courses</h1>
+			<a href="/add-course" data-bb-link>Add Course</a>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Number</th>
+						<th>Name</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each course}}
+						<tr>
+							<td><a href="/edit-course?course_id={{number}}" data-bb-link>{{number}}</a></td>
+							<td>{{name}}</td>
+							<td>
+								<a href="/edit-course?course_id={{number}}" class="btn btn-default" data-bb-link>edit</a>
+								<button type="button" class="btn btn-danger btn-delete-course" data-courseId="{{number}}">delete</button>
+							</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+			<hr>
+			<a href="/add-course" data-bb-link>Add Course</a>
+		</div>
+	</div>
+</script>

@@ -31,12 +31,14 @@ define([
 			var session = this.router.session;
 			var isLoggedIn = session ? session.logged_in : false;
 			var name = '';
+			var isAdmin = false;
 
 			if (isLoggedIn) {
 				name = (session.user && session.user.firstName && session.user.lastName) ? session.user.firstName + ' ' + session.user.lastName : session.email.split('@')[0];
+				isAdmin = (session.roles.indexOf('admin') !== -1);
 			}
 
-			this.replaceUsingTemplate('template-header', this.$el, { isLoggedIn: isLoggedIn, name: name });
+			this.replaceUsingTemplate('template-header', this.$el, { isLoggedIn: isLoggedIn, name: name, isAdmin: isAdmin });
 			$('.dropdown-toggle').dropdown();
 		},
 

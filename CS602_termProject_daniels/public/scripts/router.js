@@ -8,10 +8,11 @@ define([
 	'../views/header/header-view',
 	'../views/footer/footer-view',
 	'../views/landing/landing-view',
+	'../views/admin/admin-view',
 	'../views/login/login-view',
 	"../models/session-model",
 	'base'
-], function ($, _, Backbone, UTIL, HeaderView, FooterView, LandingView, LoginView, SessionModel, base) {
+], function ($, _, Backbone, UTIL, HeaderView, FooterView, LandingView, AdminView, LoginView, SessionModel, base) {
 	"use strict";
 
 	var displayView = function (View, viewName, config) {
@@ -27,6 +28,12 @@ define([
 				return false;
 			}
 
+			// if the page requires user to be admin, checks if they are and if not redirects user to home page
+			if (config.needsToBeAdmin && this.sessionModel.get('roles') && this.sessionModel.get('roles').indexOf('admin') === -1) {
+				UTIL.navTo("/");
+				return false;
+			}
+
 			// check to see if view exists before creating it in order to prevent the events from being attached more then once
 			if (this[viewName]) {
 				this[viewName].close();
@@ -38,9 +45,36 @@ define([
 		return callback;
 	};
 
+	var handleBodyClickEvents = function (e) {
+		var target = e.target;
+
+		if (target.tagName.toLowerCase() !== "a") {
+			target = target.parentNode;
+			if (target.tagName.toLowerCase() !== "a") {
+				target = target.parentNode;
+			}
+		}
+
+		if (target && target.hasAttribute("data-bb-link") === true) {
+			if (target.href) {
+				UTIL.nav(target, e);
+			}
+		} else if (target && target.hasAttribute("data-nw-link") === true) {
+			if (target.href) {
+				UTIL.openNewWindow(e);
+			}
+		}
+
+		if (this.sessionModel.get("logged_in")) {
+			this.sessionModel.trigger("resetSessionTimer");
+			this.sessionModel.trigger("resetSessionMessage");
+		}
+	};
+
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'/login(?:queryString)': displayView(LoginView, 'login', { needsAuth: false }),
+			'/admin': displayView(AdminView, 'admin', { needsAuth: true, needsToBeAdmin: true }),
 			'*actions': displayView(LandingView, 'sample', { needsAuth: true })
 		}
 	});
@@ -79,6 +113,9 @@ define([
 
 		headerView.render();
 		Backbone.history.start();
+
+		// attach click to the body to handle clicking on links within the whole app
+		document.getElementsByTagName("body")[0].addEventListener("click", handleBodyClickEvents.bind(router));
 	};
 
 	var initialize = function () {

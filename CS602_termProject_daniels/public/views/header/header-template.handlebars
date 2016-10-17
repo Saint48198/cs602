@@ -2,7 +2,7 @@
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<nav class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="/"><img src="/images/bu-logo.gif" alt="Boston University"></a>
+				<a class="navbar-brand" href="/" data-bb-link><img src="/images/bu-logo.gif" alt="Boston University"></a>
 			</div>
 			{{#if isLoggedIn }}
 				<div id="navbar">
@@ -12,7 +12,9 @@
 								{{name}} <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="dLabel">
-								<li><a href="/admin">LMS Admin</a></li>
+								{{#if isAdmin}}
+									<li><a href="/admin" data-bb-link>LMS Admin</a></li>
+								{{/if}}
 								<li><a href="#logout" role="button" id="logout">log out</a></li>
 							</ul>
 						</li>
