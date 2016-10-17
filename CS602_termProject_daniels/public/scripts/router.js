@@ -8,11 +8,11 @@ define([
 	'../views/header/header-view',
 	'../views/footer/footer-view',
 	'../views/landing/landing-view',
-	'../views/admin/admin-view',
+	'../views/admin/courses/courses-view',
 	'../views/login/login-view',
 	"../models/session-model",
 	'base'
-], function ($, _, Backbone, UTIL, HeaderView, FooterView, LandingView, AdminView, LoginView, SessionModel, base) {
+], function ($, _, Backbone, UTIL, HeaderView, FooterView, LandingView, AdminCoursesView, LoginView, SessionModel, base) {
 	"use strict";
 
 	var displayView = function (View, viewName, config) {
@@ -74,7 +74,7 @@ define([
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'/login(?:queryString)': displayView(LoginView, 'login', { needsAuth: false }),
-			'/admin': displayView(AdminView, 'admin', { needsAuth: true, needsToBeAdmin: true }),
+			'/admin': displayView(AdminCoursesView, 'adminCourses', { needsAuth: true, needsToBeAdmin: true }),
 			'*actions': displayView(LandingView, 'sample', { needsAuth: true })
 		}
 	});
