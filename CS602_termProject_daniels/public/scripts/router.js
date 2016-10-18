@@ -15,6 +15,8 @@ define([
 	'../views/admin/assessments/assessments-view',
 	'../views/admin/module/module-view',
 	'../views/admin/users/users-view',
+	'../views/admin/user/user-view',
+	'../views/edit-user-password/editUserPassword-view',
 	'../views/login/login-view',
 	"../models/session-model",
 	'base'
@@ -29,6 +31,8 @@ define([
 			 AdminAssessmentView,
 			 AdminModuleView,
 			 AdminUsersView,
+			 AdminUserView,
+			 EditUserPasswordView,
 			 LoginView,
 			 SessionModel, base) {
 	"use strict";
@@ -92,6 +96,8 @@ define([
 	var AppRouter = Backbone.Router.extend({
 		routes: {
 			'/login(?:queryString)': displayView(LoginView, 'login', { needsAuth: false }),
+			'/change-password(?:queryString)': displayView(EditUserPasswordView, 'changeUserPassword', { needsAuth: true }),
+
 			// admin views
 			'/admin': displayView(AdminCoursesView, 'adminCourses', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-add_course(?:queryString)': displayView(AdminCourseView, 'adminAddCourse', { needsAuth: true, needsToBeAdmin: true }),
@@ -102,6 +108,7 @@ define([
 			'/admin-add_module(?:queryString)': displayView(AdminModuleView, 'adminAddModule', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-edit_module(?:queryString)': displayView(AdminModuleView, 'adminEditModule', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-users(?:queryString)': displayView(AdminUsersView, 'adminUsers', { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-user(?:queryString)': displayView(AdminUserView, 'adminUser', { needsAuth: true, needsToBeAdmin: true }),
 
 			'*actions': displayView(LandingView, 'default', { needsAuth: true })
 		}
