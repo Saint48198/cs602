@@ -1,0 +1,44 @@
+<script id="template-adminModules" type="text/x-handlebars-template">
+	<div class="container">
+	  	<nav>
+			<ol class="breadcrumb">
+				<li><a href="/" data-bb-link>Home</a></li>
+				<li><a href="/admin" data-bb-link>Courses</a></li>
+				<li><a href="/admin-edit_course?course_id={{courseNumber}}" data-bb-link>Course</a></li>
+				<li class="active">Users</li>
+			</ol>
+		</nav>
+		<h1>Modules</h1>
+		<a href="/admin-add_user?course_id={{courseNumber}}">Add User</a>
+		<ul class="filters">
+			<li>filters:</li>
+			<li><a href="/admin-users?type=user">Students</a></li>
+			<li><a href="/admin-users?type=admin">Teachers</a></li>
+			<li><a href="/admin-users">All</a></li>
+		</ul>
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>last name</th>
+				<th>first name</th>
+				<th>email</th>
+				<th>&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			{{#each module}}
+				<tr>
+					<td><a href="/admin-edit_user?user_id={{_id}}">{{lastName}}</a></td>
+					<td>{{firstName}}</td>
+					<td>{{email}}</td>
+					<td>
+						<a href="/admin-edit_user?user_id={{_id}}" class="btn btn-default">Edit</a>
+						<button type="button" class="btn btn-danger btn-delete-user" data-id="{{_id}}">Delete</button>
+					</td>
+				</tr>
+			{{/each}}
+			</tbody>
+		</table>
+		<a href="/admin-add_user?course_id={{courseNumber}}">Add User</a>
+	</div>
+</script>
