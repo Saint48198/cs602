@@ -16,6 +16,7 @@ define([
 	'../views/admin/module/module-view',
 	'../views/admin/users/users-view',
 	'../views/admin/user/user-view',
+	'../views/admin/assignment/assignment-view',
 	'../views/edit-user-password/editUserPassword-view',
 	'../views/login/login-view',
 	"../models/session-model",
@@ -32,6 +33,7 @@ define([
 			 AdminModuleView,
 			 AdminUsersView,
 			 AdminUserView,
+			 AdminAssignmentView,
 			 EditUserPasswordView,
 			 LoginView,
 			 SessionModel, base) {
@@ -104,6 +106,7 @@ define([
 			'/admin-edit_course(?:queryString)': displayView(AdminCourseView, 'adminEditCourse', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-modules': displayView(AdminModulesView, 'adminModules', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-assignments': displayView(AdminAssignmentsView, 'adminAssignments', { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-assignment(?:queryString)': displayView(AdminAssignmentView, 'adminAssignment', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-assessments': displayView(AdminAssessmentsView, 'adminAssessments', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-add_module(?:queryString)': displayView(AdminModuleView, 'adminAddModule', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-edit_module(?:queryString)': displayView(AdminModuleView, 'adminEditModule', { needsAuth: true, needsToBeAdmin: true }),
