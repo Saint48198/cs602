@@ -43,6 +43,11 @@ define([
 			});
 		},
 		handleSuccessfulRequest: function (collection, resp) {
+			if (resp.error) {
+				this.handleFailedRequest(resp, resp.error);
+				return;
+			}
+
 			this.replaceUsingTemplate('template-adminAssessmentsContent', $('.container-tableData', this.$el), { assessment: collection.toJSON() });
 		},
 

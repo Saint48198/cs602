@@ -61,6 +61,11 @@ define([
 		},
 
 		handleSuccessfulRequest: function (collection, resp) {
+			if (resp.error) {
+				this.handleFailedRequest(resp, resp.error);
+				return;
+			}
+
 			this.replaceUsingTemplate('template-adminUsersContent', $('.container-tableData', this.$el), { user: collection.toJSON() });
 		},
 

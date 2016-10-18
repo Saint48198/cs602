@@ -53,7 +53,12 @@ define([
 		},
 		handleSuccessfulRequest: function (model, resp) {
 			var data = model.toJSON();
-			console.log(data);
+
+			if (resp.error) {
+				this.handleFailedRequest(resp, resp.error);
+				return;
+			}
+
 			this.replaceUsingTemplate('template-adminCourseForm', $('.container-form', this.$el), data);
 		},
 

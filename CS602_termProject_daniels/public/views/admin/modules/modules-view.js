@@ -2,27 +2,57 @@
 // Filename: modules-view.js
 
 define([
-	"jquery",
-	"underscore",
-	"backbone",
-	"base"
+	'jquery',
+	'underscore',
+	'backbone',
+	'util',
+	'../../../collections/module-collection',
+	'base'
 
-], function ($, _, Backbone, base) {
-	"use strict";
+], function ($, _, Backbone, UTIL, ModuleCollection) {
+	'use strict';
 	var AdminModulesView = BaseView.fullExtend({
 
-		el: $("main"),
+		el: $('main'),
 
 		url: function () {
-			return "/views/admin/modules/modules-template.handlebars";
+			return '/views/admin/modules/modules-template.handlebars';
 		},
 
 		onInitialize: function () {
-
+			this.moduleCollection = new ModuleCollection();
 		},
 
 		onRender: function () {
-			this.replaceUsingTemplate("template-adminModules", this.$el, {}, { title: "Modules" });
+			var query = UTIL.QueryString();
+			var courseId = query.course_id;
+
+			// view requires course id, if there is none redirect to admin home page
+			if (!courseId) {
+				UTIL.navTo('/admin');
+				return;
+			}
+
+			this.replaceUsingTemplate('template-adminModules', this.$el, { courseId: courseId }, {title: 'Admin Modules'});
+
+			this.moduleCollection.url = this.moduleCollection.url.split('?')[0] + '?course_id=' + courseId;
+
+			this.moduleCollection.fetch({
+				success: this.handleSuccessfulRequest.bind(this),
+				error: this.handleFailedRequest.bind(this)
+			});
+		},
+		handleSuccessfulRequest: function (collection, resp) {
+			if (resp.error) {
+				this.handleFailedRequest(resp, resp.error);
+				return;
+			}
+			this.replaceUsingTemplate('template-adminModulesContent', $('.container-tableData', this.$el), { module: collection.toJSON() });
+		},
+
+		handleFailedRequest: function (requestObject, error, errorThrow) {
+			console.log($('.container-tableData', this.$el).length);
+			this.replaceUsingTemplate('template-serviceError', $('.container-tableData', this.$el), { error: error });
 		}
 	});
 	return AdminModulesView;

@@ -37,6 +37,7 @@ module.exports.list = (req, res, next) => {
 	"use strict";
 
 	let queryData = req.query;
+	let courseId = queryData.course_id;
 
 	res.setHeader('Content-Type', 'application/json');
 
@@ -46,25 +47,27 @@ module.exports.list = (req, res, next) => {
 		return;
 	}
 
-	if (queryData.courseId) {
+	if (courseId) {
 		Course.find({ number: courseId}, (error, course) => {
 			if (error) {
 				console.log('Error: %s', error);
-				res.send(JSON.stringify({ error: error }));
+				res.send(JSON.stringify({ error:'Error on server getting the list of modules' }));
 				return;
 			}
 
-			Module.find({ $or: course.modules }, (error, results) => {
-				if (error) {
-					console.log('Error: %s', error);
-					res.send(JSON.stringify({ error: error }));
-					return;
-				}
+			if (course.modules && course.modules.length) {
+				Module.find({ $or: course.modules }, (error, results) => {
+					if (error) {
+						console.log('Error: %s', error);
+						res.send(JSON.stringify({ error: 'Error on server getting the list of modules' }));
+						return;
+					}
 
-				res.send(JSON.stringify({ module: results }));
-			});
-
-
+					res.send(JSON.stringify({ module: results }));
+				});
+			} else {
+				res.send(JSON.stringify({ module: [] }));
+			}
 
 		});
 

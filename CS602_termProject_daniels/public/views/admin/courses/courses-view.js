@@ -31,6 +31,11 @@ define([
 		},
 
 		handleSuccessfulRequest: function (collection, resp) {
+			if (resp.error) {
+				this.handleFailedRequest(resp, resp.error);
+				return;
+			}
+
 			this.replaceUsingTemplate('template-adminCoursesContent', $('.container-tableData', this.$el), { course: collection.toJSON() });
 		},
 
