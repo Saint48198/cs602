@@ -1,0 +1,76 @@
+<script id="template-adminQuestion" type="text/x-handlebars-template">
+	<div class="container">
+		<div class="col-md-3">
+			<nav>
+				<ul class="nav nav-pills nav-stacked">
+					<li role="presentation"><a href="/admin" data-bb-link>Courses</a></li>
+					<li role="presentation"><a href="/admin-students" data-bb-link>Students</a></li>
+					<li role="presentation"><a href="/admin-teachers" data-bb-link>Send Email</a></li>
+
+					{{#if inEditMode}}
+						<li role="presentation"><a href="/admin-users?role=user" data-bb-link>View Students</a></li>
+						<li role="presentation"><a href="/admin-users?role=admin" data-bb-link>View Teachers</a></li>
+						<li role="presentation" class="active"><a href="/admin-assessments" data-bb-link>View Assessments</a></li>
+						<li role="presentation"><a href="/admin-assignmenst" data-bb-link>View Assignments</a></li>
+						<li role="presentation"><a href="/admin-modules" data-bb-link>View Modules</a></li>
+					{{/if}}
+				</ul>
+			</nav>
+		</div>
+
+		<div class="col-md-9">
+			<nav>
+				<ol class="breadcrumb">
+					<li><a href="/" data-bb-link>Home</a></li>
+					<li><a href="/admin" data-bb-link>Courses</a></li>
+					<li><a href="/admin-assessment?assessment_id={{assessment_id}}">Assessment</a> </li>
+					<li class="active">Add Question</li>
+				</ol>
+			</nav>
+
+
+			<h1>Add Question for {{assessmentName}}</h1>
+			<form method="post" action="." id="form-AdminCourse">
+				{{#if error}}
+					<div class="alert alert-danger">
+						{{{error}}}
+					</div>
+				{{/if}}
+
+				{{#if success}}
+					<div class="alert alert-success">
+						{{{success}}}
+					</div>
+				{{/if}}
+
+				<div class="form-group">
+					<label for="inputQuestionText" class="sr-only">Question Text</label>
+					<textarea class="form-control" name="text" id="inputQuestionText" placeholder="Question Text" required autofocus {{#if disabled}}disabled/{{/if}}>{{text}}</textarea>
+				</div>
+
+				{{#each options }}
+					<div class="form-group" id="formsetModuleContent">
+						<div class="radio">
+							<label><input type="radio" name="options" value="{{@index}}"{{#if correct}} checked{{/if}}>{{text}}</label>
+						</div>
+					</div>
+				{{/each}}
+
+				<div id="control-ModuleContent">
+					<a href="#addContent" id="">Add Additional Option</a>
+				</div>
+
+				<div class="form-group">
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Add Question</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</script>
+
+<script id="template-adminModuleContentInput" type="text/x-handlebars-template">
+	<div class="form-group" id="formsetModuleContent">
+		<label for="inputModuleContent{{index}}" class="sr-only">Module Content Page {{index}}</label>
+		<textarea class="form-control" name="content" id="inputModuleContent{{index}}" placeholder="Module Content(HTML)"></textarea>
+	</div>
+</script>

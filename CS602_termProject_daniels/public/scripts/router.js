@@ -19,6 +19,7 @@ define([
 	'../views/admin/assignment/assignment-view',
 	'../views/admin/assessment/assessment-view',
 	'../views/admin/questions/questions-view',
+	'../views/admin/question/question-view',
 	'../views/edit-user-password/editUserPassword-view',
 	'../views/login/login-view',
 	"../models/session-model",
@@ -38,6 +39,7 @@ define([
 			 AdminAssignmentView,
 			 AdminAssessmentView,
 			 AdminQuestionsView,
+			 AdminQuestionView,
 			 EditUserPasswordView,
 			 LoginView,
 			 SessionModel, base) {
@@ -118,6 +120,7 @@ define([
 			'/admin-user(?:queryString)': 		 displayView(AdminUserView, 		'adminUser', 		  { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-assessment(?:queryString)':  displayView(AdminAssessmentView,   'adminAssessment', 	  { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-questions(?:queryString)':   displayView(AdminQuestionsView,    'adminQuestions', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-question(?:queryString)':    displayView(AdminQuestionsView,    'adminQuestion', 	  { needsAuth: true, needsToBeAdmin: true }),
 
 			// default view
 			'*actions': 						 displayView(LandingView, 			'default', 			  { needsAuth: true })

@@ -15,7 +15,7 @@ define([
 		el: $("main"),
 
 		url: function () {
-			return "/views/admin/course/course-template.handlebars";
+			return "/views/admin/module/module-template.handlebars";
 		},
 
 		onInitialize: function () {
