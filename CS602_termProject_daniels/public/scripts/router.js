@@ -10,10 +10,21 @@ define([
 	'../views/landing/landing-view',
 	'../views/admin/courses/courses-view',
 	'../views/admin/course/course-view',
+	'../views/admin/modules/modules-view',
+	'../views/admin/assignments/assignments-view',
 	'../views/login/login-view',
 	"../models/session-model",
 	'base'
-], function ($, _, Backbone, UTIL, HeaderView, FooterView, LandingView, AdminCoursesView, AdminCourseView, LoginView, SessionModel, base) {
+], function ($, _, Backbone, UTIL,
+			 HeaderView,
+			 FooterView,
+			 LandingView,
+			 AdminCoursesView,
+			 AdminCourseView,
+			 AdminModulesView,
+			 AdminAssignmentsView,
+			 LoginView,
+			 SessionModel, base) {
 	"use strict";
 
 	var displayView = function (View, viewName, config) {
@@ -78,7 +89,9 @@ define([
 			'/admin': displayView(AdminCoursesView, 'adminCourses', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-add_course': displayView(AdminCourseView, 'adminAddCourse', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-edit_course(?:queryString)': displayView(AdminCourseView, 'adminEditCourse', { needsAuth: true, needsToBeAdmin: true }),
-			'*actions': displayView(LandingView, 'sample', { needsAuth: true })
+			'/admin-modules': displayView(AdminModulesView, 'adminModules', { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-assignments': displayView(AdminAssignmentsView, 'adminAssignments', { needsAuth: true, needsToBeAdmin: true }),
+			'*actions': displayView(LandingView, 'default', { needsAuth: true })
 		}
 	});
 
