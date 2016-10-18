@@ -56,7 +56,7 @@ define([
 			this.userCollection.url = userApi
 			this.userCollection.fetch({
 				success: this.handleSuccessfulRequest.bind(this),
-				failure: this.handleFailedRequest.bind(this)
+				error: this.handleFailedRequest.bind(this)
 			});
 		},
 

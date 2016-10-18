@@ -4,15 +4,13 @@
 			<nav>
 				<ul class="nav nav-pills nav-stacked">
 					<li role="presentation" class="active"><a href="/admin" data-bb-link>Courses</a></li>
-					<li role="presentation"><a href="/admin-students" data-bb-link>Students</a></li>
-					<li role="presentation"><a href="/admin-teachers" data-bb-link>Send Email</a></li>
+					<li role="presentation"><a href="/admin-students{{#if courseId}}?course_id={{courseId}}{{/if}}" data-bb-link>Students</a></li>
+					<li role="presentation"><a href="/admin-teachers{{#if courseId}}?course_id={{courseId}}{{/if}}" data-bb-link>Teachers</a></li>
 
-					{{#if inEditMode}}
-						<li role="presentation"><a href="/admin-student" data-bb-link>View Students</a></li>
-						<li role="presentation"><a href="/admin-teacher" data-bb-link>View Teachers</a></li>
-						<li role="presentation"><a href="/admin-assessment" data-bb-link>View Assessments</a></li>
-						<li role="presentation"><a href="/admin-assignment" data-bb-link>View Assignments</a></li>
-						<li role="presentation"><a href="/admin-module" data-bb-link>View Modules</a></li>
+					{{#if courseId}}
+						<li role="presentation"><a href="/admin-assessments?course_id={{courseId}}" data-bb-link>Assessments</a></li>
+						<li role="presentation"><a href="/admin-assignments?course_id={{courseId}}" data-bb-link>Assignments</a></li>
+						<li role="presentation"><a href="/admin-modules?course_id={{courseId}}" data-bb-link>Modules</a></li>
 					{{/if}}
 				</ul>
 			</nav>
@@ -23,63 +21,69 @@
 				<ol class="breadcrumb">
 					<li><a href="/" data-bb-link>Home</a></li>
 					<li><a href="/admin" data-bb-link>Courses</a></li>
-					<li class="active">Add Course</li>
+					<li class="active">{{title}}</li>
 				</ol>
 			</nav>
 
 
-			<h1>Add Course</h1>
-			<form method="post" action="." id="form-AdminCourse">
-				{{#if error}}
-					<div class="alert alert-danger">
-						{{{error}}}
-					</div>
-				{{/if}}
-
-				{{#if success}}
-					<div class="alert alert-success">
-						{{{success}}}
-					</div>
-				{{/if}}
-
-				<div class="form-group">
-					<label for="inputCourseNumber" class="sr-only">Course Number</label>
-					<input type="text" name="number" value="{{number}}" id="inputCourseNumber" class="form-control" maxlength="5" placeholder="Course Number" required autofocus /{{#if disabled}}disabled/{{/if}}>
-				</div>
-
-				<div class="form-group">
-					<label for="inputCourseName" class="sr-only">Course Name</label>
-					<input type="text" name="name" value="{{name}}" id="inputCourseName" class="form-control" maxlength="325" placeholder="Course Name" required /{{#if disabled}}disabled/{{/if}}>
-				</div>
-
-				<div class="form-group">
-					<div class='input-group date' id='datetimepicker1'>
-						<label for="inputStartDate" class="sr-only">Start Date</label>
-						<input type='text' class="form-control" name="startDate" id="inputStartDate" placeholder="Start Date">
-						<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class='input-group date' id='datetimepicker2'>
-						<label for="inputEndDate" class="sr-only">End Date</label>
-						<input type='text' class="form-control" name="endDate" id="inputEndDate" placeholder="End Date">
-						<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="inputCourseDesc" class="sr-only">Course Description</label>
-					<textarea class="form-control" name="desc" id="inputCourseDesc" placeholder="Course Description"></textarea>
-				</div>
-				<div class="form-group">
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Add Course</button>
-				</div>
-			</form>
+			<h1>{{title}}</h1>
+			<div class="container-form">
+				<div class="loader center" aria-label="loading..."></div>
+			</div>
 		</div>
 	</div>
+</script>
+
+<script id="template-adminCourseForm" type="text/x-handlebars-template">
+	<form method="post" action="." id="form-AdminCourse">
+		{{#if error}}
+			<div class="alert alert-danger">
+				{{{error}}}
+			</div>
+		{{/if}}
+
+		{{#if success}}
+			<div class="alert alert-success">
+				{{{success}}}
+			</div>
+		{{/if}}
+
+		<div class="form-group">
+			<label for="inputCourseNumber" class="sr-only">Course Number</label>
+			<input type="text" name="number" value="{{number}}" id="inputCourseNumber" class="form-control" maxlength="5" placeholder="Course Number" required autofocus /{{#if disabled}}disabled/{{/if}}>
+		</div>
+
+		<div class="form-group">
+			<label for="inputCourseName" class="sr-only">Course Name</label>
+			<input type="text" name="name" value="{{name}}" id="inputCourseName" class="form-control" maxlength="325" placeholder="Course Name" required /{{#if disabled}}disabled/{{/if}}>
+		</div>
+
+		<div class="form-group">
+			<div class='input-group date' id='datetimepicker1'>
+				<label for="inputStartDate" class="sr-only">Start Date</label>
+				<input type='text' class="form-control" name="startDate" id="inputStartDate" placeholder="Start Date" value="{{startDate}}">
+				<span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class='input-group date' id='datetimepicker2'>
+				<label for="inputEndDate" class="sr-only">End Date</label>
+				<input type='text' class="form-control" name="endDate" id="inputEndDate" placeholder="End Date" value="{{endDate}}">
+				<span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="inputCourseDesc" class="sr-only">Course Description</label>
+			<textarea class="form-control" name="desc" id="inputCourseDesc" placeholder="Course Description"></textarea>
+		</div>
+		<div class="form-group">
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Add Course</button>
+		</div>
+	</form>
 </script>
