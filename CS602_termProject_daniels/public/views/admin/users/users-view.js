@@ -28,7 +28,8 @@ define([
 			var config = {
 				studentsActive: false,
 				teachersActive: false,
-				allActive: true
+				allActive: true,
+				courseId: query.course_id
 			};
 			var userApi = this.userCollection.url.split('?')[0];
 
@@ -71,7 +72,7 @@ define([
 				return;
 			}
 
-			this.replaceUsingTemplate('template-adminUsersContent', $('.container-tableData', this.$el), { user: collection.toJSON() });
+			this.replaceUsingTemplate('template-adminUsersContent', $('.container-tableData', this.$el), { user: collection.toJSON(), courseId: UTIL.QueryString().course_id });
 		},
 
 		handleFailedRequest: function (requestObject, error, errorThrow) {

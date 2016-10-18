@@ -27,22 +27,18 @@ define([
 		onRender: function () {
 			var query = UTIL.QueryString();
 			var courseId = query.course_id;
-			var title = 'Add Course';
+			var title = courseId ? 'Add Course' : 'Edit Course';
 
 			// no course id no access to edit course page, push the user to the add course page
-			if (!courseId && window.location.pathname.indexOf('/admin-add_course')) {
+			if (!courseId && window.location.pathname.indexOf('/admin-edit_course') !== -1) {
 				UTIL.navTo('/admin-add_course');
 				return;
-			} else {
-				title = 'Edit Course';
-				this.courseModel.url = this.courseModel.url + courseId;
 			}
-
-
 
 			this.replaceUsingTemplate('template-adminCourse', this.$el, { courseId: courseId, title: title }, { title: title });
 
 			if (courseId) {
+				this.courseModel.url = this.courseModel.url + courseId;
 				this.courseModel.fetch({
 					success: this.handleSuccessfulRequest.bind(this),
 					error: this.handleFailedRequest.bind(this)
