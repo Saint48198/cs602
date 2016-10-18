@@ -48,7 +48,7 @@ define([
 				return;
 			}
 
-			this.replaceUsingTemplate('template-adminAssignmentsContent', $('.container-tableData', this.$el), { assignment: collection.toJSON() });
+			this.replaceUsingTemplate('template-adminAssignmentsContent', $('.container-tableData', this.$el), { assignment: collection.toJSON(), courseId: UTIL.QueryString().course_id });
 		},
 
 		handleFailedRequest: function (requestObject, error, errorThrow) {
