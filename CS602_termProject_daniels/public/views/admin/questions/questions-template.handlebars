@@ -1,0 +1,35 @@
+<script id="template-adminQuestions" type="text/x-handlebars-template">
+	<div class="container">
+	  	<nav>
+			<ol class="breadcrumb">
+				<li><a href="/" data-bb-link>Home</a></li>
+				<li><a href="/admin" data-bb-link>Courses</a></li>
+				<li><a href="/admin-edit_course?course_id={{courseNumber}}" data-bb-link>Course</a></li>
+				<li><a href="/admin-edit-assessment?assessment_id={{assessmentId}}">Assessment</a></li>
+				<li class="active">Questions</li>
+			</ol>
+		</nav>
+		<h1>Questions for {{assessment_name}}</h1>
+		<a href="/admin-edit_assessment?assessment_id={{assessmentId}}">Edit Assessment Details</a>
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Text</th>
+				<th>&nbsp;</th>
+			</tr>
+			</thead>
+			<tbody>
+			{{#each question}}
+				<tr>
+					<td><a href="/admin-edit_question?question_id={{_id}}">{{text}}</a></td>
+					<td>
+						<a href="/admin-edit_question?question_id={{_id}}" class="btn btn-default">Edit</a>
+						<button type="button" class="btn btn-danger btn-delete-assessment" data-id="{{_id}}">Delete</button>
+					</td>
+				</tr>
+			{{/each}}
+			</tbody>
+		</table>
+		<a href="/admin-edit_assessment?assessment_id={{assessmentId}}">Edit Assessment Details</a>
+	</div>
+</script>
