@@ -120,9 +120,11 @@ define([
 			'/admin-users(?:queryString)': 		 	displayView(AdminUsersView, 		'adminUsers', 		  { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-add_user(?:queryString)':    	displayView(AdminUserView, 			'adminAddUser', 	  { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-edit_user(?:queryString)':   	displayView(AdminUserView, 			'adminEditUser', 	  { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-assessment(?:queryString)':  	displayView(AdminAssessmentView,    'adminAssessment', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-edit_assessment(?:queryString)':displayView(AdminAssessmentView,    'adminEditAssessment',{ needsAuth: true, needsToBeAdmin: true }),
+			'/admin-add_assessment(?:queryString)': displayView(AdminAssessmentView,    'adminAddAssessment', { needsAuth: true, needsToBeAdmin: true }),
 			'/admin-questions(?:queryString)':   	displayView(AdminQuestionsView,     'adminQuestions', 	  { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-question(?:queryString)':    	displayView(AdminQuestionsView,     'adminQuestion', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-edit_question(?:queryString)':  displayView(AdminQuestionsView,     'adminEditQuestion',  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-add_question(?:queryString)':   displayView(AdminQuestionsView,     'adminAddQuestion',   { needsAuth: true, needsToBeAdmin: true }),
 
 			// default view
 			'*actions': 						 displayView(LandingView, 			'default', 			  { needsAuth: true })
