@@ -1,32 +1,44 @@
-<script id="template-adminModules" type="text/x-handlebars-template">
+<script id="template-adminUsers" type="text/x-handlebars-template">
 	<div class="container">
 	  	<nav>
 			<ol class="breadcrumb">
 				<li><a href="/" data-bb-link>Home</a></li>
 				<li><a href="/admin" data-bb-link>Courses</a></li>
-				<li><a href="/admin-edit_course?course_id={{courseNumber}}" data-bb-link>Course</a></li>
-				<li class="active">Users</li>
+				{{#if courseNumber}}
+					<li><a href="/admin-edit_course?course_id={{courseNumber}}" data-bb-link>Course</a></li>
+				{{/if}}
+				<li class="active">{{title}}</li>
 			</ol>
 		</nav>
-		<h1>Modules</h1>
-		<a href="/admin-add_user?course_id={{courseNumber}}">Add User</a>
+		<h1>{{title}}</h1>
+		<a href="/admin-add_user{{#if courseNumber}}?course_id={{courseNumber}}{{/if}}" data-bb-link>Add User</a>
 		<ul class="filters">
 			<li>filters:</li>
-			<li><a href="/admin-users?type=user">Students</a></li>
-			<li><a href="/admin-users?type=admin">Teachers</a></li>
-			<li><a href="/admin-users">All</a></li>
+			<li><a href="/admin-users?role=user" data-bb-link{{#if studentsActive}} class="active"{{/if}}>Students</a></li>
+			<li><a href="/admin-users?role=admin" data-bb-link{{#if teachersActive}} class="active"{{/if}}>Teachers</a></li>
+			<li><a href="/admin-users" data-bb-link{{#if allActive}} class="active"{{/if}}>All</a></li>
 		</ul>
-		<table class="table table-striped">
-			<thead>
-			<tr>
-				<th>last name</th>
-				<th>first name</th>
-				<th>email</th>
-				<th>&nbsp;</th>
-			</tr>
-			</thead>
-			<tbody>
-			{{#each module}}
+		<div class="container-tableData">
+			<div class="loader center" aria-label="loading..."></div>
+		</div>
+		<a href="/admin-add_user{{#if courseNumber}}?course_id={{courseNumber}}{{/if}}" data-bb-link>Add User</a>
+		
+	</div>
+</script>
+
+<script id="template-adminUsersContent" type="text/x-handlebars-template">
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>last name</th>
+			<th>first name</th>
+			<th>email</th>
+			<th>&nbsp;</th>
+		</tr>
+		</thead>
+		<tbody>
+		{{#if user.length}}
+			{{#each user}}
 				<tr>
 					<td><a href="/admin-edit_user?user_id={{_id}}">{{lastName}}</a></td>
 					<td>{{firstName}}</td>
@@ -37,8 +49,14 @@
 					</td>
 				</tr>
 			{{/each}}
-			</tbody>
-		</table>
-		<a href="/admin-add_user?course_id={{courseNumber}}">Add User</a>
-	</div>
+		{{else}}
+			<tr>
+				<td colspan="4">
+					<div class="txt-noResults">No Users of this role in the system.</div>
+				</td>
+			</tr>
+		{{/if}}
+		</tbody>
+	</table>
 </script>
+

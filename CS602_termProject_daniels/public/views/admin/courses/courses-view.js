@@ -31,7 +31,6 @@ define([
 		},
 
 		handleSuccessfulRequest: function (collection, resp) {
-			console.log(resp, collection);
 			this.replaceUsingTemplate('template-adminCoursesContent', $('.container-tableData', this.$el), { course: collection.toJSON() });
 		},
 

@@ -93,3 +93,23 @@ footer > div:first-child {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* admin */
+.filters {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.filters li {
+    padding-right: 8px;
+}
+
+.filters li:first-child {
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.filters li a.active {
+    color: #666;
+}

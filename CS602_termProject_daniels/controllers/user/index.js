@@ -51,7 +51,7 @@ module.exports.list = (req, res, next) => {
 	let query = {};
 
 	if (queryData.role) {
-		query.role = queryData.role;
+		query.roles = queryData.role;
 	}
 
 	res.setHeader('Content-Type', 'application/json');
