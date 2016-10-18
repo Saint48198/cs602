@@ -1,0 +1,80 @@
+<script id="template-adminModule" type="text/x-handlebars-template">
+	<div class="container">
+		<div class="col-md-3">
+			<nav>
+				<ul class="nav nav-pills nav-stacked">
+					<li role="presentation"><a href="/admin" data-bb-link>Courses</a></li>
+					<li role="presentation"><a href="/admin-students" data-bb-link>Students</a></li>
+					<li role="presentation"><a href="/admin-teachers" data-bb-link>Send Email</a></li>
+
+					{{#if inEditMode}}
+						<li role="presentation"><a href="/admin-student" data-bb-link>View Students</a></li>
+						<li role="presentation"><a href="/admin-teacher" data-bb-link>View Teachers</a></li>
+						<li role="presentation"><a href="/admin-assessment" data-bb-link>View Assessments</a></li>
+						<li role="presentation"><a href="/admin-assignment" data-bb-link>View Assignments</a></li>
+						<li role="presentation" class="active"><a href="/admin-module" data-bb-link>View Modules</a></li>
+					{{/if}}
+				</ul>
+			</nav>
+		</div>
+
+		<div class="col-md-9">
+			<nav>
+				<ol class="breadcrumb">
+					<li><a href="/" data-bb-link>Home</a></li>
+					<li><a href="/admin" data-bb-link>Courses</a></li>
+					<li class="active">Add Module</li>
+				</ol>
+			</nav>
+
+
+			<h1>Add Module</h1>
+			<form method="post" action="." id="form-AdminCourse">
+				{{#if error}}
+					<div class="alert alert-danger">
+						{{{error}}}
+					</div>
+				{{/if}}
+
+				{{#if success}}
+					<div class="alert alert-success">
+						{{{success}}}
+					</div>
+				{{/if}}
+
+				<div class="form-group">
+					<label for="inputModuleName" class="sr-only">Module Name</label>
+					<input type="text" name="name" value="{{name}}" id="inputModuleName" class="form-control" maxlength="325" placeholder="Module Name" required autofocus /{{#if disabled}}disabled/{{/if}}>
+				</div>
+
+
+				<div class="form-group">
+					<label for="inputModuleDesc" class="sr-only">Module Description</label>
+					<textarea class="form-control" name="desc" id="inputModuleDesc" placeholder="Module Description"></textarea>
+				</div>
+
+				{{#each moduleContentPage}}
+					<div class="form-group" id="formsetModuleContent">
+						<label for="inputModuleContent{{@index}}" class="sr-only">Module Content Page {{@index}}</label>
+						<textarea class="form-control" name="content" id="inputModuleContent{{@index}}" placeholder="Module Content(HTML)"></textarea>
+					</div>
+				{{/each}}
+
+				<div id="control-ModuleContent">
+					<a href="#addContent" id="">Add Module Content Page</a>
+				</div>
+
+				<div class="form-group">
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Add Module</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</script>
+
+<script id="template-adminModuleContentInput" type="text/x-handlebars-template">
+	<div class="form-group" id="formsetModuleContent">
+		<label for="inputModuleContent{{index}}" class="sr-only">Module Content Page {{index}}</label>
+		<textarea class="form-control" name="content" id="inputModuleContent{{index}}" placeholder="Module Content(HTML)"></textarea>
+	</div>
+</script>
