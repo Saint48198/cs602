@@ -23,6 +23,7 @@ const UserSchema = new Schema({
     numberLogins: { type: Number, required: true, default: 0 },
     lastLogin: { type: Date, default: null },
     lockUntil: { type: Date, default: 1 },
+    messages: [ { from: String, text: String, date: Date, subject: String  }]
 });
 
 const SALT_WORK_FACTOR = 10;
