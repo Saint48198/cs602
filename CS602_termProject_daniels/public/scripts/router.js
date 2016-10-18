@@ -17,6 +17,8 @@ define([
 	'../views/admin/users/users-view',
 	'../views/admin/user/user-view',
 	'../views/admin/assignment/assignment-view',
+	'../views/admin/assessment/assessment-view',
+	'../views/admin/questions/questions-view',
 	'../views/edit-user-password/editUserPassword-view',
 	'../views/login/login-view',
 	"../models/session-model",
@@ -29,11 +31,13 @@ define([
 			 AdminCourseView,
 			 AdminModulesView,
 			 AdminAssignmentsView,
-			 AdminAssessmentView,
+			 AdminAssessmentsView,
 			 AdminModuleView,
 			 AdminUsersView,
 			 AdminUserView,
 			 AdminAssignmentView,
+			 AdminAssessmentView,
+			 AdminQuestionsView,
 			 EditUserPasswordView,
 			 LoginView,
 			 SessionModel, base) {
@@ -97,23 +101,26 @@ define([
 
 	var AppRouter = Backbone.Router.extend({
 		routes: {
-			'/login(?:queryString)': displayView(LoginView, 'login', { needsAuth: false }),
-			'/change-password(?:queryString)': displayView(EditUserPasswordView, 'changeUserPassword', { needsAuth: true }),
+			'/login(?:queryString)': 			 displayView(LoginView, 			'login', 			  { needsAuth: false }),
+			'/change-password(?:queryString)': 	 displayView(EditUserPasswordView, 	'changeUserPassword', { needsAuth: true }),
 
 			// admin views
-			'/admin': displayView(AdminCoursesView, 'adminCourses', { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-add_course(?:queryString)': displayView(AdminCourseView, 'adminAddCourse', { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-edit_course(?:queryString)': displayView(AdminCourseView, 'adminEditCourse', { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-modules': displayView(AdminModulesView, 'adminModules', { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-assignments': displayView(AdminAssignmentsView, 'adminAssignments', { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-assignment(?:queryString)': displayView(AdminAssignmentView, 'adminAssignment', { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-assessments': displayView(AdminAssessmentsView, 'adminAssessments', { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-add_module(?:queryString)': displayView(AdminModuleView, 'adminAddModule', { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-edit_module(?:queryString)': displayView(AdminModuleView, 'adminEditModule', { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-users(?:queryString)': displayView(AdminUsersView, 'adminUsers', { needsAuth: true, needsToBeAdmin: true }),
-			'/admin-user(?:queryString)': displayView(AdminUserView, 'adminUser', { needsAuth: true, needsToBeAdmin: true }),
+			'/admin': 							 displayView(AdminCoursesView, 		'adminCourses', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-add_course(?:queryString)':  displayView(AdminCourseView, 		'adminAddCourse', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-edit_course(?:queryString)': displayView(AdminCourseView, 		'adminEditCourse', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-modules': 					 displayView(AdminModulesView, 		'adminModules', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-assignments': 				 displayView(AdminAssignmentsView,  'adminAssignments',   { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-assignment(?:queryString)':  displayView(AdminAssignmentView,   'adminAssignment', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-assessments': 				 displayView(AdminAssessmentsView,  'adminAssessments',   { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-add_module(?:queryString)':  displayView(AdminModuleView, 		'adminAddModule', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-edit_module(?:queryString)': displayView(AdminModuleView, 		'adminEditModule', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-users(?:queryString)': 		 displayView(AdminUsersView, 		'adminUsers', 		  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-user(?:queryString)': 		 displayView(AdminUserView, 		'adminUser', 		  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-assessment(?:queryString)':  displayView(AdminAssessmentView,   'adminAssessment', 	  { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-questions(?:queryString)':   displayView(AdminQuestionsView,    'adminQuestions', 	  { needsAuth: true, needsToBeAdmin: true }),
 
-			'*actions': displayView(LandingView, 'default', { needsAuth: true })
+			// default view
+			'*actions': 						 displayView(LandingView, 			'default', 			  { needsAuth: true })
 		}
 	});
 
