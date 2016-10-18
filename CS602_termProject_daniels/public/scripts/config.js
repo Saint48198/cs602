@@ -2,7 +2,7 @@ require.config({
 	baseUrl: '/scripts/',
 
 	paths: {
-		'jquery': '../bower_components/jquery/dist/jquery.min',
+		'jquery': '../bower_components/jquery/jquery.min',
 		'backbone': '../bower_components/backbone/backbone-min',
 		'underscore': '../bower_components/underscore/underscore-min',
 		'handlebars': '../bower_components/handlebars/handlebars.amd.min',

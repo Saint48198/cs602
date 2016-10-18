@@ -9,10 +9,11 @@ define([
 	'../views/footer/footer-view',
 	'../views/landing/landing-view',
 	'../views/admin/courses/courses-view',
+	'../views/admin/course/course-view',
 	'../views/login/login-view',
 	"../models/session-model",
 	'base'
-], function ($, _, Backbone, UTIL, HeaderView, FooterView, LandingView, AdminCoursesView, LoginView, SessionModel, base) {
+], function ($, _, Backbone, UTIL, HeaderView, FooterView, LandingView, AdminCoursesView, AdminCourseView, LoginView, SessionModel, base) {
 	"use strict";
 
 	var displayView = function (View, viewName, config) {
@@ -75,6 +76,8 @@ define([
 		routes: {
 			'/login(?:queryString)': displayView(LoginView, 'login', { needsAuth: false }),
 			'/admin': displayView(AdminCoursesView, 'adminCourses', { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-add_course': displayView(AdminCourseView, 'adminAddCourse', { needsAuth: true, needsToBeAdmin: true }),
+			'/admin-edit_course(?:queryString)': displayView(AdminCourseView, 'adminEditCourse', { needsAuth: true, needsToBeAdmin: true }),
 			'*actions': displayView(LandingView, 'sample', { needsAuth: true })
 		}
 	});
