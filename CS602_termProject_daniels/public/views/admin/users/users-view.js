@@ -30,7 +30,7 @@ define([
 				teachersActive: false,
 				allActive: true
 			};
-			var userApi = this.userCollection.url;
+			var userApi = this.userCollection.url.split('?')[0];
 
 			this.title = 'Users';
 
@@ -46,6 +46,11 @@ define([
 					config.teachersActive = true;
 					userApi += '?role=admin';
 				}
+			}
+
+			if (query.course_id) {
+				userApi = (query.role) ? userApi + '&' : userApi + '?'; // determine if there is already a parameter to the api url
+				userApi = userApi + 'course_id=' + query.course_id;
 			}
 
 			config.title = this.title;

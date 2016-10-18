@@ -54,6 +54,10 @@ module.exports.list = (req, res, next) => {
 		query.roles = queryData.role;
 	}
 
+	if (queryData.course_id) {
+		query['courses.number'] = queryData.course_id;
+	}
+
 	res.setHeader('Content-Type', 'application/json');
 
 	if (utilities.checkAccess(req, res, next) === false) {
