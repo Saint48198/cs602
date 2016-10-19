@@ -20,6 +20,7 @@ define([
 	'../views/admin/assessment/assessment-view',
 	'../views/admin/questions/questions-view',
 	'../views/admin/question/question-view',
+	'../views/reset-password/resetPassword-view',
 	'../views/forgot-password/forgotPassword-view',
 	'../views/login/login-view',
 	"../models/session-model",
@@ -40,6 +41,7 @@ define([
 			 AdminAssessmentView,
 			 AdminQuestionsView,
 			 AdminQuestionView,
+			 ResetPasswordView,
 			 ForgotPasswordView,
 			 LoginView,
 			 SessionModel, base) {
@@ -105,6 +107,7 @@ define([
 		routes: {
 			'/login(?:queryString)': 			 	displayView(LoginView, 				'login', 			  { needsAuth: false }),
 			'/forgot_password(?:queryString)': 	 	displayView(ForgotPasswordView, 	'forgotPassword', 	  { needsAuth: false }),
+			'/reset(?:token)': 	 					displayView(ResetPasswordView, 	    'resetPassword', 	  { needsAuth: false }),
 
 			// admin views
 			'/admin': 							 	displayView(AdminCoursesView, 		'adminCourses', 	  { needsAuth: true, needsToBeAdmin: true }),

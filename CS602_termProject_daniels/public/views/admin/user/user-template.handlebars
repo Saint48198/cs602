@@ -70,18 +70,6 @@
 			<input type="email" name="email" value="{{email}}" id="inputEmail" class="form-control" maxlength="325" placeholder="Email" required /{{#if disabled}}disabled/{{/if}}>
 		</div>
 
-		{{#unless _id }}
-			<div class="form-group">
-				<label for="inputPassword" class="sr-only">Password</label>
-				<input type="password" name="password" value="" id="inputPassword" class="form-control" maxlength="325" placeholder="Password" required /{{#if disabled}}disabled/{{/if}}>
-			</div>
-
-			<div class="form-group">
-				<label for="inputConfirmPassword" class="sr-only"> Confirm Password</label>
-				<input type="password" name="confirmPassword" value="" id="inputConfirmPassword" class="form-control" maxlength="325" placeholder="Confirm Password" required /{{#if disabled}}disabled/{{/if}}>
-			</div>
-		{{/unless}}
-
 		<div class="form-group">
 			<div>User Role</div>
 			{{#each roles}}

@@ -229,7 +229,7 @@ module.exports.getPasswordResetToken = (req, res, next) => {
 				subject: 'LMS Password Reset',
 				text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
 				'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-				'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+				'http://' + req.headers.host + '/reset?_t=' + token + '\n\n' +
 				'If you did not request this, please ignore this email and your password will remain unchanged.\n'
 			};
 
@@ -287,27 +287,34 @@ module.exports.resetPassword = (req, res, next) => {
 			});
 		},
 		function(user, done) {
-			var smtpTransport = nodemailer.createTransport('SMTP', {
-				service: 'SendGrid',
+			const options = {
 				auth: {
-					user: 'Saint48198',
-					pass: 'b2zneGVSsQ8DQ47'
+					api_user: 'Saint48198',
+					api_key: 'b2zneGVSsQ8DQ47'
 				}
-			});
-			var mailOptions = {
+			};
+			const client = nodemailer.createTransport(sgTransport(options));
+			const email = {
 				to: user.email,
 				from: 'passwordreset@lms.com',
 				subject: 'Your password has been changed',
 				text: 'Hello,\n\n' +
 				'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
 			};
-			smtpTransport.sendMail(mailOptions, function(err) {
+
+			client.sendMail(email, (error, info) => {
+				if (error) {
+					done(error, 'done');
+					return;
+				}
 				res.send(JSON.stringify({ success: true, message: 'Success! Your password has been changed.' }));
-				done(err);
 			});
 		}
 	], function (error) {
-		res.send(JSON.stringify({success: false, error: error.message }));
+		if (error) {
+			res.send(JSON.stringify({success: false, error: 'There was an issue sending the email! Please try again later' }));
+			return next(error);
+		}
 	});
 
 };

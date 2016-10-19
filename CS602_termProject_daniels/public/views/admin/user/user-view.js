@@ -126,28 +126,23 @@ define([
 					newUser.url = newUser.newUserUrl;
 				}
 
-				if (formDataObject.password === formDataObject.confirmPassword) {
-					newUser.save(formDataObject, {
-						success: function (model, resp) {
-							if (resp.error) {
-								var data = model.toJSON();
-								data.error = resp.error.message || resp.error;
+				newUser.save(formDataObject, {
+					success: function (model, resp) {
+						if (resp.error) {
+							var data = model.toJSON();
+							data.error = resp.error.message || resp.error;
 
-								this.displayUpdatedForm(data);
-								return;
-							}
+							this.displayUpdatedForm(data);
+							return;
+						}
 
-							UTIL.navTo('/admin-users');
-						}.bind(this),
-						error: function (resp, error) {
-							formDataObject.error = error.message || error;
-							this.displayUpdatedForm(formDataObject);
-						}.bind(this)
-					});
-				} else {
-					formDataObject.error = 'Password and confirm password do not match!';
-					this.displayUpdatedForm(formDataObject);
-				}
+						UTIL.navTo('/admin-users');
+					}.bind(this),
+					error: function (resp, error) {
+						formDataObject.error = error.message || error;
+						this.displayUpdatedForm(formDataObject);
+					}.bind(this)
+				});
 			}
 		},
 
