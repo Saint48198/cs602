@@ -4,13 +4,13 @@
 			<nav>
 				<ul class="nav nav-pills nav-stacked">
 					<li role="presentation"><a href="/admin" data-bb-link>Courses</a></li>
-					<li role="presentation"><a href="/admin-users?role=user{{#if courseId}}&course_id={{courseId}}{{/if}}" data-bb-link>Students</a></li>
-					<li role="presentation"><a href="/admin-users?role=admin{{#if courseId}}&course_id={{courseId}}{{/if}}" data-bb-link>Teachers</a></li>
+					<li role="presentation"><a href="/admin/users?role=user{{#if courseId}}&course_id={{courseId}}{{/if}}" data-bb-link>Students</a></li>
+					<li role="presentation"><a href="/admin/users?role=admin{{#if courseId}}&course_id={{courseId}}{{/if}}" data-bb-link>Teachers</a></li>
 
 					{{#if courseId}}
-						<li role="presentation"><a href="/admin-assessments?course_id={{courseId}}" data-bb-link>Assessments</a></li>
-						<li role="presentation"><a href="/admin-assignments?course_id={{courseId}}" data-bb-link>Assignments</a></li>
-						<li role="presentation"><a href="/admin-modules?course_id={{courseId}}" data-bb-link>Modules</a></li>
+						<li role="presentation"><a href="/admin/assessments?course_id={{courseId}}" data-bb-link>Assessments</a></li>
+						<li role="presentation"><a href="/admin/assignments?course_id={{courseId}}" data-bb-link>Assignments</a></li>
+						<li role="presentation"><a href="/admin/modules?course_id={{courseId}}" data-bb-link>Modules</a></li>
 					{{/if}}
 				</ul>
 			</nav>
@@ -22,7 +22,7 @@
 					<li><a href="/" data-bb-link>Home</a></li>
 					<li><a href="/admin" data-bb-link>Courses</a></li>
 					{{#if courseId}}
-						<li><a href="/admin-edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
+						<li><a href="/admin/edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
 					{{/if}}
 					<li class="active">{{title}}</li>
 				</ol>

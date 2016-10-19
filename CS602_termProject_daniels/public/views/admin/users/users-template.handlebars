@@ -5,7 +5,7 @@
 				<li><a href="/" data-bb-link>Home</a></li>
 				<li><a href="/admin" data-bb-link>Courses</a></li>
 				{{#if courseId}}
-					<li><a href="/admin-edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
+					<li><a href="/admin/edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
 				{{/if}}
 				<li class="active">{{title}}</li>
 			</ol>
@@ -13,17 +13,17 @@
 		<h1>{{title}}</h1>
 		<div class="container">
 			<div class="col-md-6">
-				<a href="/admin-add_user{{#if courseId}}?course_id={{courseId}}{{/if}}" data-bb-link>Add New {{roleLabel}}</a>
+				<a href="/admin/add_user{{#if courseId}}?course_id={{courseId}}{{/if}}" data-bb-link>Add New {{roleLabel}}</a>
 				{{#if courseId}}
-					| <a href="/admin-add_user_to_course?course_id={{courseId}}{{#if role}}&role={{role}}{{/if}}" data-bb-link>Add {{roleLabel}} to Course</a>
+					| <a href="/admin/add_user_to_course?course_id={{courseId}}{{#if role}}&role={{role}}{{/if}}" data-bb-link>Add {{roleLabel}} to Course</a>
 				{{/if}}
 			</div>
 			<div class="col-md-6">
 				<ul class="filters pull-right">
 					<li>filters:</li>
-					<li><a href="/admin-users?role=user" data-bb-link{{#if studentsActive}} class="active"{{/if}}>Students</a></li>
-					<li><a href="/admin-users?role=admin" data-bb-link{{#if teachersActive}} class="active"{{/if}}>Teachers</a></li>
-					<li><a href="/admin-users" data-bb-link{{#if allActive}} class="active"{{/if}}>All</a></li>
+					<li><a href="/admin/users?role=user" data-bb-link{{#if studentsActive}} class="active"{{/if}}>Students</a></li>
+					<li><a href="/admin/users?role=admin" data-bb-link{{#if teachersActive}} class="active"{{/if}}>Teachers</a></li>
+					<li><a href="/admin/users" data-bb-link{{#if allActive}} class="active"{{/if}}>All</a></li>
 				</ul>
 			</div>
 		</div>
@@ -32,9 +32,9 @@
 		</div>
 		<div class="container">
 			<div class="col-md-12">
-				<a href="/admin-add_user{{#if courseId}}?course_id={{courseId}}{{/if}}" data-bb-link>Add New {{roleLabel}}</a>
+				<a href="/admin/add_user{{#if courseId}}?course_id={{courseId}}{{/if}}" data-bb-link>Add New {{roleLabel}}</a>
 				{{#if courseId}}
-					| <a href="/admin-add_user_to_course?course_id={{courseId}}{{#if role}}&role={{role}}{{/if}}" data-bb-link>Add {{roleLabel}} to Course</a>
+					| <a href="/admin/add_user_to_course?course_id={{courseId}}{{#if role}}&role={{role}}{{/if}}" data-bb-link>Add {{roleLabel}} to Course</a>
 				{{/if}}
 			</div>
 		</div>
@@ -55,11 +55,11 @@
 		{{#if user.length}}
 			{{#each user}}
 				<tr>
-					<td><a href="/admin-edit_user?user_id={{_id}}{{#if ../courseId}}&course_id={{../courseId}}{{/if}}" data-bb-link>{{lastName}}</a></td>
+					<td><a href="/admin/edit_user?user_id={{_id}}{{#if ../courseId}}&course_id={{../courseId}}{{/if}}" data-bb-link>{{lastName}}</a></td>
 					<td>{{firstName}}</td>
 					<td>{{email}}</td>
 					<td>
-						<a href="/admin-edit_user?user_id={{_id}}{{#if ../courseId}}&course_id={{../courseId}}{{/if}}" class="btn btn-default" data-bb-link>Edit</a>
+						<a href="/admin/edit_user?user_id={{_id}}{{#if ../courseId}}&course_id={{../courseId}}{{/if}}" class="btn btn-default" data-bb-link>Edit</a>
 						<button type="button" class="btn btn-danger btn-delete-user" data-id="{{_id}}">Delete</button>
 					</td>
 				</tr>

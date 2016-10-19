@@ -4,16 +4,16 @@
 			<ol class="breadcrumb">
 				<li><a href="/" data-bb-link>Home</a></li>
 				<li><a href="/admin" data-bb-link>Courses</a></li>
-				<li><a href="/admin-edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
+				<li><a href="/admin/edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
 				<li class="active">Assessments</li>
 			</ol>
 		</nav>
 		<h1>Assessments</h1>
-		<a href="/admin-add_assessment?course_id={{courseId}}" data-bb-link>Add Assessment</a>
+		<a href="/admin/add_assessment?course_id={{courseId}}" data-bb-link>Add Assessment</a>
 		<div class="container-tableData">
 			<div class="loader center" aria-label="loading..."></div>
 		</div>
-		<a href="/admin-add_assessment?course_id={{courseId}}" data-bb-link>Add Assessment</a>
+		<a href="/admin/add_assessment?course_id={{courseId}}" data-bb-link>Add Assessment</a>
 	</div>
 </script>
 
@@ -29,10 +29,10 @@
 		{{#if assessment.length}}
 			{{#each assessment}}
 				<tr>
-					<td><a href="/admin-edit_assessment?assessment_id={{_id}}&course_id={{../courseId}}" data-bb-link>{{name}}</a></td>
+					<td><a href="/admin/edit_assessment?assessment_id={{_id}}&course_id={{../courseId}}" data-bb-link>{{name}}</a></td>
 					<td>
-						<a href="/admin-edit_assessment?assessment_id={{_id}}&course_id={{../courseId}}" class="btn btn-default" data-bb-link>Edit Details</a>
-						<a href="/admin-questions?assessment_id={{_id}}&course_id={{../courseId}}" class="btn btn-default" data-bb-link>View Questions</a>
+						<a href="/admin/edit_assessment?assessment_id={{_id}}&course_id={{../courseId}}" class="btn btn-default" data-bb-link>Edit Details</a>
+						<a href="/admin/questions?assessment_id={{_id}}&course_id={{../courseId}}" class="btn btn-default" data-bb-link>View Questions</a>
 						<button type="button" class="btn btn-danger btn-delete-assessment" data-id="{{_id}}">Delete</button>
 					</td>
 				</tr>

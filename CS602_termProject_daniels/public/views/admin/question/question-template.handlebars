@@ -4,15 +4,15 @@
 			<nav>
 				<ul class="nav nav-pills nav-stacked">
 					<li role="presentation"><a href="/admin" data-bb-link>Courses</a></li>
-					<li role="presentation"><a href="/admin-students" data-bb-link>Students</a></li>
-					<li role="presentation"><a href="/admin-teachers" data-bb-link>Send Email</a></li>
+					<li role="presentation"><a href="/admin/students" data-bb-link>Students</a></li>
+					<li role="presentation"><a href="/admin/teachers" data-bb-link>Send Email</a></li>
 
 					{{#if inEditMode}}
-						<li role="presentation"><a href="/admin-users?role=user" data-bb-link>View Students</a></li>
-						<li role="presentation"><a href="/admin-users?role=admin" data-bb-link>View Teachers</a></li>
-						<li role="presentation" class="active"><a href="/admin-assessments" data-bb-link>View Assessments</a></li>
-						<li role="presentation"><a href="/admin-assignmenst" data-bb-link>View Assignments</a></li>
-						<li role="presentation"><a href="/admin-modules" data-bb-link>View Modules</a></li>
+						<li role="presentation"><a href="/admin/users?role=user" data-bb-link>View Students</a></li>
+						<li role="presentation"><a href="/admin/users?role=admin" data-bb-link>View Teachers</a></li>
+						<li role="presentation" class="active"><a href="/admin/assessments" data-bb-link>View Assessments</a></li>
+						<li role="presentation"><a href="/admin/assignmenst" data-bb-link>View Assignments</a></li>
+						<li role="presentation"><a href="/admin/modules" data-bb-link>View Modules</a></li>
 					{{/if}}
 				</ul>
 			</nav>
@@ -23,7 +23,7 @@
 				<ol class="breadcrumb">
 					<li><a href="/" data-bb-link>Home</a></li>
 					<li><a href="/admin" data-bb-link>Courses</a></li>
-					<li><a href="/admin-assessment?assessment_id={{assessment_id}}">Assessment</a> </li>
+					<li><a href="/admin/assessment?assessment_id={{assessment_id}}">Assessment</a> </li>
 					<li class="active">Add Question</li>
 				</ol>
 			</nav>

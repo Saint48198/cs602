@@ -4,19 +4,19 @@
 			<nav>
 				<ul class="nav nav-pills nav-stacked">
 					<li role="presentation" class="active"><a href="/admin" data-bb-link>Courses</a></li>
-					<li role="presentation"><a href="/admin-users?role=user" data-bb-link>Students</a></li>
-					<li role="presentation"><a href="/admin-users?role=admin" data-bb-link>Teachers</a></li>
+					<li role="presentation"><a href="/admin/users?role=user" data-bb-link>Students</a></li>
+					<li role="presentation"><a href="/admin/users?role=admin" data-bb-link>Teachers</a></li>
 				</ul>
 			</nav>
 		</div>
 		<div class="col-lg-9">
 			<h1>Courses</h1>
-			<a href="/admin-add_course" data-bb-link>Add Course</a>
+			<a href="/admin/add_course" data-bb-link>Add Course</a>
 			<div class="container-tableData">
 				<div class="loader center" aria-label="loading..."></div>
 			</div>
 			<hr>
-			<a href="/admin-add_course" data-bb-link>Add Course</a>
+			<a href="/admin/add_course" data-bb-link>Add Course</a>
 		</div>
 	</div>
 </script>
@@ -34,10 +34,10 @@
 		{{#if course.length }}
 			{{#each course}}
 				<tr>
-					<td><a href="/admin-edit_course?course_id={{number}}" data-bb-link>{{number}}</a></td>
+					<td><a href="/admin/edit_course?course_id={{number}}" data-bb-link>{{number}}</a></td>
 					<td>{{name}}</td>
 					<td>
-						<a href="/admin-edit_course?course_id={{number}}" class="btn btn-default" data-bb-link>edit</a>
+						<a href="/admin/edit_course?course_id={{number}}" class="btn btn-default" data-bb-link>edit</a>
 						<button type="button" class="btn btn-danger btn-delete-course" data-courseId="{{number}}">delete</button>
 					</td>
 				</tr>

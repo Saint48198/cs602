@@ -1,91 +1,76 @@
 <script id="template-adminAssignment" type="text/x-handlebars-template">
 	<div class="container">
-		<div class="col-md-3">
-			<nav>
-				<ul class="nav nav-pills nav-stacked">
-					<li role="presentation"><a href="/admin" data-bb-link>Courses</a></li>
-					<li role="presentation"><a href="/admin-students" data-bb-link>Students</a></li>
-					<li role="presentation"><a href="/admin-teachers" data-bb-link>Send Email</a></li>
-
-					{{#if inEditMode}}
-						<li role="presentation"><a href="/admin-users?role=user" data-bb-link>View Students</a></li>
-						<li role="presentation"><a href="/admin-users?role=admin" data-bb-link>View Teachers</a></li>
-						<li role="presentation"><a href="/admin-assessments" data-bb-link>View Assessments</a></li>
-						<li role="presentation" class="active"><a href="/admin-assignments" data-bb-link>View Assignments</a></li>
-						<li role="presentation"><a href="/admin-modules" data-bb-link>View Modules</a></li>
-					{{/if}}
-				</ul>
-			</nav>
-		</div>
-
-		<div class="col-md-9">
+		<div class="col-md-12">
 			<nav>
 				<ol class="breadcrumb">
 					<li><a href="/" data-bb-link>Home</a></li>
 					<li><a href="/admin" data-bb-link>Courses</a></li>
+					<li><a href="/admin/edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
+					<li><a href="/admin/assessments?course_id={{courseId}}" data-bb-link>Assignments</a></li>
 					<li class="active">Add Assignment</li>
 				</ol>
 			</nav>
 
 
-			<h1>Add Assignment</h1>
-			<form method="post" action="." id="form-AdminAssignment">
-				{{#if error}}
-					<div class="alert alert-danger">
-						{{{error}}}
-					</div>
-				{{/if}}
-
-				{{#if success}}
-					<div class="alert alert-success">
-						{{{success}}}
-					</div>
-				{{/if}}
-
-				<div class="form-group">
-					<label for="inputAssignmentName" class="sr-only">Assignment Name</label>
-					<input type="text" name="name" value="{{name}}" id="inputAssignmentName" class="form-control" maxlength="325" placeholder="Assignment Name" autofocus required /{{#if disabled}}disabled/{{/if}}>
-				</div>
-
-				<div class="form-group">
-					<div class='input-group date' id='datetimepicker1'>
-						<label for="inputDueDate" class="sr-only">Due Date</label>
-						<input type='text' class="form-control" name="dueDate" id="inputDueDate" placeholder="Due Date">
-						<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="inputPoints" class="sr-only">Total Points</label>
-					<input type="text" name="points" value="{{points}}" id="inputPoints" class="form-control" maxlength="3" placeholder="Total Points" required /{{#if disabled}}disabled/{{/if}}>
-				</div>
-
-				<div class="form-group">
-					<div>Additional Files</div>
-					<label class="btn btn-default btn-file">
-						Browse <input type="file" name="file" style="display: none;">
-					</label>
-				</div>
-
-				<div class="container-addAdditionalFileUpload">
-					<button type="button" class="btn btn-default" id="btn-addFileUploadControl">Add Additional File</button>
-				</div>
-
-				<div class="form-group">
-					<label for="inputInstructions" class="sr-only">Instructions</label>
-					<textarea class="form-control" name="instructions" id="inputInstructions" placeholder="Instructions"></textarea>
-				</div>
-
-				<div class="form-group">
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Add Assignment</button>
-				</div>
-			</form>
+			<h1>{{title}}</h1>
+			<div class="container-form">
+				<div class="loader center" aria-label="loading..."></div>
+			</div>
 		</div>
 	</div>
 </script>
 
-<script id="template-assignmentFileUpload" type="text/x-handlebars-template">
+<script id="template-adminAssignmentForm" type="text/x-handlebars-template">
+	<form method="post" action="." id="form-AdminAssignment">
+		{{#if error}}
+			<div class="alert alert-danger">
+				{{{error}}}
+			</div>
+		{{/if}}
 
+		{{#if success}}
+			<div class="alert alert-success">
+				{{{success}}}
+			</div>
+		{{/if}}
+
+		<div class="form-group">
+			<label for="inputAssignmentName" class="sr-only">Assignment Name</label>
+			<input type="text" name="name" value="{{name}}" id="inputAssignmentName" class="form-control" maxlength="325" placeholder="Assignment Name" autofocus required {{#if disabled}}disabled{{/if}}>
+		</div>
+
+		<div class="form-group">
+			<div class='input-group date' id='datetimepicker1'>
+				<label for="inputDueDate" class="sr-only">Due Date</label>
+				<input type='text' class="form-control" name="dueDate" id="inputDueDate" placeholder="Due Date" {{#if disabled}}disabled{{/if}}>
+				<span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="inputPoints" class="sr-only">Total Points</label>
+			<input type="text" name="points" value="{{points}}" id="inputPoints" class="form-control" maxlength="3" placeholder="Total Points" required {{#if disabled}}disabled{{/if}}>
+		</div>
+
+		<div class="form-group">
+			<label for="inputInstructions" class="sr-only">Instructions</label>
+			<textarea class="form-control" name="instructions" id="inputInstructions" placeholder="Instructions" {{#if disabled}}disabled{{/if}}></textarea>
+		</div>
+
+		{{#if disabled}}
+			<div class="loader center" aria-label="working..."></div>
+		{{else}}
+			<div class="form-group">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">{{title}}</button>
+			</div>
+
+			<div class="form-group">
+				<a href="/admin/edit_course?course_id={{courseId}}" class="btn btn-lg btn-default btn-block">Cancel</a>
+			</div>
+		{{/if}}
+
+
+	</form>
 </script>

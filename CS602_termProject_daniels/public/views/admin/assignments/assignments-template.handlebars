@@ -4,16 +4,16 @@
 			<ol class="breadcrumb">
 				<li><a href="/" data-bb-link>Home</a></li>
 				<li><a href="/admin" data-bb-link>Courses</a></li>
-				<li><a href="/admin-edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
+				<li><a href="/admin/edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
 				<li class="active">Assignments</li>
 			</ol>
 		</nav>
 		<h1>Assignments</h1>
-		<a href="/admin-add_assignment?course_id={{courseId}}" data-bb-link>Add Assignment</a>
+		<a href="/admin/add_assignment?course_id={{courseId}}" data-bb-link>Add Assignment</a>
 		<div class="container-tableData">
 			<div class="loader center" aria-label="loading..."></div>
 		</div>
-		<a href="/admin-add_assignment?course_id={{courseId}}" data-bb-link>Add Assignment</a>
+		<a href="/admin/add_assignment?course_id={{courseId}}" data-bb-link>Add Assignment</a>
 	</div>
 </script>
 
@@ -29,9 +29,9 @@
 		{{#if assignment.length}}
 			{{#each assignment}}
 				<tr>
-					<td><a href="/admin-edit_assignment?assignment_id={{_id}}&course_id={{../courseId}}" data-bb-link>{{name}}</a></td>
+					<td><a href="/admin/edit_assignment?assignment_id={{_id}}&course_id={{../courseId}}" data-bb-link>{{name}}</a></td>
 					<td>
-						<a href="/admin-edit_assignment?assignment_id={{_id}}&course_id={{../courseId}}" class="btn btn-default" data-bb-link>Edit</a>
+						<a href="/admin/edit_assignment?assignment_id={{_id}}&course_id={{../courseId}}" class="btn btn-default" data-bb-link>Edit</a>
 						<button type="button" class="btn btn-danger btn-delete-assignment" data-id="{{_id}}">Delete</button>
 					</td>
 				</tr>

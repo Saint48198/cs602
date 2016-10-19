@@ -16,19 +16,41 @@ module.exports.create = (req, res, next) => {
 	}
 
 	let postData = req.body;
-	postData.due = new Date();
-	postData.files = [];
+	let courseId = postData.course_id;
+	let assignmentData = {};
+	console.log(postData.files);
 
-	let newAssignment = new Assignment(postData);
+	assignmentData.name =  postData.name;
+	assignmentData.points  = postData.points;
+	assignmentData.due = postData.due;
+	assignmentData.instructions = postData.instructions;
+	assignmentData.files = [];
 
-	newAssignment.save((error) => {
+	Course.findOne({ number: courseId }, (error, course) => {
 		if (error) {
-			res.send(JSON.stringify({  success: false, error: error }));
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: 'Error finding course!' }));
 			return;
 		}
 
-		res.send(JSON.stringify({ success: true }));
+		if (!course.name) {
+			res.send(JSON.stringify({ error: 'Invalid course number!' }));
+			return;
+		}
 
+		let newAssignment = new Assignment(assignmentData);
+
+		newAssignment.save((error, assignment) => {
+			if (error) {
+				res.send(JSON.stringify({  success: false, error: error.message }));
+				return;
+			}
+
+			course.assignments.addToSet({ _id: assignment.id });
+
+			res.send(JSON.stringify({ success: true, assignment: assignment, course: course }));
+
+		});
 	});
 };
 
