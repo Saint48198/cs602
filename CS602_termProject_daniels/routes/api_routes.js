@@ -41,7 +41,9 @@ router.get('/logout', sessionController.logout);
 /* user services */
 router.post('/user', userController.create);
 router.post('/auth', userController.auth);
+router.post('/user/:user_id', userController.update);
 router.get('/users', userController.list);
 router.get('/user/:user_id', userController.show);
+
 
 module.exports = router;

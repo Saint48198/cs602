@@ -18,6 +18,9 @@ define([
 	};
 
 	var CourseModel = Backbone.Model.fullExtend({
+		newUserUrl: '/api/user',
+		existingUserUrl: '/api/user/',
+
 		url: '/api/user/',
 
 		parse: function (resp, options) {

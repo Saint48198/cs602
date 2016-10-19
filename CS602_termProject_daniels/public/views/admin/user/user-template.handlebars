@@ -51,6 +51,10 @@
 			</div>
 		{{/if}}
 
+		{{#if _id}}
+			<input type="hidden" value="{{_id}}" name="_id">
+		{{/if}}
+
 		<div class="form-group">
 			<label for="inputFirstName" class="sr-only">First Name</label>
 			<input type="text" name="firstName" value="{{firstName}}" id="inputFirstName" class="form-control" maxlength="325" placeholder="First Name" required autofocus /{{#if disabled}}disabled/{{/if}}>
@@ -63,10 +67,10 @@
 
 		<div class="form-group">
 			<label for="inputEmail" class="sr-only">Email</label>
-			<input type="email" name="lastName" value="{{email}}" id="inputEmail" class="form-control" maxlength="325" placeholder="Email" required /{{#if disabled}}disabled/{{/if}}>
+			<input type="email" name="email" value="{{email}}" id="inputEmail" class="form-control" maxlength="325" placeholder="Email" required /{{#if disabled}}disabled/{{/if}}>
 		</div>
 
-		{{#if addUserMode }}
+		{{#unless _id }}
 			<div class="form-group">
 				<label for="inputPassword" class="sr-only">Password</label>
 				<input type="password" name="password" value="" id="inputPassword" class="form-control" maxlength="325" placeholder="Password" required /{{#if disabled}}disabled/{{/if}}>
@@ -81,12 +85,12 @@
 			<div>
 				<a href="/admin-edit_password?token={{token}}">Edit Password</a>
 			</div>
-		{{/if}}
+		{{/unless}}
 
 		<div class="form-group">
 			<div>User Role</div>
 			{{#each roles}}
-				<label class="checkbox-inline"><input type="checkbox" value="{{value}}" name="role"{{#if selected}} checked{{/if}}>{{label}}</label>
+				<label class="checkbox-inline"><input type="checkbox" value="{{value}}" name="roles"{{#if selected}} checked{{/if}}>{{label}}</label>
 			{{/each}}
 		</div>
 

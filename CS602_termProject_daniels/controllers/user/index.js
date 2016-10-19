@@ -108,6 +108,52 @@ module.exports.show =  (req, res, next) => {
 	});
 };
 
+module.exports.update = (req, res, next) => {
+	"use strict";
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	let update = {};
+	let postData = req.body;
+	console.log(postData);
+
+	/*User.findOne({ _id: postData.user_id }, (error, user) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error }));
+			return;
+		}
+
+		if (postData.firstName) {
+			user.firstName = postData.firstName;
+		}
+
+		if (postData.lastName) {
+			user.lastName = postData.lastName;
+		}
+
+		if (postData.email) {
+			user.email = postData.email;
+		}
+
+		if (postData.password) {
+			user.password = postData.password;
+		}
+
+		user.visits.$inc();
+		user.save();
+
+		res.send(JSON.stringify({ success: true, user: user }));
+	});*/
+
+	res.send(JSON.stringify({ success: true }));
+};
+
 module.exports.auth = (req, res, next) => {
 	"use strict";
 

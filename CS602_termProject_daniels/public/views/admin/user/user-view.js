@@ -20,6 +20,10 @@ define([
 			return '/views/admin/user/user-template.handlebars';
 		},
 
+		events: {
+			'submit #form-AdminUser': 'handleUserForm'
+		},
+
 		onInitialize: function () {
 			this.userModel = new UserModel();
 		},
@@ -36,16 +40,18 @@ define([
 				return;
 			}
 
+			this.formDisabled = false;
+
 			this.replaceUsingTemplate('template-adminUser', this.$el, config, {title: title });
 
 			if (userId) {
-				this.userModel.url = this.userModel.url + userId;
+				this.userModel.url = this.userModel.existingUserUrl + userId;
 				this.userModel.fetch({
 					success: this.handleSuccessfulRequest.bind(this),
 					error: this.handleFailedRequest.bind(this)
 				});
 			} else {
-				this.replaceUsingTemplate('template-adminUserForm', $('.container-form', this.$el), { roles: this.getRoles(), title: title });
+				this.replaceUsingTemplate('template-adminUserForm', $('.container-form', this.$el), { roles: this.getRoles(), title: title, formDisabled: this.formDisabled });
 			}
 		},
 		handleSuccessfulRequest: function (model, resp) {
@@ -54,8 +60,13 @@ define([
 			var userId = query.user_id;
 			var title = userId ? 'Edit User' : 'Add User';
 
+			this.formDisabled = false;
+
 			data.roles = this.getRoles(data.roles);
 			data.title = title;
+			data.formDisabled = this.formDisabled;
+
+
 
 			if (resp.error) {
 				this.handleFailedRequest(resp, resp.error);
@@ -86,6 +97,71 @@ define([
 			});
 
 			return roles;
+		},
+
+		handleUserForm: function (e) {
+			e.preventDefault();
+
+			var formData = $(e.currentTarget).serializeArray();
+			var formDataObject = {};
+			if (this.formDisabled === false) {
+				this.formDisabled = true;
+
+				formData.forEach(function(input) {
+
+					if (!formDataObject.roles && input.name === 'roles') {
+						formDataObject[input.name] = input.value;
+					} else if (formDataObject.roles && input.name === 'roles')  {
+						formDataObject[input.name] = formDataObject[input.name] + ',' + input.value;
+					} else {
+						formDataObject[input.name] = input.value;
+					}
+				});
+
+				var newUser = new UserModel();
+
+				if (formData._id) {
+					newUser.url = newUser.existingUserUrl + formData._id;
+				} else {
+					newUser.url = newUser.newUserUrl;
+				}
+
+				if (formDataObject.password === formDataObject.confirmPassword) {
+					newUser.save(formDataObject, {
+						success: function (model, resp) {
+							if (resp.error) {
+								var data = model.toJSON();
+								data.error = error;
+
+								this.displayUpdatedForm(data);
+							}
+
+							UTIL.navTo('/admin-users');
+						}.bind(this),
+						error: function () {
+
+						}.bind(this)
+					});
+				} else {
+					console.log('heelo thare')
+					formDataObject.error = 'Password and confirm password do not match!';
+					this.displayUpdatedForm(formDataObject);
+				}
+			}
+		},
+
+		displayUpdatedForm: function (data) {
+			var query = UTIL.QueryString();
+			var userId = query.user_id;
+			var title = userId ? 'Edit User' : 'Add User';
+
+			this.formDisabled = false;
+
+			data.title = title;
+			data.roles = this.getRoles(data.roles.split(','));
+
+
+			this.replaceUsingTemplate('template-adminUserForm', $('.container-form', this.$el), data);
 		}
 	});
 	return AdminUserView;
