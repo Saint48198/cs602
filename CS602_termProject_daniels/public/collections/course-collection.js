@@ -16,6 +16,14 @@ define([
 
 		parse: function (resp) {
 			return resp.results || [];
+		},
+
+		addUserToCourse: function (courseId, userId, type) {
+			return $.ajax({
+				method: 'post',
+				url: '/api/course/' + courseId + '/' + type,
+				data: '_id=' + userId
+			});
 		}
 	});
 

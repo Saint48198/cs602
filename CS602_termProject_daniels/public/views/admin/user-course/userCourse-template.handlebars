@@ -1,5 +1,75 @@
 <script id="template-adminUserCourse" type="text/x-handlebars-template">
-  <div class="container">
-    <h1>Hello World</h1>
-  </div>
+	<div class="container">
+		<nav>
+			<ol class="breadcrumb">
+				<li><a href="/" data-bb-link>Home</a></li>
+				<li><a href="/admin" data-bb-link>Courses</a></li>
+				{{#if courseId}}
+					<li><a href="/admin-edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
+				{{/if}}
+				<li class="active">Add {{roleLabel}} to Course</li>
+			</ol>
+		</nav>
+		<h1>Add {{roleLabel}} to Course</h1>
+	  	<div class="container-form">
+			<div class="loader center" aria-label="loading..."></div>
+		</div>
+		<div class="container-results"></div>
+	</div>
+</script>
+
+<script id="template-adminUserCourseForm" type="text/x-handlebars-template">
+	<form method="post" action="." id="form-addUserToCourse">
+		{{#if error}}
+			<div class="alert alert-danger">
+				{{{error}}}
+			</div>
+		{{/if}}
+
+		{{#if success}}
+			<div class="alert alert-success">
+				{{{success}}}
+			</div>
+		{{/if}}
+
+		<div class="form-group">
+			<label for="selectCourse" class="sr-only">Course</label>
+			<select id="selectCourse" class="form-control" name="course_id" required{{#if disabled}} disabled{{/if}}>
+				<option value="">Select Course</option>
+				{{#each course}}
+					<option value="{{number}}"{{#if selected}} selected{{/if}}>{{number}} - {{name}}</option>
+				{{/each}}
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="selectUser" class="sr-only">User</label>
+			<select id="selectUser" class="form-control" name="user_id" required{{#if disabled}} disabled{{/if}}>
+				<option value="">Select User</option>
+				{{#each user}}
+					<option value="{{_id}}">{{lastName}}, {{firstName}} &lt;{{email}}&gt;</option>
+				{{/each}}
+			</select>
+		</div>
+
+		{{#if disabled}}
+			<div class="loader center" aria-label="loading..."></div>
+		{{else}}
+			<div class="form-group">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Add {{roleLabel}}</button>
+			</div>
+
+			<div class="form-group">
+				<a href="/admin" class="btn btn-lg btn-default btn-block">Cancel</a>
+			</div>
+		{{/if}}
+
+
+	</form>
+</script>
+
+<script id="template-errorMessage" type="text/x-handlebars-template">
+	<div class="alert alert-danger">
+		{{error}}
+	</div>
 </script>
