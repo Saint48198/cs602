@@ -21,6 +21,7 @@ router.get('assignment/:assignment_id', assignmentController.show);
 
 /* course services */
 router.post('/course', courseController.create);
+router.post('/course/:course_id', courseController.update);
 router.post('/course/:course_id/add_teacher', courseController.addTeacher);
 router.post('/course/:course_id/add_student', courseController.addStudent);
 router.post('/course/:course_id/add_assessment', courseController.addAssessment);

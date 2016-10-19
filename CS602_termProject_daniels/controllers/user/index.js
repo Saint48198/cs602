@@ -123,11 +123,11 @@ module.exports.update = (req, res, next) => {
 		return;
 	}
 
-	let update = {};
 	let postData = req.body;
+	let userId = req.params.user_id || postData._id;
 
 
-	User.findOne({ _id: postData._id }, (error, user) => {
+	User.findOne({ _id: userId }, (error, user) => {
 		if (error) {
 			console.log('Error: %s', error);
 			res.send(JSON.stringify({ error: error }));

@@ -15,18 +15,13 @@ module.exports.create = (req, res, next) => {
 	}
 
 	let postData = req.body;
-	let name = postData.name;
-	let number = postData.number;
+	postData.assessments = [];
+	postData.assignments = [];
+	postData.modules = [];
+	postData.students = [];
+	postData.teachers = [];
 
-	let newCourse = new Course({
-		name:  name,
-		number: number,
-		assessments: [],
-		assignments: [],
-		modules: [],
-		students: [],
-		teachers: []
-	});
+	let newCourse = new Course(postData);
 
 	newCourse.save((error) => {
 		if (error) {
@@ -258,4 +253,68 @@ module.exports.list = (req, res, next) => {
 		res.send(JSON.stringify({ results: results }));
 	});
 
+};
+
+
+module.exports.update = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	let postData = req.body;
+	let courseId = req.params.course_id;
+
+	Course.findOne({ number: courseId }, (error, course) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error }));
+			return;
+		}
+
+		if (!course) {
+			res.send(JSON.stringify({ error: 'Course does not exist!' }));
+			return;
+		}
+
+		course.isNew = false;
+
+		if (postData.number && (postData.number !== course.number)) {
+			course.number = postData.number;
+		}
+
+		if (postData.name && (postData.name !== course.name)) {
+			course.name = postData.name;
+		}
+
+		if (postData.startDate && (postData.startDate !== course.startDate)) {
+			course.startDate = postData.startDate;
+		}
+
+
+		if (postData.endDate && (postData.endDate !== course.endDate)) {
+			course.endDate = postData.endDate;
+		}
+
+		if (postData.desc && (postData.desc !== course.desc)) {
+			course.desc = postData.desc;
+		}
+
+
+		course.save((error) => {
+			if(error) {
+				console.log('Error: %s', error);
+				res.send(JSON.stringify({ error: error }));
+				return;
+			}
+			res.send(JSON.stringify({ success: true, course: course }));
+		});
+
+
+	});
 };
