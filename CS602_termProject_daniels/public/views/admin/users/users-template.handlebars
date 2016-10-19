@@ -11,18 +11,33 @@
 			</ol>
 		</nav>
 		<h1>{{title}}</h1>
-		<a href="/admin-add_user{{#if courseId}}?course_id={{courseId}}{{/if}}" data-bb-link>Add User</a>
-		<ul class="filters">
-			<li>filters:</li>
-			<li><a href="/admin-users?role=user" data-bb-link{{#if studentsActive}} class="active"{{/if}}>Students</a></li>
-			<li><a href="/admin-users?role=admin" data-bb-link{{#if teachersActive}} class="active"{{/if}}>Teachers</a></li>
-			<li><a href="/admin-users" data-bb-link{{#if allActive}} class="active"{{/if}}>All</a></li>
-		</ul>
+		<div class="container">
+			<div class="col-md-6">
+				<a href="/admin-add_user{{#if courseId}}?course_id={{courseId}}{{/if}}" data-bb-link>Add New {{roleLabel}}</a>
+				{{#if courseId}}
+					| <a href="/admin-add_user_to_course?course_id={{courseId}}{{#if role}}&role={{role}}{{/if}}" data-bb-link>Add {{roleLabel}} to Course</a>
+				{{/if}}
+			</div>
+			<div class="col-md-6">
+				<ul class="filters pull-right">
+					<li>filters:</li>
+					<li><a href="/admin-users?role=user" data-bb-link{{#if studentsActive}} class="active"{{/if}}>Students</a></li>
+					<li><a href="/admin-users?role=admin" data-bb-link{{#if teachersActive}} class="active"{{/if}}>Teachers</a></li>
+					<li><a href="/admin-users" data-bb-link{{#if allActive}} class="active"{{/if}}>All</a></li>
+				</ul>
+			</div>
+		</div>
 		<div class="container-tableData">
 			<div class="loader center" aria-label="loading..."></div>
 		</div>
-		<a href="/admin-add_user{{#if courseId}}?course_id={{courseId}}{{/if}}" data-bb-link>Add User</a>
-
+		<div class="container">
+			<div class="col-md-12">
+				<a href="/admin-add_user{{#if courseId}}?course_id={{courseId}}{{/if}}" data-bb-link>Add New {{roleLabel}}</a>
+				{{#if courseId}}
+					| <a href="/admin-add_user_to_course?course_id={{courseId}}{{#if role}}&role={{role}}{{/if}}" data-bb-link>Add {{roleLabel}} to Course</a>
+				{{/if}}
+			</div>
+		</div>
 	</div>
 </script>
 

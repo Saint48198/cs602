@@ -29,6 +29,7 @@ define([
 				studentsActive: false,
 				teachersActive: false,
 				allActive: true,
+				roleLabel: 'User',
 				courseId: query.course_id
 			};
 			var userApi = this.userCollection.url.split('?')[0];
@@ -41,11 +42,15 @@ define([
 				if (query.role === 'user') {
 					this.title =  this.title + ' - Students';
 					config.studentsActive = true;
-					userApi += '?role=user';
+					config.roleLabel = 'Student';
+					config.role = 'user';
+					userApi += '?role=' + config.role;
 				} else if (query.role === 'admin') {
 					this.title =  this.title + ' - Teachers';
 					config.teachersActive = true;
-					userApi += '?role=admin';
+					config.roleLabel = 'Student';
+					config.role = 'admin';
+					userApi += '?role=' . config.role;
 				}
 			}
 
