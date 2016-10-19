@@ -120,24 +120,31 @@ module.exports.update = (req, res, next) => {
 
 	let update = {};
 	let postData = req.body;
-	console.log(postData);
 
-	/*User.findOne({ _id: postData.user_id }, (error, user) => {
+
+	User.findOne({ _id: postData._id }, (error, user) => {
 		if (error) {
 			console.log('Error: %s', error);
 			res.send(JSON.stringify({ error: error }));
 			return;
 		}
 
-		if (postData.firstName) {
+		if (!user) {
+			res.send(JSON.stringify({ error: 'User does not exist!' }));
+			return;
+		}
+
+		user.isNew = false;
+
+		if (postData.firstName && (postData.firstName !== user.firstName)) {
 			user.firstName = postData.firstName;
 		}
 
-		if (postData.lastName) {
+		if (postData.lastName && (postData.lastName !== user.lastName)) {
 			user.lastName = postData.lastName;
 		}
 
-		if (postData.email) {
+		if (postData.email && (postData.email !== user.email)) {
 			user.email = postData.email;
 		}
 
@@ -145,13 +152,21 @@ module.exports.update = (req, res, next) => {
 			user.password = postData.password;
 		}
 
-		user.visits.$inc();
-		user.save();
+		if (postData.roles && (postData.roles !== user.roles.join(','))) {
+			user.roles = postData.roles.split(',');
+		}
 
-		res.send(JSON.stringify({ success: true, user: user }));
-	});*/
+		user.save((error) => {
+			if(error) {
+				console.log('Error: %s', error);
+				res.send(JSON.stringify({ error: error }));
+				return;
+			}
+			res.send(JSON.stringify({ success: true, user: user }));
+		});
 
-	res.send(JSON.stringify({ success: true }));
+
+	});
 };
 
 module.exports.auth = (req, res, next) => {

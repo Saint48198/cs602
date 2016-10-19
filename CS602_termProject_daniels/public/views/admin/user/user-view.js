@@ -120,8 +120,8 @@ define([
 
 				var newUser = new UserModel();
 
-				if (formData._id) {
-					newUser.url = newUser.existingUserUrl + formData._id;
+				if (formDataObject._id) {
+					newUser.url = newUser.existingUserUrl + formDataObject._id;
 				} else {
 					newUser.url = newUser.newUserUrl;
 				}
@@ -131,19 +131,20 @@ define([
 						success: function (model, resp) {
 							if (resp.error) {
 								var data = model.toJSON();
-								data.error = error;
+								data.error = resp.error.message || resp.error;
 
 								this.displayUpdatedForm(data);
+								return;
 							}
 
 							UTIL.navTo('/admin-users');
 						}.bind(this),
-						error: function () {
-
+						error: function (resp, error) {
+							formDataObject.error = error.message || error;
+							this.displayUpdatedForm(formDataObject);
 						}.bind(this)
 					});
 				} else {
-					console.log('heelo thare')
 					formDataObject.error = 'Password and confirm password do not match!';
 					this.displayUpdatedForm(formDataObject);
 				}
