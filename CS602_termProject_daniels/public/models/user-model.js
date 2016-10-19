@@ -25,6 +25,14 @@ define([
 
 		parse: function (resp, options) {
 			return resp.results && resp.results.length ? resp.results[0] : {};
+		},
+
+		resetPasswordRequest: function (email) {
+			return $.ajax({
+				method: 'post',
+				url: '/api/forgot',
+				data: 'email=' + encodeURIComponent(email)
+			});
 		}
 	});
 	return CourseModel;

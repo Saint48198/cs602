@@ -80,11 +80,6 @@
 				<label for="inputConfirmPassword" class="sr-only"> Confirm Password</label>
 				<input type="password" name="confirmPassword" value="" id="inputConfirmPassword" class="form-control" maxlength="325" placeholder="Confirm Password" required /{{#if disabled}}disabled/{{/if}}>
 			</div>
-
-		{{else}}
-			<div>
-				<a href="/admin-edit_password?token={{token}}">Edit Password</a>
-			</div>
 		{{/unless}}
 
 		<div class="form-group">

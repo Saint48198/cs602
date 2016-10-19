@@ -20,7 +20,7 @@ define([
 	'../views/admin/assessment/assessment-view',
 	'../views/admin/questions/questions-view',
 	'../views/admin/question/question-view',
-	'../views/edit-user-password/editUserPassword-view',
+	'../views/forgot-password/forgotPassword-view',
 	'../views/login/login-view',
 	"../models/session-model",
 	'base'
@@ -40,7 +40,7 @@ define([
 			 AdminAssessmentView,
 			 AdminQuestionsView,
 			 AdminQuestionView,
-			 EditUserPasswordView,
+			 ForgotPasswordView,
 			 LoginView,
 			 SessionModel, base) {
 	"use strict";
@@ -103,8 +103,8 @@ define([
 
 	var AppRouter = Backbone.Router.extend({
 		routes: {
-			'/login(?:queryString)': 			 displayView(LoginView, 			'login', 			  { needsAuth: false }),
-			'/change-password(?:queryString)': 	 displayView(EditUserPasswordView, 	'changeUserPassword', { needsAuth: true }),
+			'/login(?:queryString)': 			 	displayView(LoginView, 				'login', 			  { needsAuth: false }),
+			'/forgot_password(?:queryString)': 	 	displayView(ForgotPasswordView, 	'forgotPassword', 	  { needsAuth: false }),
 
 			// admin views
 			'/admin': 							 	displayView(AdminCoursesView, 		'adminCourses', 	  { needsAuth: true, needsToBeAdmin: true }),
@@ -127,7 +127,7 @@ define([
 			'/admin-add_question(?:queryString)':   displayView(AdminQuestionsView,     'adminAddQuestion',   { needsAuth: true, needsToBeAdmin: true }),
 
 			// default view
-			'*actions': 						 displayView(LandingView, 			'default', 			  { needsAuth: true })
+			'*actions': 						 	displayView(LandingView, 			'default', 			  { needsAuth: true })
 		}
 	});
 

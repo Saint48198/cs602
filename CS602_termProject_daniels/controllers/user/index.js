@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+const async = require('async');
+const crypto = require('crypto')
+const nodemailer = require('nodemailer');
+const sgTransport = require('nodemailer-sendgrid-transport');
+
 const utilities = require('../../lib/utilities');
 const User = mongoose.model('User');
 
@@ -169,6 +174,144 @@ module.exports.update = (req, res, next) => {
 	});
 };
 
+module.exports.getPasswordResetToken = (req, res, next) => {
+	"use strict";
+
+	let postData = req.body;
+	let email = postData.email;
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (!email) {
+		res.send(JSON.stringify({ success: false, error: 'Must provide email address!' }));
+		return ;
+	}
+
+	async.waterfall([
+		function (done) {
+			crypto.randomBytes(20, function(error, buf) {
+				var token = buf.toString('hex');
+				done(error, token);
+			});
+		},
+		function(token, done) {
+			User.findOne({  email: email }, (error, user) => {
+				// system error with getting user
+				if (error) {
+					res.send(JSON.stringify({success: false, error: error}));
+					return;
+				}
+
+				if (!user) {
+					res.send(JSON.stringify({success: false, error: 'No User found with this email address!'} ));
+					return;
+				}
+
+				user.resetPasswordToken = token;
+				user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+				user.save((error)=> {
+					done(error, token, user);
+				});
+			});
+		},
+		function(token, user, done) {
+			const options = {
+				auth: {
+					api_user: 'Saint48198',
+					api_key: 'b2zneGVSsQ8DQ47'
+				}
+			};
+			const client = nodemailer.createTransport(sgTransport(options));
+			const email = {
+				to: user.email,
+				from: 'passwordreset@lms.com',
+				subject: 'LMS Password Reset',
+				text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+				'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+				'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+				'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+			};
+
+			client.sendMail(email, (error, info) => {
+				if (error) {
+					done(error, 'done');
+					return;
+				}
+				res.send(JSON.stringify({ success: true, message: 'An e-mail has been sent to ' + user.email + ' with further instructions.' }));
+			});
+		}
+	], function(error) {
+		if (error) {
+			res.send(JSON.stringify({success: false, error: 'There was an issue sending the email! Please try again later' }));
+			return next(error);
+		}
+	});
+};
+
+module.exports.resetTokenCheck = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (error, user) => {
+		if (!user) {
+			res.send(JSON.stringify({success: false, error: 'Password reset token is invalid or has expired.' }));
+			return;
+		}
+
+		res.send(JSON.stringify({ success: true }));
+	});
+};
+
+module.exports.resetPassword = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	async.waterfall([
+		function(done) {
+			User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, (error, user) => {
+				if (!user) {
+					res.send(JSON.stringify({success: false, error: 'Password reset token is invalid or has expired.' }));
+					return;
+				}
+
+				user.password = req.body.password;
+				user.resetPasswordToken = undefined;
+				user.resetPasswordExpires = undefined;
+
+				user.save(function(error) {
+					done(error, user);
+				});
+			});
+		},
+		function(user, done) {
+			var smtpTransport = nodemailer.createTransport('SMTP', {
+				service: 'SendGrid',
+				auth: {
+					user: 'Saint48198',
+					pass: 'b2zneGVSsQ8DQ47'
+				}
+			});
+			var mailOptions = {
+				to: user.email,
+				from: 'passwordreset@lms.com',
+				subject: 'Your password has been changed',
+				text: 'Hello,\n\n' +
+				'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+			};
+			smtpTransport.sendMail(mailOptions, function(err) {
+				res.send(JSON.stringify({ success: true, message: 'Success! Your password has been changed.' }));
+				done(err);
+			});
+		}
+	], function (error) {
+		res.send(JSON.stringify({success: false, error: error.message }));
+	});
+
+};
+
 module.exports.auth = (req, res, next) => {
 	"use strict";
 
@@ -179,7 +322,7 @@ module.exports.auth = (req, res, next) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	if (!email && !password) {
-		res.send(JSON.stringify({ success: false, info: false }));
+		res.send(JSON.stringify({ success: false, info: false, error: 'Must provide email and password!' }));
 		return ;
 	}
 
@@ -187,6 +330,11 @@ module.exports.auth = (req, res, next) => {
 		// system error with getting user
 		if (error) {
 			res.send(JSON.stringify({ success: false, error: error }));
+			return;
+		}
+
+		if (user.resetPasswordToken) {
+			res.send(JSON.stringify({ success: false, error: 'Password has been reset' }));
 			return;
 		}
 
