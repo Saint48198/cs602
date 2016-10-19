@@ -48,9 +48,9 @@ define([
 				} else if (query.role === 'admin') {
 					this.title =  this.title + ' - Teachers';
 					config.teachersActive = true;
-					config.roleLabel = 'Student';
+					config.roleLabel = 'Teacher';
 					config.role = 'admin';
-					userApi += '?role=' . config.role;
+					userApi += '?role=' + config.role;
 				}
 			}
 
