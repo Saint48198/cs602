@@ -124,17 +124,16 @@ app.use(function(req, res) {
 app.use((err, req, res, next) => {
 	// log it
 	if (!module.parent) console.error(err.stack);
-
-	// error page
+	res.setHeader('Content-Type', 'application/json');
 	res.status(500);
-	res.render('html/5xx');
+	res.send(JSON.stringify({ error: 'Server Error', code: 500 }));
 });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-	var err = new Error('Not Found');
-	err.status = 404;
-	next(err);
+	res.setHeader('Content-Type', 'application/json');
+	res.status(404);
+	res.send(JSON.stringify({ error: 'Page Not Found', code: 400 }));
 });
 
 // server

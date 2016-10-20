@@ -10,6 +10,7 @@ const userController = require('../controllers/user/index');
 
 /* assessment services */
 router.post('/assessment', assessmentController.create);
+router.post('/assessment/:assessment_id', assessmentController.update);
 router.post('/assessment/:assessment_id/add_question', assessmentController.addQuestion);
 router.get('/assessments', assessmentController.list);
 router.get('/assessment/:assessment_id', assessmentController.show);
@@ -25,8 +26,6 @@ router.post('/course', courseController.create);
 router.post('/course/:course_id', courseController.update);
 router.post('/course/:course_id/add_teacher', courseController.addTeacher);
 router.post('/course/:course_id/add_student', courseController.addStudent);
-router.post('/course/:course_id/add_assessment', courseController.addAssessment);
-router.post('/course/:course_id/add_module', courseController.addModule);
 router.get('/courses', courseController.list);
 router.get('/course/:course_id', courseController.show);
 

@@ -31,11 +31,11 @@ define([
 		onRender: function () {
 			var query = UTIL.QueryString();
 			var courseId = query.course_id;
-			var assessmentId = query.assignment_id;
+			var assignmentId = query.assignment_id;
 
 			this.formDisabled = false;
 
-			this.title = assessmentId ? 'Edit Assignment' : 'Add Assignment';
+			this.title = assignmentId ? 'Edit Assignment' : 'Add Assignment';
 
 			// view must have a course
 			if (!courseId) {
@@ -45,8 +45,8 @@ define([
 
 			this.replaceUsingTemplate('template-adminAssignment', this.$el, { title: this.title, courseId: courseId }, { title: 'Admin ~ ' + this.title });
 
-			if (assessmentId) {
-				this.assignmentModel.url = this.assignmentModel.existingAssignmentUrl + assessmentId;
+			if (assignmentId) {
+				this.assignmentModel.url = this.assignmentModel.existingAssignmentUrl + assignmentId;
 				this.assignmentModel.fetch({
 					success: this.handleRequestAssignment.bind(this),
 					error: this.handleRequestAssignment.bind(this)
@@ -111,7 +111,7 @@ define([
 			this.formDisabled = false;
 
 			if (resp.error) {
-				data.error = resp.error;
+				data.error = typeof resp.error === 'string' ? resp.error : 'There was a problem try again later.';
 				this.displayForm(data);
 				return;
 			}
