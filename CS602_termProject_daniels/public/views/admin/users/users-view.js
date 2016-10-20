@@ -110,6 +110,8 @@ define([
 				id: $(e.target).attr('data-Id'),
 				type: 'user'
 			};
+
+			$('#theModal').modal('show');
 		}
 	});
 	return AdminUsersView;

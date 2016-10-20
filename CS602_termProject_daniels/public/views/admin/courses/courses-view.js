@@ -68,6 +68,8 @@ define([
 				id: $(e.target).attr('data-courseId'),
 				type: 'course'
 			};
+
+			$('#theModal').modal('show');
 		}
 	});
 	return AdminCoursesView;
