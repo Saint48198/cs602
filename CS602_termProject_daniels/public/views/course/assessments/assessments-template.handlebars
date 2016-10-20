@@ -15,7 +15,20 @@
 		<div class="col-md-9">
 			<h2><small>{{courseId}}<br></small>{{course.name}}</h2>
 			<h1>Assessments</h1>
-
+			{{#if assessment.length}}
+				<ul class="noStyle">
+					{{#each assessment}}
+						<li>
+							<a href="/course/{{../courseId}}/assessment?assessment_id={{_id}}" data-bb-link>{{name}}</a>
+							{{#if desc }}
+								<p>{{desc}}</p>
+							{{/if}}
+						</li>
+					{{/each}}
+				</ul>
+			{{else}}
+				<p>No Assessments for this course.</p>
+			{{/if}}
 		</div>
 	</div>
 </script>
