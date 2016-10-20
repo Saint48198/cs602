@@ -8,6 +8,7 @@ define([
 	'../views/header/header-view',
 	'../views/footer/footer-view',
 	'../views/landing/landing-view',
+	/* admin views */
 	'../views/admin/courses/courses-view',
 	'../views/admin/course/course-view',
 	'../views/admin/modules/modules-view',
@@ -21,7 +22,11 @@ define([
 	'../views/admin/questions/questions-view',
 	'../views/admin/question/question-view',
 	'../views/admin/user-course/userCourse-view',
+
 	'../views/course/course-view',
+	'../views/grades/grades-view',
+
+	/* user auth views */
 	'../views/register/register-view',
 	'../views/reset-password/resetPassword-view',
 	'../views/forgot-password/forgotPassword-view',
@@ -46,6 +51,7 @@ define([
 			 AdminQuestionView,
 			 AdminUserCourseView,
 			 CourseView,
+			 GradesView,
 			 RegisterView,
 			 ResetPasswordView,
 			 ForgotPasswordView,
@@ -138,6 +144,7 @@ define([
 			'admin': 							 		displayView(AdminCoursesView, 		'adminCourses', 	  { needsAuth: true, needsToBeAdmin: true }),
 
 			'course/:courseId':							displayView(CourseView,				'course',			  { needsAuth: true }),
+			'grades(/:courseId)':					    displayView(GradesView,				'grades',			  { needsAuth: true }),
 
 			// default view
 			'*actions': 						 		displayView(LandingView, 			'default', 			  { needsAuth: true })

@@ -1,5 +1,5 @@
-// Page Section: Sample
-// Filename: sample-view.js
+// Page Section: Grades
+// Filename: grades-view.js
 
 define([
 	'jquery',
@@ -10,12 +10,12 @@ define([
 
 ], function ($, _, Backbone, UTIL) {
 	'use strict';
-	var SampleView = BaseView.fullExtend({
+	var GradesView = BaseView.fullExtend({
 
 		el: $('main'),
 
 		url: function () {
-			return '/views/sample/sample-template.handlebars';
+			return '/views/grades/grades-template.handlebars';
 		},
 
 		onInitialize: function () {
@@ -23,8 +23,8 @@ define([
 		},
 
 		onRender: function () {
-			this.replaceUsingTemplate('template-sample', this.$el, {}, { title: 'Hello World' });
+			this.replaceUsingTemplate('template-grades', this.$el, {}, { title: 'My Grades' });
 		}
 	});
-	return SampleView;
+	return GradesView;
 });
