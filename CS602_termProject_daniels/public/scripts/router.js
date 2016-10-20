@@ -21,6 +21,7 @@ define([
 	'../views/admin/questions/questions-view',
 	'../views/admin/question/question-view',
 	'../views/admin/user-course/userCourse-view',
+	'../views/course/course-view',
 	'../views/reset-password/resetPassword-view',
 	'../views/forgot-password/forgotPassword-view',
 	'../views/login/login-view',
@@ -43,6 +44,7 @@ define([
 			 AdminQuestionsView,
 			 AdminQuestionView,
 			 AdminUserCourseView,
+			 CourseView,
 			 ResetPasswordView,
 			 ForgotPasswordView,
 			 LoginView,
@@ -131,6 +133,8 @@ define([
 			'admin/add_question(?:queryString)':   	    displayView(AdminQuestionView,      'adminAddQuestion',   { needsAuth: true, needsToBeAdmin: true }),
 			'admin/add_user_to_course(?:queryString)':  displayView(AdminUserCourseView,    'adminUserCourse',    { needsAuth: true, needsToBeAdmin: true }),
 			'admin': 							 		displayView(AdminCoursesView, 		'adminCourses', 	  { needsAuth: true, needsToBeAdmin: true }),
+
+			'course/:courseId':							displayView(CourseView,				'course',			  { needsAuth: true }),
 
 			// default view
 			'*actions': 						 		displayView(LandingView, 			'default', 			  { needsAuth: true })

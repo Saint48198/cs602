@@ -227,8 +227,10 @@ module.exports.list = (req, res, next) => {
 	let queryData = req.query;
 	let query = {};
 
-	if (queryData.userId) {
-		query.userId = queryData.userId;
+	if (queryData.user_id && queryData.role === 'student') {
+		query = { 'students._id': queryData.user_id };
+	} else if (queryData.user_id && queryData.role === 'teacher') {
+		query = { 'teachers._id': queryData.user_id };
 	}
 
 	res.setHeader('Content-Type', 'application/json');

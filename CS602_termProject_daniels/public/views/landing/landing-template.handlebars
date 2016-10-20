@@ -14,10 +14,26 @@
 		<div class="col-md-6">
 			<section class="cell">
 				<h1>My Courses</h1>
-				<p>Courses where you are: Student</p>
-				<ul>
-					<li><a href="/course?id=cs601" data-bb-link>Course Name</a> </li>
-				</ul>
+				{{#if studentCourses.length }}
+					<p>Courses where you are: Student</p>
+					<ul>
+						{{#each studentCourses }}
+							<li><a href="/course/{{number}}" data-bb-link>{{number}} - {{name}}</a> </li>
+						{{/each}}
+
+					</ul>
+				{{/if}}
+
+				{{#if teacherCourses.length }}
+					<p>Courses where you are: Student</p>
+					<ul>
+						{{#each teacherCourses }}
+							<li><a href="/course/{{number}}" data-bb-link>{{number}} - {{name}}</a> </li>
+						{{/each}}
+
+					</ul>
+				{{/if}}
+
 			</section>
 		</div>
 		<div class="col-md-3">
@@ -27,7 +43,7 @@
 				<table class="table">
 					<tbody>
 					<tr>
-						<td><a href="/messages?course_id=cs601" data-bb-link>Course Name</a></td>
+						<td><a href="/messages" data-bb-link>Course Name</a></td>
 						<td>(4 unread)</td>
 					</tr>
 					</tbody>
