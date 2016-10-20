@@ -31,6 +31,7 @@ router.get('/course/:course_id', courseController.show);
 
 /* module  services */
 router.post('/module', moduleController.create);
+router.post('/module/:module_id', moduleController.update);
 router.get('/modules', moduleController.list);
 router.get('/module/:module_id', moduleController.show);
 

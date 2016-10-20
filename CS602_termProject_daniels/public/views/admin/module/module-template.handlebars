@@ -1,80 +1,78 @@
 <script id="template-adminModule" type="text/x-handlebars-template">
 	<div class="container">
-		<div class="col-md-3">
-			<nav>
-				<ul class="nav nav-pills nav-stacked">
-					<li role="presentation"><a href="/admin" data-bb-link>Courses</a></li>
-					<li role="presentation"><a href="/admin/students" data-bb-link>Students</a></li>
-					<li role="presentation"><a href="/admin/teachers" data-bb-link>Send Email</a></li>
-
-					{{#if inEditMode}}
-						<li role="presentation"><a href="/admin/student" data-bb-link>View Students</a></li>
-						<li role="presentation"><a href="/admin/teacher" data-bb-link>View Teachers</a></li>
-						<li role="presentation"><a href="/admin/assessment" data-bb-link>View Assessments</a></li>
-						<li role="presentation"><a href="/admin/assignment" data-bb-link>View Assignments</a></li>
-						<li role="presentation" class="active"><a href="/admin/module" data-bb-link>View Modules</a></li>
-					{{/if}}
-				</ul>
-			</nav>
-		</div>
-
-		<div class="col-md-9">
+		<div class="col-md-12">
 			<nav>
 				<ol class="breadcrumb">
 					<li><a href="/" data-bb-link>Home</a></li>
 					<li><a href="/admin" data-bb-link>Courses</a></li>
-					<li class="active">Add Module</li>
+					<li><a href="/admin/edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
+					<li><a href="/admin/modules?course_id={{courseId}}" data-bb-link>Modules</a></li>
+					<li class="active">{{title}}</li>
 				</ol>
 			</nav>
 
 
-			<h1>Add Module</h1>
-			<form method="post" action="." id="form-AdminCourse">
-				{{#if error}}
-					<div class="alert alert-danger">
-						{{{error}}}
-					</div>
-				{{/if}}
-
-				{{#if success}}
-					<div class="alert alert-success">
-						{{{success}}}
-					</div>
-				{{/if}}
-
-				<div class="form-group">
-					<label for="inputModuleName" class="sr-only">Module Name</label>
-					<input type="text" name="name" value="{{name}}" id="inputModuleName" class="form-control" maxlength="325" placeholder="Module Name" required autofocus /{{#if disabled}}disabled/{{/if}}>
-				</div>
-
-
-				<div class="form-group">
-					<label for="inputModuleDesc" class="sr-only">Module Description</label>
-					<textarea class="form-control" name="desc" id="inputModuleDesc" placeholder="Module Description"></textarea>
-				</div>
-
-				{{#each moduleContentPage}}
-					<div class="form-group" id="formsetModuleContent">
-						<label for="inputModuleContent{{@index}}" class="sr-only">Module Content Page {{@index}}</label>
-						<textarea class="form-control" name="content" id="inputModuleContent{{@index}}" placeholder="Module Content(HTML)"></textarea>
-					</div>
-				{{/each}}
-
-				<div id="control-ModuleContent">
-					<a href="#addContent" id="">Add Module Content Page</a>
-				</div>
-
-				<div class="form-group">
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Add Module</button>
-				</div>
-			</form>
+			<h1>{{title}}</h1>
+			<div class="container-form">
+				<div class="loader center" aria-label="loading..."></div>
+			</div>
 		</div>
 	</div>
 </script>
 
+<script id="template-adminModuleForm" type="text/x-handlebars-template">
+	<form method="post" action="." id="form-AdminModule">
+		{{#if error}}
+			<div class="alert alert-danger">
+				{{{error}}}
+			</div>
+		{{/if}}
+
+		{{#if success}}
+			<div class="alert alert-success">
+				{{{success}}}
+			</div>
+		{{/if}}
+
+		<div class="form-group">
+			<label for="inputModuleName" class="sr-only">Module Name</label>
+			<input type="text" name="name" value="{{name}}" id="inputModuleName" class="form-control" maxlength="325" placeholder="Module Name" autofocus required {{#if disabled}}disabled{{/if}}>
+		</div>
+
+		<div class="form-group">
+			<label for="inputModuleDesc" class="sr-only">Module Description</label>
+			<textarea class="form-control" name="desc" id="inputModuleDesc" placeholder="Module Description" {{#if disabled}}disabled{{/if}}></textarea>
+		</div>
+
+		{{#each moduleContentPage}}
+			<div class="form-group" id="formsetModuleContent">
+				<label for="inputModuleContent{{@index}}" class="sr-only">{{label}}</label>
+				<textarea class="form-control pageContent" name="content" id="inputModuleContent{{@index}}" placeholder="{{label}}" {{#if disabled}}disabled{{/if}}></textarea>
+			</div>
+		{{/each}}
+		<div id="container-contentPages"></div>
+		<div id="form-group control-ModuleContent">
+			<button type="button" class="btn btn-default btn-lg btn-block" id="btn-addModulePageContent">Add Module Content Page</button>
+		</div>
+		<hr>
+		{{#if disabled}}
+			<div class="loader center" aria-label="working..."></div>
+		{{else}}
+			<div class="form-group">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">{{title}}</button>
+			</div>
+
+			<div class="form-group">
+				<a href="/admin/edit_course?course_id={{courseId}}" class="btn btn-lg btn-default btn-block">Cancel</a>
+			</div>
+		{{/if}}
+	</form>
+</script>
+
+
 <script id="template-adminModuleContentInput" type="text/x-handlebars-template">
-	<div class="form-group" id="formsetModuleContent">
-		<label for="inputModuleContent{{index}}" class="sr-only">Module Content Page {{index}}</label>
-		<textarea class="form-control" name="content" id="inputModuleContent{{index}}" placeholder="Module Content(HTML)"></textarea>
+	<div class="form-group">
+		<label for="inputModuleContent{{index}}" class="sr-only">{{label}}</label>
+		<textarea class="form-control pageContent" name="content" id="inputModuleContent{{index}}" placeholder="{{label}}"></textarea>
 	</div>
 </script>

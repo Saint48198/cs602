@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const ModuleSchema = new Schema({
 	name: { type: String, required: true },
 	desc: { type: String, required: true },
-	content: [{ content: String }]
+	content: [String]
 });
 
 module.exports = mongoose.model('Module', ModuleSchema);

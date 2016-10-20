@@ -113,3 +113,7 @@ footer > div:first-child {
 .filters li a.active {
     color: #666;
 }
+
+textarea.pageContent {
+    height: 400px;
+}

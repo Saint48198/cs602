@@ -54,9 +54,6 @@ define([
 			} else {
 				this.displayForm({});
 			}
-
-
-
 		},
 
 		displayForm: function (data) {
@@ -96,7 +93,7 @@ define([
 				this.displayForm({});
 
 			}
-			console.log(formDataObject);
+
 			if (assessmentId) {
 				this.assessmentModel.url = this.assessmentModel.existingAssessmentUrl + assessmentId;
 			} else {

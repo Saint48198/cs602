@@ -45,7 +45,7 @@ module.exports.create = (req, res, next) => {
 					return;
 				}
 
-				course.assignments.addToSet({ _id: assessment.id });
+				course.assessments.addToSet({ _id: assessment.id });
 				course.save((error, course) => {
 					if (error) {
 						console.log('Error: %s', error);
