@@ -16,6 +16,13 @@ define([
 
 		parse: function (resp) {
 			return resp.assignment || [];
+		},
+
+		deleteAssignment: function (id) {
+			return $.ajax({
+				method: 'post',
+				url: '/api/assignment/' + id + '/delete'
+			});
 		}
 	});
 
