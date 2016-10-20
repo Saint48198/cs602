@@ -12,12 +12,6 @@ module.exports.create = (req, res, next) => {
 
 	res.setHeader('Content-Type', 'application/json');
 
-	if (utilities.checkAccess(req, res, next) === false) {
-		res.status(401);
-		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
-		return;
-	}
-
 	let postData = req.body;
 	let fname = postData.firstName;
 	let lname = postData.lastName;

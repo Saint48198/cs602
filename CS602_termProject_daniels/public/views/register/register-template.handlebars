@@ -1,0 +1,79 @@
+<script id="template-register" type="text/x-handlebars-template">
+	<div class="container">
+		<div class="col-md-12">
+			<nav>
+				<ol class="breadcrumb">
+					<li><a href="/" data-bb-link>Home</a></li>
+					<li class="active">{{title}}</li>
+				</ol>
+			</nav>
+
+
+			<h1>{{title}}</h1>
+			<div class="container-form">
+				<div class="loader center" aria-label="loading..."></div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="template-registerForm" type="text/x-handlebars-template">
+	<form method="post" action="." id="form-register">
+		{{#if error}}
+			<div class="alert alert-danger">
+				{{{error}}}
+			</div>
+		{{/if}}
+
+		{{#if success}}
+			<div class="alert alert-success">
+				{{{success}}}
+			</div>
+		{{/if}}
+
+		{{#if _id}}
+			<input type="hidden" value="{{_id}}" name="_id">
+		{{/if}}
+
+		<div class="form-group">
+			<label for="inputFirstName" class="sr-only">First Name</label>
+			<input type="text" name="firstName" value="{{firstName}}" id="inputFirstName" class="form-control" maxlength="325" placeholder="First Name" required autofocus /{{#if disabled}}disabled/{{/if}}>
+		</div>
+
+		<div class="form-group">
+			<label for="inputLastName" class="sr-only">Last Name</label>
+			<input type="text" name="lastName" value="{{lastName}}" id="inputLastName" class="form-control" maxlength="325" placeholder="Last Name" required /{{#if disabled}}disabled/{{/if}}>
+		</div>
+
+		<div class="form-group">
+			<label for="inputEmail" class="sr-only">Email</label>
+			<input type="email" name="email" value="{{email}}" id="inputEmail" class="form-control" maxlength="325" placeholder="Email" required /{{#if disabled}}disabled/{{/if}}>
+		</div>
+
+		<div class="form-group">
+			<label for="inputPassword" class="sr-only">Password</label>
+			<input type="password" name="password" value="" id="inputPassword" class="form-control" maxlength="325" placeholder="Password" required /{{#if disabled}}disabled/{{/if}}>
+		</div>
+
+		<div class="form-group">
+			<label for="inputConfirmPassword" class="sr-only">Confirm Password</label>
+			<input type="password" name="cpassword" value="" id="inputConfirmPassword" class="form-control" maxlength="325" placeholder="Confirm Password" required /{{#if disabled}}disabled/{{/if}}>
+		</div>
+
+		<div class="form-group">
+			<div>User Role</div>
+			{{#each roles}}
+				<label class="checkbox-inline"><input type="checkbox" value="{{value}}" name="roles"{{#if selected}} checked{{/if}}>{{label}}</label>
+			{{/each}}
+		</div>
+
+
+		<div class="form-group">
+			<button class="btn btn-lg btn-primary btn-block" type="submit">{{title}}</button>
+		</div>
+
+		<div class="form-group">
+			<a href="/" class="btn btn-lg btn-default btn-block">Cancel</a>
+		</div>
+	</form>
+</script>
