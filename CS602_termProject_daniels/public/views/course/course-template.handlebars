@@ -1,5 +1,32 @@
 <script id="template-course" type="text/x-handlebars-template">
-  <div class="container">
-    <h1>Hello World</h1>
-  </div>
+	<div class="container">
+		<div class="col-md-3">
+			<nav>
+				<ul class="nav nav-pills nav-stacked">
+					<li role="presentation" class="active"><a href="/course/{{courseId}}" data-bb-link>Home</a></li>
+					<li role="presentation"><a href="/course/{{courseId}}/assessments" data-bb-link>Assessments</a></li>
+					<li role="presentation"><a href="/course/{{courseId}}/assignments" data-bb-link>Assignments</a></li>
+					<li role="presentation"><a href="/course/{{courseId}}/modules" data-bb-link>Course Modules</a></li>
+					<li role="presentation"><a href="/course/{{courseId}}/grades" data-bb-link>My Grades</a></li>
+					<li role="presentation"><a href="/course/{{courseId}}/messages" data-bb-link>Messages</a></li>
+				</ul>
+			</nav>
+		</div>
+		<div class="col-md-9">
+			<h1><small>{{courseId}}<br></small>{{course.name}}</h1>
+
+			{{#if module.length}}
+				<ul class="noStyle">
+					{{#each module}}
+						<li>
+							<a href="/course/{{courseId}}/modules?module_id={{id}}" data-bb-link>{{name}}</a>
+							{{#if desc }}
+								<p>{{desc}}</p>
+							{{/if}}
+						</li>
+					{{/each}}
+				</ul>
+			{{/if}}
+		</div>
+	</div>
 </script>

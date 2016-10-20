@@ -44,6 +44,12 @@ footer > div:first-child {
     color: #ccc;
 }
 
+ul.noStyle {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px;
+}
+
 
 /* horizontal menu */
 .actions ul {

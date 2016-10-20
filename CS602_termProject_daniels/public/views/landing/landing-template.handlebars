@@ -16,17 +16,17 @@
 				<h1>My Courses</h1>
 				{{#if studentCourses.length }}
 					<p>Courses where you are: Student</p>
-					<ul>
+					<ul class="noStyle">
 						{{#each studentCourses }}
 							<li><a href="/course/{{number}}" data-bb-link>{{number}} - {{name}}</a> </li>
 						{{/each}}
 
 					</ul>
 				{{/if}}
-
+				<hr>
 				{{#if teacherCourses.length }}
 					<p>Courses where you are: Student</p>
-					<ul>
+					<ul class="noStyle">
 						{{#each teacherCourses }}
 							<li><a href="/course/{{number}}" data-bb-link>{{number}} - {{name}}</a> </li>
 						{{/each}}
