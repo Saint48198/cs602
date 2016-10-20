@@ -26,6 +26,7 @@ define([
 	'../views/course/course-view',
 	'../views/grades/grades-view',
 	'../views/messages/messages-view',
+	'../views/calendar/calendar-view',
 
 	/* user auth views */
 	'../views/register/register-view',
@@ -54,6 +55,7 @@ define([
 			 CourseView,
 			 GradesView,
 			 MessagesView,
+			 CalendarView,
 			 RegisterView,
 			 ResetPasswordView,
 			 ForgotPasswordView,
@@ -148,6 +150,7 @@ define([
 			'course/:courseId':							displayView(CourseView,				'course',			  { needsAuth: true }),
 			'grades(/:courseId)':					    displayView(GradesView,				'grades',			  { needsAuth: true }),
 			'messages(/:courseId)':						displayView(MessagesView,			'messages',			  { needsAuth: true }),
+			'calendar(/:courseId)(?:queryString)':		displayView(CalendarView,		    'calendar',			  { needsAuth: true }),
 
 			// default view
 			'*actions': 						 		displayView(LandingView, 			'default', 			  { needsAuth: true })
