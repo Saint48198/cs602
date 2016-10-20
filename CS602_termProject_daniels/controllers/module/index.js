@@ -70,14 +70,20 @@ module.exports.list = (req, res, next) => {
 	}
 
 	if (courseId) {
-		Course.find({ number: courseId}, (error, course) => {
+		Course.findOne({ number: courseId}, (error, course) => {
 			if (error) {
 				console.log('Error: %s', error);
 				res.send(JSON.stringify({ error:'Error on server getting the list of modules' }));
 				return;
 			}
 
+			if (!course) {
+				res.send(JSON.stringify({ error:'Course does not exist!' }));
+				return;
+			}
+
 			if (course.modules && course.modules.length) {
+
 				Module.find({ $or: course.modules }, (error, results) => {
 					if (error) {
 						console.log('Error: %s', error);
@@ -95,7 +101,7 @@ module.exports.list = (req, res, next) => {
 
 		return;
 	} else {
-		res.send(JSON.stringify({ error: 'Request must include course number!' }));
+		res.send(JSON.stringify({ success: false, error: 'Request must include course number!' }));
 	}
 };
 

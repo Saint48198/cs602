@@ -43,15 +43,17 @@ define([
 			});
 		},
 		handleSuccessfulRequest: function (collection, resp) {
+			var query = UTIL.QueryString();
+			var courseId = query.course_id;
+
 			if (resp.error) {
 				this.handleFailedRequest(resp, resp.error);
 				return;
 			}
-			this.replaceUsingTemplate('template-adminModulesContent', $('.container-tableData', this.$el), { module: collection.toJSON() });
+			this.replaceUsingTemplate('template-adminModulesContent', $('.container-tableData', this.$el), { module: collection.toJSON(), courseId: courseId });
 		},
 
 		handleFailedRequest: function (requestObject, error, errorThrow) {
-			console.log($('.container-tableData', this.$el).length);
 			this.replaceUsingTemplate('template-serviceError', $('.container-tableData', this.$el), { error: error });
 		}
 	});
