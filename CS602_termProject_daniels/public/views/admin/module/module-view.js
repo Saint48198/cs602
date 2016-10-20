@@ -66,9 +66,13 @@ define([
 		},
 
 		displayForm: function (data) {
+			var query = UTIL.QueryString();
+			var courseId = query.course_id;
+
 			data.disabled = this.formDisabled;
 			data.title =  this.title;
 			data.moduleContentPage = this.moduleContentPage;
+			data.courseId = courseId;
 
 			this.replaceUsingTemplate('template-adminModuleForm', $('.container-form', this.$el), data);
 		},
@@ -124,8 +128,6 @@ define([
 			} else {
 				this.moduleModel.url = this.moduleModel.newModuleUrl;
 			}
-
-			console.log(formDataObject);
 
 			this.moduleModel.save(formDataObject, {
 				success: this.handleModuleServiceResponse.bind(this),

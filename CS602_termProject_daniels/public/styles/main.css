@@ -123,3 +123,14 @@ ul.noStyle {
 textarea.pageContent {
     height: 400px;
 }
+
+.container-courseContent > h2  {
+    font-size: 18px;
+    color: #666;
+    padding-bottom: 8px;
+    margin-bottom: 0;
+}
+
+.container-courseContent > .title {
+    margin-top: 0;
+}

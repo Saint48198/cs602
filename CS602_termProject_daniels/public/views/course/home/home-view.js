@@ -34,6 +34,7 @@ define([
 
 			Promise.all([this.moduleCollection.fetch(), this.courseModel.fetch()]).then(function (fullfill, reject) {
 				if (fullfill.length) {
+					console.log(this.moduleCollection.toJSON())
 					this.replaceUsingTemplate('template-course', this.$el, { courseId: courseId, module: this.moduleCollection.toJSON(), course: this.courseModel.toJSON() }, { title: 'Course - ' + courseId });
 				} else {
 
