@@ -6,11 +6,11 @@ define([
 	'underscore',
 	'backbone',
 	'util',
-	'../../../collections/module-collection',
+	'../../../collections/assignment-collection',
 	'../../../models/course-model',
 	'base'
 
-], function ($, _, Backbone, UTIL, ModuleCollection, CourseModel) {
+], function ($, _, Backbone, UTIL, AssignmentCollection, CourseModel) {
 	'use strict';
 	var CourseAssignmentsView = BaseView.fullExtend({
 
@@ -21,20 +21,20 @@ define([
 		},
 
 		onInitialize: function () {
-			this.moduleCollection = new ModuleCollection();
+			this.assignmentCollection = new AssignmentCollection();
 			this.courseModel = new CourseModel();
 		},
 
 		onRender: function (actions) {
 			var courseId = actions.type;
 
-			this.moduleCollection.url = this.moduleCollection.url.split('?')[0] + '?course_id=' + courseId;
+			this.assignmentCollection.url = this.assignmentCollection.url.split('?')[0] + '?course_id=' + courseId;
 			this.courseModel.url = this.courseModel.existingCourseUrl + courseId;
 
 
-			Promise.all([this.moduleCollection.fetch(), this.courseModel.fetch()]).then(function (fullfill, reject) {
+			Promise.all([this.assignmentCollection.fetch(), this.courseModel.fetch()]).then(function (fullfill, reject) {
 				if (fullfill.length) {
-					this.replaceUsingTemplate('template-courseAssignments', this.$el, { courseId: courseId, module: this.moduleCollection.toJSON(), course: this.courseModel.toJSON() }, { title: 'Course - ' + courseId });
+					this.replaceUsingTemplate('template-courseAssignments', this.$el, { courseId: courseId, assignment: this.assignmentCollection.toJSON(), course: this.courseModel.toJSON() }, { title: 'Course - ' + courseId + 'Assignment' });
 				} else {
 
 				}
