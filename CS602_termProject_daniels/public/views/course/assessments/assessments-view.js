@@ -1,4 +1,4 @@
-// Page Section: Course
+// Page Section: Course | Assessments
 // Filename: course-view.js
 
 define([
@@ -6,18 +6,18 @@ define([
 	'underscore',
 	'backbone',
 	'util',
-	'../../collections/module-collection',
-	'../../models/course-model',
+	'../../../collections/module-collection',
+	'../../../models/course-model',
 	'base'
 
 ], function ($, _, Backbone, UTIL, ModuleCollection, CourseModel) {
 	'use strict';
-	var CourseView = BaseView.fullExtend({
+	var CourseAssessmentsView = BaseView.fullExtend({
 
 		el: $('main'),
 
 		url: function () {
-			return '/views/course/course-template.handlebars';
+			return '/views/course/assessments/assessments-template.handlebars';
 		},
 
 		onInitialize: function () {
@@ -31,15 +31,14 @@ define([
 			this.moduleCollection.url = this.moduleCollection.url.split('?')[0] + '?course_id=' + courseId;
 			this.courseModel.url = this.courseModel.existingCourseUrl + courseId;
 
-
 			Promise.all([this.moduleCollection.fetch(), this.courseModel.fetch()]).then(function (fullfill, reject) {
 				if (fullfill.length) {
-					this.replaceUsingTemplate('template-course', this.$el, { courseId: courseId, module: this.moduleCollection.toJSON(), course: this.courseModel.toJSON() }, { title: 'Course - ' + courseId });
+					this.replaceUsingTemplate('template-courseAssessments', this.$el, { courseId: courseId, module: this.moduleCollection.toJSON(), course: this.courseModel.toJSON() }, { title: 'Course - ' + courseId });
 				} else {
 
 				}
 			}.bind(this));
 		}
 	});
-	return CourseView;
+	return CourseAssessmentsView;
 });

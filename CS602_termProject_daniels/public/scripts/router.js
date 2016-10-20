@@ -23,7 +23,11 @@ define([
 	'../views/admin/question/question-view',
 	'../views/admin/user-course/userCourse-view',
 
-	'../views/course/course-view',
+	/* course views */
+	'../views/course/home/home-view',
+	'../views/course/assessments/assessments-view',
+	'../views/course/assignments/assignments-view',
+	'../views/course/modules/modules-view',
 	'../views/grades/grades-view',
 	'../views/messages/messages-view',
 	'../views/calendar/calendar-view',
@@ -52,7 +56,10 @@ define([
 			 AdminQuestionsView,
 			 AdminQuestionView,
 			 AdminUserCourseView,
-			 CourseView,
+			 CourseHomeView,
+			 CourseAssessmentsView,
+			 CourseAssignmentsView,
+			 CourseModulesView,
 			 GradesView,
 			 MessagesView,
 			 CalendarView,
@@ -147,7 +154,11 @@ define([
 			'admin/add_user_to_course(?:queryString)':  displayView(AdminUserCourseView,    'adminUserCourse',    { needsAuth: true, needsToBeAdmin: true }),
 			'admin': 							 		displayView(AdminCoursesView, 		'adminCourses', 	  { needsAuth: true, needsToBeAdmin: true }),
 
-			'course/:courseId':							displayView(CourseView,				'course',			  { needsAuth: true }),
+			'course/:courseId/assessments':				displayView(CourseAssessmentsView,	'courseAssessments',  { needsAuth: true }),
+			'course/:courseId/assignments':				displayView(CourseAssignmentsView,	'courseAssignments',  { needsAuth: true }),
+			'course/:courseId/modules':				    displayView(CourseModulesView,	    'courseModules',      { needsAuth: true }),
+			'course/:courseId':							displayView(CourseHomeView,			'courseHome',		  { needsAuth: true }),
+
 			'grades(/:courseId)':					    displayView(GradesView,				'grades',			  { needsAuth: true }),
 			'messages(/:courseId)':						displayView(MessagesView,			'messages',			  { needsAuth: true }),
 			'calendar(/:courseId)(?:queryString)':		displayView(CalendarView,		    'calendar',			  { needsAuth: true }),
