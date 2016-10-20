@@ -43,11 +43,11 @@
 
 	<div>
 		{{#if prevPage}}
-			<a href="/course/{{courseId}}/modules?module_id={{module._id}}&page={{prevPage}}">&#171; Prev</a>
+			<a href="/course/{{courseId}}/modules?module_id={{module._id}}&page={{prevPage}}" data-bb-link>&#171; Prev</a>
 		{{/if}}
 		Page {{page}}
 		{{#if nextPage}}
-			<a href="/course/{{courseId}}/modules?module_id={{module._id}}&page={{nextPage}}">&raquo; Next</a>
+			<a href="/course/{{courseId}}/modules?module_id={{module._id}}&page={{nextPage}}" data-bb-link>&raquo; Next</a>
 		{{/if}}
 	</div>
 

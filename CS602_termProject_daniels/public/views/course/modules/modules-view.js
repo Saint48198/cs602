@@ -43,7 +43,7 @@ define([
 				Promise.all([this.moduleModel.fetch(), this.courseModel.fetch()]).then(function (fullfill, reject) {
 					if (fullfill.length) {
 						var module = this.moduleModel.toJSON();
-						var page = query.page ? parseInt(query.page) : 1;
+						var page = query.page && (parseInt(query.page) <= module.content.length)  ? parseInt(query.page) : 1;
 						var prevPage = page === 1 ? null : page - 1;
 						var nextPage = module.content.length === page ? null : page + 1;
 
