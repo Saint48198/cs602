@@ -32,6 +32,25 @@
 
 	<footer></footer>
 
+	<!-- Modal -->
+	<div class="modal fade" id="theModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Delete Action!</h4>
+				</div>
+				<div class="modal-body">
+					Are you sure that you want to do this. It can be undone after you continue.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-danger" id="modal-delete-btn">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script id="template-serviceError" type="text/x-handlebars-template">
 		<div class="alert alert-danger">
 			{{error}}

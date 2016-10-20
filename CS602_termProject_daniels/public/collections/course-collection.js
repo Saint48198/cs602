@@ -24,6 +24,13 @@ define([
 				url: '/api/course/' + courseId + '/' + type,
 				data: '_id=' + userId
 			});
+		},
+
+		deleteCourse: function (courseId) {
+			return $.ajax({
+				url: '/api/course/' + courseId + '/delete',
+				method: 'post'
+			});
 		}
 	});
 

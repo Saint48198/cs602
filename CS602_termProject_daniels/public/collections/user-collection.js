@@ -16,6 +16,13 @@ define([
 
 		parse: function (resp) {
 			return resp.user || [];
+		},
+
+		deleteUser: function (id) {
+			return $.ajax({
+				method: 'post',
+				url: '/api/user/' + id + '/delete'
+			});
 		}
 	});
 

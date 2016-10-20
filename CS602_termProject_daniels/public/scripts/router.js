@@ -259,6 +259,17 @@ define([
 				startApp(appRouter, sessionResp);
 			}
 		});
+
+		// sete events for the delete modal message
+		$('#theModal').on('show.bs.modal', function (event) {
+			var modal = $(this)
+			modal.find('.modal-title').text('Delete Item')
+			modal.find('.modal-body').val('Are you sure becuase this can not be undone?')
+		});
+
+		$('#modal-delete-btn').click(function (e) {
+			appRouter.trigger('doDelete');
+		}.bind(this));
 	};
 
 	return {

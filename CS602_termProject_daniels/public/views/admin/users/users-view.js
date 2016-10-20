@@ -19,8 +19,26 @@ define([
 			return '/views/admin/users/users-template.handlebars';
 		},
 
+		events: {
+			'click .btn-delete-user': 'setItemToDelete'
+		},
+
 		onInitialize: function () {
 			this.userCollection = new UserCollection();
+
+			this.router.on('doDelete', function () {
+				this.userCollection.deleteUser(this.selectedItemId.id).done(function (resp) {
+					if (resp.error) {
+						alert('error');
+						return;
+					}
+
+					$('#theModal').modal('hide');
+					this.onRender({});
+
+				}.bind(this));
+
+			}.bind(this));
 		},
 
 		onRender: function () {
@@ -35,6 +53,9 @@ define([
 			var userApi = this.userCollection.url.split('?')[0];
 
 			this.title = 'Users';
+
+			// storehouse for the the delete item data for the taking action when the modal closes
+			this.selectedItemId = null;
 
 
 			if (query.role) {
@@ -82,6 +103,13 @@ define([
 
 		handleFailedRequest: function (requestObject, error, errorThrow) {
 			this.replaceUsingTemplate('template-serviceError', $('.container-tableData', this.$el), { error: error });
+		},
+
+		setItemToDelete: function (e) {
+			this.selectedItemId = {
+				id: $(e.target).attr('data-Id'),
+				type: 'user'
+			};
 		}
 	});
 	return AdminUsersView;

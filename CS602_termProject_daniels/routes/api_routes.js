@@ -52,6 +52,7 @@ router.post('/auth', userController.auth);
 router.post('/forgot', userController.getPasswordResetToken);
 router.post('/reset/:token', userController.resetPassword);
 router.post('/user/:user_id', userController.update);
+router.post('/user/:user_id/delete', userController.delete);
 router.get('/users', userController.list);
 router.get('/user/:user_id', userController.show);
 router.get('/reset/:token', userController.resetTokenCheck);
