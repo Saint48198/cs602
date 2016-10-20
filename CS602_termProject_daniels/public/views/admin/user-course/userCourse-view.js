@@ -92,7 +92,7 @@ define([
 					return;
 				}
 
-				UTIL.navTo('admin/users?role=' + query.role + '&course_id=' + query.course_id);
+				UTIL.navTo('/admin/users?role=' + query.role + '&course_id=' + query.course_id);
 			}.bind(this));
 
 		}

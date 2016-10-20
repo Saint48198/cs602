@@ -24,7 +24,7 @@ define([
 		url: '/api/assignment/',
 
 		parse: function (resp, options) {
-			return resp.results && resp.results.length ? resp.results[0] : {};
+			return resp.assignment || {};
 		}
 	});
 	return AssignmentModel;

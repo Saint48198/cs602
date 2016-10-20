@@ -16,8 +16,9 @@ router.get('/assessment/:assessment_id', assessmentController.show);
 
 /* assignment  services */
 router.post('/assignment', assignmentController.create);
+router.post('/assignment/:assignment_id', assignmentController.update);
 router.get('/assignments', assignmentController.list);
-router.get('assignment/:assignment_id', assignmentController.show);
+router.get('/assignment/:assignment_id', assignmentController.show);
 
 /* course services */
 router.post('/course', courseController.create);

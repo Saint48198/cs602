@@ -55,9 +55,9 @@ define([
 
 			if (!this.sessionModel.get('logged_in') && config.needsAuth) {
 				if (fwdVal === "/") {
-					UTIL.navTo("login");
+					UTIL.navTo("/login");
 				} else {
-					UTIL.navTo("login?fwd=" +  encodeURIComponent(fwdVal));
+					UTIL.navTo("/login?fwd=" +  encodeURIComponent(fwdVal));
 				}
 				return false;
 			}
@@ -189,7 +189,6 @@ define([
 
 		appRouter.history = [];
 		appRouter.listenTo(appRouter, 'route', function (name, args) {
-			console.log(name);
 
 			appRouter.history.push({
 				name : name,

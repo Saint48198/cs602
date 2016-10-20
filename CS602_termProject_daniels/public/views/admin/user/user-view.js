@@ -36,7 +36,7 @@ define([
 
 			// no course id no access to edit course page, push the user to the add course page
 			if (!userId && window.location.pathname.indexOf('admin/edit_user') !== -1) {
-				UTIL.navTo('admin/add_course');
+				UTIL.navTo('/admin/add_course');
 				return;
 			}
 
@@ -136,7 +136,7 @@ define([
 							return;
 						}
 
-						UTIL.navTo('admin/users');
+						UTIL.navTo('/admin/users');
 					}.bind(this),
 					error: function (resp, error) {
 						formDataObject.error = error.message || error;

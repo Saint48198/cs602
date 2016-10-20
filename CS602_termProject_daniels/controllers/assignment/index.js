@@ -18,7 +18,6 @@ module.exports.create = (req, res, next) => {
 	let postData = req.body;
 	let courseId = postData.course_id;
 	let assignmentData = {};
-	console.log(postData.files);
 
 	assignmentData.name =  postData.name;
 	assignmentData.points  = postData.points;
@@ -33,7 +32,7 @@ module.exports.create = (req, res, next) => {
 			return;
 		}
 
-		if (!course.name) {
+		if (!course) {
 			res.send(JSON.stringify({ error: 'Invalid course number!' }));
 			return;
 		}
@@ -47,8 +46,15 @@ module.exports.create = (req, res, next) => {
 			}
 
 			course.assignments.addToSet({ _id: assignment.id });
+			course.save((error, course) => {
+				if (error) {
+					console.log('Error: %s', error);
+					res.send(JSON.stringify({ error: 'Error finding course!' }));
+					return;
+				}
 
-			res.send(JSON.stringify({ success: true, assignment: assignment, course: course }));
+				res.send(JSON.stringify({ success: true, assignment: assignment, course: course }));
+			});
 
 		});
 	});
@@ -75,7 +81,7 @@ module.exports.list = (req, res, next) => {
 				return;
 			}
 
-			if (!course.name) {
+			if (!course) {
 				res.send(JSON.stringify({ error: 'Invalid course number!' }));
 				return;
 			}
@@ -112,17 +118,63 @@ module.exports.show =  (req, res, next) => {
 		return;
 	}
 
-	Assignment.find({ number: req.params.assignment_id }, (error, assignment) => {
+	Assignment.findOne({ _id: req.params.assignment_id }, (error, assignment) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error.message }));
+			return;
+		}
+
+		if (!assignment) {
+			res.send(JSON.stringify({ error: 'No assignment found with that id.' }));
+			return;
+		}
+
+		res.send(JSON.stringify({ assignment: assignment }));
+	});
+};
+
+module.exports.update = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	let postData = req.body;
+
+	Assignment.findOne({ _id: req.params.assignment_id }, (error, assignment) => {
 		if (error) {
 			console.log('Error: %s', error);
 			res.send(JSON.stringify({ error: error }));
 			return;
 		}
 
-		let results = assignment.map((assignment) => {
-			return assignment;
+		if (!assignment) {
+			res.send(JSON.stringify({ error: 'Assignment does not exist!' }));
+			return;
+		}
+
+		assignment.isNew = false;
+
+		for (var prop in postData) {
+			if (postData[prop] && (postData[prop] !== assignment[prop])) {
+				assignment[prop] = postData[prop];
+			}
+		}
+
+		assignment.save((error) => {
+			if(error) {
+				console.log('Error: %s', error);
+				res.send(JSON.stringify({ error: error }));
+				return;
+			}
+			res.send(JSON.stringify({ success: true, assignment: assignment }));
 		});
 
-		res.send(JSON.stringify({ assignment: results }));
 	});
 };

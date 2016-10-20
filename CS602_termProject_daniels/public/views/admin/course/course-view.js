@@ -35,7 +35,7 @@ define([
 
 			// no course id no access to edit course page, push the user to the add course page
 			if (!courseId && window.location.pathname.indexOf('admin/edit_course') !== -1) {
-				UTIL.navTo('admin/add_course');
+				UTIL.navTo('/admin/add_course');
 				return;
 			}
 

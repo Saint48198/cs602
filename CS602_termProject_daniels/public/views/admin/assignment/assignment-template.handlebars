@@ -6,8 +6,8 @@
 					<li><a href="/" data-bb-link>Home</a></li>
 					<li><a href="/admin" data-bb-link>Courses</a></li>
 					<li><a href="/admin/edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
-					<li><a href="/admin/assessments?course_id={{courseId}}" data-bb-link>Assignments</a></li>
-					<li class="active">Add Assignment</li>
+					<li><a href="/admin/assignments?course_id={{courseId}}" data-bb-link>Assignments</a></li>
+					<li class="active">{{title}}</li>
 				</ol>
 			</nav>
 
@@ -42,7 +42,7 @@
 		<div class="form-group">
 			<div class='input-group date' id='datetimepicker1'>
 				<label for="inputDueDate" class="sr-only">Due Date</label>
-				<input type='text' class="form-control" name="dueDate" id="inputDueDate" placeholder="Due Date" {{#if disabled}}disabled{{/if}}>
+				<input type='text' class="form-control" name="due" id="inputDueDate" placeholder="Due Date" value="{{due}}" {{#if disabled}}disabled{{/if}}>
 				<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -56,7 +56,7 @@
 
 		<div class="form-group">
 			<label for="inputInstructions" class="sr-only">Instructions</label>
-			<textarea class="form-control" name="instructions" id="inputInstructions" placeholder="Instructions" {{#if disabled}}disabled{{/if}}></textarea>
+			<textarea class="form-control" name="instructions" id="inputInstructions" placeholder="Instructions" {{#if disabled}}disabled{{/if}}>{{instructions}}</textarea>
 		</div>
 
 		{{#if disabled}}

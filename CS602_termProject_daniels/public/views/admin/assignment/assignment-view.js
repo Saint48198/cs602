@@ -31,7 +31,7 @@ define([
 		onRender: function () {
 			var query = UTIL.QueryString();
 			var courseId = query.course_id;
-			var assessmentId = query.assessment_id;
+			var assessmentId = query.assignment_id;
 
 			this.formDisabled = false;
 
@@ -44,7 +44,16 @@ define([
 			}
 
 			this.replaceUsingTemplate('template-adminAssignment', this.$el, { title: this.title, courseId: courseId }, { title: 'Admin ~ ' + this.title });
-			this.displayForm({});
+
+			if (assessmentId) {
+				this.assignmentModel.url = this.assignmentModel.existingAssignmentUrl + assessmentId;
+				this.assignmentModel.fetch({
+					success: this.handleRequestAssignment.bind(this),
+					error: this.handleRequestAssignment.bind(this)
+				});
+			} else {
+				this.displayForm({});
+			}
 		},
 
 		displayForm: function (data) {
@@ -54,6 +63,16 @@ define([
 			this.replaceUsingTemplate('template-adminAssignmentForm', $('.container-form', this.$el), data);
 		},
 
+		handleRequestAssignment: function (model, resp) {
+			var data = model.toJSON();
+
+			if (resp.error) {
+				data.error = resp.error;
+			}
+
+			this.displayForm(data);
+		},
+
 		handleAdminAssessmentForm: function (e) {
 			e.preventDefault();
 
@@ -61,10 +80,10 @@ define([
 			var formDataObject = {};
 			var query = UTIL.QueryString();
 			var courseId = query.course_id;
-			var assessmentId = query.assessment_id;
+			var assessmentId = query.assignment_id;
 
-			formData.courseId = courseId;
-
+			formDataObject.course_id = courseId;
+			// data needs to be an object for backbone model to store it with the right keys
 			if (this.formDisabled === false) {
 				formData.forEach(function (input) {
 					formDataObject[input.name] = input.value;
@@ -73,15 +92,14 @@ define([
 				this.formDisabled = true;
 				this.displayForm({});
 
-				console.log(formDataObject);
 			}
 			if (assessmentId) {
-				this.assignmentModel.url = this.existingUserUrl + assessmentId;
+				this.assignmentModel.url = this.assignmentModel.existingAssignmentUrl + assessmentId;
 			} else {
 				this.assignmentModel.url = this.assignmentModel.newAssignmentUrl;
 			}
 
-			this.assignmentModel.save(formData, {
+			this.assignmentModel.save(formDataObject, {
 				success: this.handleAssignmentServiceResponse.bind(this),
 				error: this.handleAssignmentServiceResponse.bind(this)
 			});
@@ -93,12 +111,12 @@ define([
 			this.formDisabled = false;
 
 			if (resp.error) {
-				data.error = error;
+				data.error = resp.error;
 				this.displayForm(data);
 				return;
 			}
 
-			UTIL.navTo('admin/assessments?course_id=' + data.courseId);
+			UTIL.navTo('/admin/assignments?course_id=' + data.course_id);
 		}
 	});
 	return AdminAssignmentView;
