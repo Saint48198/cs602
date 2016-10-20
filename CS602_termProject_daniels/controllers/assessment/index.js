@@ -264,3 +264,95 @@ module.exports.getQuestions =  (req, res, next) => {
 
 	});
 };
+
+module.exports.updateQuestion =  (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	Assessment.findOne({ _id: req.params.assessment_id }, (error, assessment) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error.message }));
+			return;
+		}
+
+		if (!assessment) {
+			res.send(JSON.stringify({ error: 'Assesment does not exist!' }));
+			return;
+		}
+
+		Question.findOne({ _id: req.params.question_id }, (error, question) => {
+			if (error) {
+				console.log('Error: %s', error);
+				res.send(JSON.stringify({ error: error }));
+				return;
+			}
+
+			if (!question) {
+				res.send(JSON.stringify({ error: 'Question does not exist!' }));
+				return;
+			}
+
+			question.isNew = false;
+
+			for (var prop in postData) {
+				if (postData[prop] && (postData[prop] !== question[prop])) {
+					question[prop] = postData[prop];
+				}
+			}
+
+			question.save((error) => {
+				if(error) {
+					console.log('Error: %s', error);
+					res.send(JSON.stringify({ error: error }));
+					return;
+				}
+				res.send(JSON.stringify({ success: true, question: question }));
+			});
+		});
+
+	});
+};
+
+module.exports.getQuestion =  (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	Assessment.findOne({ _id: req.params.assessment_id }, (error, assessment) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error.message }));
+			return;
+		}
+
+		if (!assessment) {
+			res.send(JSON.stringify({ error: 'Assesment does not exist!' }));
+			return;
+		}
+
+		Question.findOne({ _id: req.params.question_id }, (error, question) => {
+			if (error) {
+				console.log('Error: %s', error);
+				res.send(JSON.stringify({ error: error }));
+				return;
+			}
+
+			res.send(JSON.stringify({ question: question }));
+		});
+
+	});
+};

@@ -11,10 +11,12 @@ const userController = require('../controllers/user/index');
 /* assessment services */
 router.post('/assessment', assessmentController.create);
 router.post('/assessment/:assessment_id', assessmentController.update);
-router.post('/assessment/:assessment_id/add_question', assessmentController.addQuestion);
+router.post('/assessment/:assessment_id/question', assessmentController.addQuestion);
+router.post('/assessment/:assessment_id/question/:qeustion_id', assessmentController.updateQuestion);
 router.get('/assessments', assessmentController.list);
 router.get('/assessment/:assessment_id', assessmentController.show);
 router.get('/assessment/:assessment_id/get_questions', assessmentController.getQuestions);
+router.get('/assessment/:assessment_id/question/:qeustion_id', assessmentController.getQuestion);
 
 /* assignment  services */
 router.post('/assignment', assignmentController.create);

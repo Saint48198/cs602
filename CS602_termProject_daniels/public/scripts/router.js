@@ -127,8 +127,8 @@ define([
 			'admin/edit_assessment(?:queryString)':	    displayView(AdminAssessmentView,    'adminEditAssessment',{ needsAuth: true, needsToBeAdmin: true }),
 			'admin/add_assessment(?:queryString)': 	    displayView(AdminAssessmentView,    'adminAddAssessment', { needsAuth: true, needsToBeAdmin: true }),
 			'admin/questions(?:queryString)':   		displayView(AdminQuestionsView,     'adminQuestions', 	  { needsAuth: true, needsToBeAdmin: true }),
-			'admin/edit_question(?:queryString)':  	    displayView(AdminQuestionsView,     'adminEditQuestion',  { needsAuth: true, needsToBeAdmin: true }),
-			'admin/add_question(?:queryString)':   	    displayView(AdminQuestionsView,     'adminAddQuestion',   { needsAuth: true, needsToBeAdmin: true }),
+			'admin/edit_question(?:queryString)':  	    displayView(AdminQuestionView,      'adminEditQuestion',  { needsAuth: true, needsToBeAdmin: true }),
+			'admin/add_question(?:queryString)':   	    displayView(AdminQuestionView,      'adminAddQuestion',   { needsAuth: true, needsToBeAdmin: true }),
 			'admin/add_user_to_course(?:queryString)':  displayView(AdminUserCourseView,    'adminUserCourse',    { needsAuth: true, needsToBeAdmin: true }),
 			'admin': 							 		displayView(AdminCoursesView, 		'adminCourses', 	  { needsAuth: true, needsToBeAdmin: true }),
 

@@ -1,71 +1,68 @@
 <script id="template-adminQuestion" type="text/x-handlebars-template">
 	<div class="container">
-		<div class="col-md-3">
-			<nav>
-				<ul class="nav nav-pills nav-stacked">
-					<li role="presentation"><a href="/admin" data-bb-link>Courses</a></li>
-					<li role="presentation"><a href="/admin/students" data-bb-link>Students</a></li>
-					<li role="presentation"><a href="/admin/teachers" data-bb-link>Send Email</a></li>
-
-					{{#if inEditMode}}
-						<li role="presentation"><a href="/admin/users?role=user" data-bb-link>View Students</a></li>
-						<li role="presentation"><a href="/admin/users?role=admin" data-bb-link>View Teachers</a></li>
-						<li role="presentation" class="active"><a href="/admin/assessments" data-bb-link>View Assessments</a></li>
-						<li role="presentation"><a href="/admin/assignmenst" data-bb-link>View Assignments</a></li>
-						<li role="presentation"><a href="/admin/modules" data-bb-link>View Modules</a></li>
-					{{/if}}
-				</ul>
-			</nav>
-		</div>
-
-		<div class="col-md-9">
+		<div class="col-md-12">
 			<nav>
 				<ol class="breadcrumb">
 					<li><a href="/" data-bb-link>Home</a></li>
 					<li><a href="/admin" data-bb-link>Courses</a></li>
-					<li><a href="/admin/assessment?assessment_id={{assessment_id}}">Assessment</a> </li>
-					<li class="active">Add Question</li>
+					<li><a href="/admin/edit_course?course_id={{courseId}}" data-bb-link>{{courseId}}</a></li>
+					<li><a href="/admin/assessments?course_id={{courseId}}" data-bb-link>Assessments</a></li>
+					<li><a href="/admin/questions?assessment_id={{assessmentId}}&course_id={{courseId}}" data-bb-link>Questions</a> </li>
+					<li class="active">{{title}}</li>
 				</ol>
 			</nav>
 
+			<h1>{{title}}</h1>
+			<div class="container-form">
+				<div class="loader center" aria-label="loading..."></div>
+			</div>
 
-			<h1>Add Question for {{assessmentName}}</h1>
-			<form method="post" action="." id="form-AdminCourse">
-				{{#if error}}
-					<div class="alert alert-danger">
-						{{{error}}}
-					</div>
-				{{/if}}
-
-				{{#if success}}
-					<div class="alert alert-success">
-						{{{success}}}
-					</div>
-				{{/if}}
-
-				<div class="form-group">
-					<label for="inputQuestionText" class="sr-only">Question Text</label>
-					<textarea class="form-control" name="text" id="inputQuestionText" placeholder="Question Text" required autofocus {{#if disabled}}disabled/{{/if}}>{{text}}</textarea>
-				</div>
-
-				{{#each options }}
-					<div class="form-group" id="formsetModuleContent">
-						<div class="radio">
-							<label><input type="radio" name="options" value="{{@index}}"{{#if correct}} checked{{/if}}>{{text}}</label>
-						</div>
-					</div>
-				{{/each}}
-
-				<div id="control-ModuleContent">
-					<a href="#addContent" id="">Add Additional Option</a>
-				</div>
-
-				<div class="form-group">
-					<button class="btn btn-lg btn-primary btn-block" type="submit">Add Question</button>
-				</div>
-			</form>
 		</div>
 	</div>
+</script>
+
+<script id="template-adminQuestionForm" type="text/x-handlebars-template">
+	<form method="post" action="." id="form-AdminCourse">
+		{{#if error}}
+			<div class="alert alert-danger">
+				{{{error}}}
+			</div>
+		{{/if}}
+
+		{{#if success}}
+			<div class="alert alert-success">
+				{{{success}}}
+			</div>
+		{{/if}}
+
+		<div class="form-group">
+			<label for="inputQuestionText" class="sr-only">Question Text</label>
+			<textarea class="form-control" name="text" id="inputQuestionText" placeholder="Question Text" required autofocus {{#if disabled}}disabled/{{/if}}>{{text}}</textarea>
+		</div>
+
+		{{#each options }}
+			<div class="form-group" id="formsetModuleContent">
+				<div class="radio">
+					<label><input type="radio" name="options" value="{{@index}}"{{#if correct}} checked{{/if}}>{{text}}</label>
+				</div>
+			</div>
+		{{/each}}
+
+
+		<hr>
+
+		{{#if disabled}}
+			<div class="loader center" aria-label="working..."></div>
+		{{else}}
+			<div class="form-group">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">{{title}}</button>
+			</div>
+
+			<div class="form-group">
+				<a href="/admin/edit_course?course_id={{courseId}}" class="btn btn-lg btn-default btn-block">Cancel</a>
+			</div>
+		{{/if}}
+	</form>
 </script>
 
 <script id="template-adminModuleContentInput" type="text/x-handlebars-template">
