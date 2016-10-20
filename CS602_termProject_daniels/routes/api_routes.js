@@ -14,6 +14,7 @@ router.post('/assessment/:assessment_id', assessmentController.update);
 router.post('/assessment/:assessment_id/add_question', assessmentController.addQuestion);
 router.get('/assessments', assessmentController.list);
 router.get('/assessment/:assessment_id', assessmentController.show);
+router.get('/assessment/:assessment_id/get_questions', assessmentController.getQuestions);
 
 /* assignment  services */
 router.post('/assignment', assignmentController.create);

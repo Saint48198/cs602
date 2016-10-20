@@ -224,3 +224,43 @@ module.exports.update = (req, res, next) => {
 
 	});
 };
+
+module.exports.getQuestions =  (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	Assessment.findOne({ _id: req.params.assessment_id }, (error, assessment) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error.message }));
+			return;
+		}
+
+		if (!assessment) {
+			res.send(JSON.stringify({ error: 'Assesment does not exist!' }));
+			return;
+		}
+
+		if (assessment.questions.length) {
+			Question.find({ $or: assessment.questions }, (error, results) => {
+				if (error) {
+					console.log('Error: %s', error);
+					res.send(JSON.stringify({ error: error }));
+					return;
+				}
+
+				res.send(JSON.stringify({ question: results }));
+			});
+		} else {
+			res.send(JSON.stringify({ question: assessment.questions }));
+		}
+
+	});
+};
