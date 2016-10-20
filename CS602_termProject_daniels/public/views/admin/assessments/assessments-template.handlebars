@@ -33,7 +33,7 @@
 					<td>
 						<a href="/admin/edit_assessment?assessment_id={{_id}}&course_id={{../courseId}}" class="btn btn-default" data-bb-link>Edit Details</a>
 						<a href="/admin/questions?assessment_id={{_id}}&course_id={{../courseId}}" class="btn btn-default" data-bb-link>View Questions</a>
-						<button type="button" class="btn btn-danger btn-delete-assessment" data-id="{{_id}}">Delete</button>
+						<button type="button" class="btn btn-danger btn-delete-assessment" data-id="{{_id}}"  data-toggle="modal" data-target="#theModal">Delete</button>
 					</td>
 				</tr>
 			{{/each}}

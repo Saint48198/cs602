@@ -15,6 +15,7 @@ router.post('/assessment/:assessment_id/delete', assessmentController.delete);
 router.post('/assessment/:assessment_id/question', assessmentController.addQuestion);
 router.post('/assessment/:assessment_id/question/:qeustion_id', assessmentController.updateQuestion);
 router.post('/assessment/:assessment_id/question/:qeustion_id/delete', assessmentController.deleteQuestion);
+router.get('/assessments', assessmentController.list);
 router.get('/assessment/:assessment_id', assessmentController.show);
 router.get('/assessment/:assessment_id/get_questions', assessmentController.getQuestions);
 router.get('/assessment/:assessment_id/question/:qeustion_id', assessmentController.getQuestion);
