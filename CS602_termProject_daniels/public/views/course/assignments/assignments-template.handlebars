@@ -1,4 +1,4 @@
-<script id="template-courseAssignments" type="text/x-handlebars-template">
+<script id="template-courseAssignmentsBase" type="text/x-handlebars-template">
 	<div class="container">
 		<div class="col-md-3">
 			<nav>
@@ -12,23 +12,34 @@
 				</ul>
 			</nav>
 		</div>
-		<div class="col-md-9">
-			<h2><small>{{courseId}}<br></small>{{course.name}}</h2>
-			<h1>Assignments</h1>
-			{{#if assignment.length}}
-				<ul class="noStyle">
-					{{#each assignment}}
-						<li>
-							<a href="/course/{{../courseId}}/assignment?assignment_id={{_id}}" data-bb-link>{{name}}</a>
-							{{#if desc }}
-								<p>{{desc}}</p>
-							{{/if}}
-						</li>
-					{{/each}}
-				</ul>
-			{{else}}
-				<p>No Assignments for this course.</p>
-			{{/if}}
+		<div class="col-md-9 container-courseContent" id="courseContent">
+			<div class="loader center" aria-label="loading..."></div>
 		</div>
 	</div>
+</script>
+
+
+<script id="template-courseAssignments" type="text/x-handlebars-template">
+	<h2>{{courseId}} - {{course.name}}</h2>
+	<h1 class="title">Assignments</h1>
+	{{#if assignment.length}}
+		<ul class="noStyle">
+			{{#each assignment}}
+				<li>
+					<a href="/course/{{../courseId}}/assignments?assignment_id={{_id}}" data-bb-link>{{name}}</a>
+					{{#if desc }}
+						<p>{{desc}}</p>
+					{{/if}}
+				</li>
+			{{/each}}
+		</ul>
+	{{else}}
+		<p>No Assignments for this course.</p>
+	{{/if}}
+</script>
+
+<script id="template-courseAssignment" type="text/x-handlebars-template">
+	<h2>{{courseId}} - {{course.name}}</h2>
+	<h1 class="title"><small>Assessment</small><br>{{assignment.name}}</h1>
+	<p>{{assignment.instructions}}</p>
 </script>
