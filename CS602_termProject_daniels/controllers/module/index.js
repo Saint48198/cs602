@@ -116,18 +116,19 @@ module.exports.show =  (req, res, next) => {
 		return;
 	}
 
-	Module.find({ number: req.params.module_id }, (error, module) => {
+	Module.findOne({ _id: req.params.module_id }, (error, module) => {
 		if (error) {
 			console.log('Error: %s', error);
-			res.send(JSON.stringify({ error: error }));
+			res.send(JSON.stringify({ error: error.message }));
 			return;
 		}
 
-		let results = module.map((module) => {
-			return module;
-		});
+		if (!module) {
+			res.send(JSON.stringify({ error: 'Module does not exist!' }));
+			return;
+		}
 
-		res.send(JSON.stringify({ module: results }));
+		res.send(JSON.stringify({ module: module }));
 	});
 };
 

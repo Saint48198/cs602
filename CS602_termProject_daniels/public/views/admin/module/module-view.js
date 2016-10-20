@@ -46,6 +46,7 @@ define([
 			}
 
 			this.replaceUsingTemplate('template-adminModule', this.$el, { title: this.title, courseId: courseId }, { title: 'Admin ~ ' + this.title });
+			this.moduleContentPage = [];
 
 			if (moduleId) {
 				this.moduleModel.url = this.moduleModel.existingModuleUrl + moduleId;
@@ -54,7 +55,6 @@ define([
 					error: this.handleRequestModule.bind(this)
 				});
 			} else {
-				this.moduleContentPage = [];
 				var pageNumber = 1;
 				for(var i = 0; i < this.defaultNumberContentPages; i++) {
 					this.moduleContentPage.push({ label: 'Module Page ' + pageNumber + ' (HTML)'});
@@ -80,6 +80,12 @@ define([
 				data.error = resp.error;
 			}
 
+			var pageNumber = 1;
+			for(var i = 0; i < data.content.length; i++) {
+				this.moduleContentPage.push({ label: 'Module Page ' + pageNumber + ' (HTML)', content: data.content[i] });
+				pageNumber++;
+			}
+
 			this.displayForm(data);
 		},
 
@@ -102,9 +108,9 @@ define([
 							formDataObject[input.name] = [];
 						}
 
-						formDataObject[input.name].push(encodeURIComponent(input.value));
+						formDataObject[input.name].push(input.value);
 					} else {
-						formDataObject[input.name] = encodeURIComponent(input.value);
+						formDataObject[input.name] = input.value;
 					}
 				});
 

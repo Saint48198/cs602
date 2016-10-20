@@ -41,13 +41,13 @@
 
 		<div class="form-group">
 			<label for="inputModuleDesc" class="sr-only">Module Description</label>
-			<textarea class="form-control" name="desc" id="inputModuleDesc" placeholder="Module Description" {{#if disabled}}disabled{{/if}}></textarea>
+			<textarea class="form-control" name="desc" id="inputModuleDesc" placeholder="Module Description" {{#if disabled}}disabled{{/if}}>{{desc}}</textarea>
 		</div>
 
 		{{#each moduleContentPage}}
 			<div class="form-group" id="formsetModuleContent">
 				<label for="inputModuleContent{{@index}}" class="sr-only">{{label}}</label>
-				<textarea class="form-control pageContent" name="content" id="inputModuleContent{{@index}}" placeholder="{{label}}" {{#if disabled}}disabled{{/if}}></textarea>
+				<textarea class="form-control pageContent" name="content" id="inputModuleContent{{@index}}" placeholder="{{label}}" {{#if disabled}}disabled{{/if}}>{{content}}</textarea>
 			</div>
 		{{/each}}
 		<div id="container-contentPages"></div>
