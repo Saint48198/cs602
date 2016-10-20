@@ -357,3 +357,25 @@ module.exports.auth = (req, res, next) => {
 		});
 	});
 };
+
+module.exports.delete = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	User.findOneAndRemove({ _id: req.params.user_id }, (error) => {
+		// system error with getting user
+		if (error) {
+			res.send(JSON.stringify({ success: false, error: error }));
+			return;
+		}
+
+		res.send(JSON.stringify({ success: true }));
+	});
+};

@@ -320,3 +320,28 @@ module.exports.update = (req, res, next) => {
 
 	});
 };
+
+module.exports.delete = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	let courseId = req.params.course_id;
+
+	Course.findOneAndRemove({ number: courseId }, (error) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error }));
+			return;
+		}
+
+		res.send(JSON.stringify({ success: true }));
+	});
+
+};

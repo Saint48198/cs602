@@ -356,3 +356,61 @@ module.exports.getQuestion =  (req, res, next) => {
 
 	});
 };
+
+module.exports.delete = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	Assessment.findOneAndRemove({ _id: req.params.assessment_id }, (error) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error.message }));
+			return;
+		}
+
+		res.send(JSON.stringify({ success: true }));
+	});
+};
+
+module.exports.deleteQuestion = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	Assessment.findOne({ _id: req.params.assessment_id }, (error, assessment) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({error: error.message}));
+			return;
+		}
+
+		if (!assessment) {
+			res.send(JSON.stringify({error: 'Assesment does not exist!'}));
+			return;
+		}
+
+		Question.findOneAndRemove({ _id: req.params.question_id }, (error) => {
+			if (error) {
+				console.log('Error: %s', error);
+				res.send(JSON.stringify({ error: error.message }));
+				return;
+			}
+
+			res.send(JSON.stringify({ success: true }));
+		});
+
+	});
+};

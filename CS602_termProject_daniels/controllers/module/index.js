@@ -177,3 +177,25 @@ module.exports.update = (req, res, next) => {
 	});
 
 };
+
+module.exports.delete = (req, res, next) => {
+	"use strict";
+
+	res.setHeader('Content-Type', 'application/json');
+
+	if (utilities.checkAccess(req, res, next) === false) {
+		res.status(401);
+		res.send(JSON.stringify({ status: 'Access Denied!', code: 401 }));
+		return;
+	}
+
+	Module.findOneAndRemove({ _id: req.params.module_id }, (error) => {
+		if (error) {
+			console.log('Error: %s', error);
+			res.send(JSON.stringify({ error: error.message }));
+			return;
+		}
+
+		res.send(JSON.stringify({ success: true  }));
+	});
+};
